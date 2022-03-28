@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/weather" />
+
+                <TextView
+                    android:id="@+id/news"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="News feed"
+                    android:textSize="30dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:padding="15dp"
+                        android:background="#96B3E2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginRight="2.5dp"
+                        android:layout_marginBottom="2.5dp"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginRight="2.5dp"
+                        android:layout_marginBottom="2.5dp"
+                        android:background="@drawable/bandi_2"
+                        android:text="Bacord &amp; image\n recognition"
+                        android:textSize="19dp"
+                        android:fontFamily="@font/fonta"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/music"
+                        android:layout_marginRight="2.5dp"
+                        android:layout_marginTop="2.5dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_marginBottom="2.5dp"
+                        android:background="@drawable/recipepic_00"
+                        android:text="Recipe\n recommendation"
+                        android:textSize="17dp"
+                        android:fontFamily="@font/fonta"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="2.5dp">
+
+                        <ImageButton
+                            android:id="@+id/timer"
+                            android:src="@drawable/btn_timer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2.5dp"
+                            android:layout_marginTop="2.5dp"
+                            android:layout_marginBottom="2.5dp"
+                            android:layout_weight="1"
+                            android:background="#0072C6"/>
+
+                        <ImageButton
+                            android:id="@+id/setting"
+                            android:src="@drawable/btn_setting"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#5133AB"
+                            android:layout_marginLeft="2.5dp"
+                            android:layout_marginTop="2.5dp"
+                            android:layout_marginBottom="2.5dp"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="450dp"
+                        android:src="@drawable/memo"
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_marginTop="2.5dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
