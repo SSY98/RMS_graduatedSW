@@ -2,8 +2,14 @@ package com.project.rms.Recipe.RecipeMake
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.project.rms.App
+import com.project.rms.R
 import com.project.rms.databinding.SsyActivityRecipemakeBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -34,7 +40,7 @@ class ssy_RecipeMakeActivity : AppCompatActivity() {
             var site =
                 "http://openapi.foodsafetykorea.go.kr/api/" + Api_key + "/COOKRCP01/json/1/1000/RCP_NM="
             t_site.append(site)
-            t_site.append("삼색") //쉐어드프리퍼런스
+            t_site.append(App.prefs.Recipe_Name) //쉐어드프리퍼런스
 
             Log.d("site:", "${t_site}")
             var url = URL(t_site.toString())
@@ -72,7 +78,17 @@ class ssy_RecipeMakeActivity : AppCompatActivity() {
                 Log.d("레시피_메뉴이름:","${RCP_NM}")
                 Log.d("레시피_사진:","${ATT_FILE_NO_MAIN}")
                 Log.d("레시피_필요재료:","${RCP_PARTS_DTLS}")
-                if(RCP_SEQ=="122"){ //쉐어드프리퍼런스로 seq와 비교
+                GlobalScope.launch(Dispatchers.Main){
+                    val name= findViewById<TextView>(R.id.food_name) //ssy
+                    val matrial= findViewById<TextView>(R.id.food_material) //ssy
+                    val foodimg= findViewById<ImageView>(R.id.food_img) //ssy
+                    name.setText(RCP_NM)
+                    matrial.setText(RCP_PARTS_DTLS)
+                    Glide.with(applicationContext)
+                        .load(ATT_FILE_NO_MAIN)
+                        .into(foodimg)
+                }
+                if(RCP_SEQ==App.prefs.Recipe_Seq){ //쉐어드프리퍼런스로 seq와 비교
                     for(j in 1 until 21){
                         val numform = DecimalFormat("00")
                         var MANUAL: String = obj2.getString("MANUAL"+numform.format(j))

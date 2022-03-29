@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
-
 
         //리스트 뷰
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)

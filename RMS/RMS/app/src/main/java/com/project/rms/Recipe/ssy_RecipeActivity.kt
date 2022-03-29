@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.rms.App
 import com.project.rms.Recipe.RecipeMake.ssy_RecipeMakeActivity
 import com.project.rms.databinding.SsyActivityRecipeBinding
 import kotlinx.coroutines.Dispatchers
@@ -36,15 +37,20 @@ class ssy_RecipeActivity : AppCompatActivity() {
         listAdapter.setItemClickListener(object: ssy_Recipe_Ladapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 // 클릭 시 이벤트 작성
+                //띄어쓰기 인식안돼서 앞글자만 따옴
                 var input = itemList[position].name
                 println(input)
                 var token = input.split(' ')
+                App.prefs.Recipe_Name = token[0]
+                //앞글자 같은것중에 레시피번호 비교
+                App.prefs.Recipe_Seq = itemList[position].seq
+
                 Toast.makeText(applicationContext,
                     "${itemList[position].name}\n${itemList[position].material}\n"+token[0],
                     Toast.LENGTH_SHORT).show()
+
                 val intent = Intent(applicationContext, ssy_RecipeMakeActivity::class.java)
                 startActivity(intent)
-                //쉐어드로 이름 앞에 값보내기 seq와 이름앞글자
             }
         })
         //globalscope 시작

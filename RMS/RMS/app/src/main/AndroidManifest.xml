@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET"/> //인터넷 설정_ssy
 
+
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,6 +16,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.RMS">
         //usesCleartextTraffic는 https때문에 넣음_ssy
+        //.App추가_ssy
 
         <activity
             android:name=".SwipeActivity"
