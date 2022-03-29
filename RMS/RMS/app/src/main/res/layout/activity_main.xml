@@ -89,6 +89,7 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/recipe"
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:layout_marginLeft="2.5dp"
