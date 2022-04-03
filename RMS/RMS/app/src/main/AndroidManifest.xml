@@ -4,7 +4,10 @@
     package="com.project.rms">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <!--    카메라 권한 and 메모리 권한-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".App"
@@ -16,6 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RMS"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".Image_recognition.Image_Recognition_Activity"
+            android:exported="true" />
+
         <activity
             android:name=".Barcode.ssh_BarcodeCustom"
             android:exported="true" />
@@ -44,6 +52,17 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.blacklog.takepicture.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
     </application>
 
 </manifest>

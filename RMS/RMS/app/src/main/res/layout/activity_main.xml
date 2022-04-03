@@ -81,6 +81,13 @@
                         android:layout_marginRight="2.5dp"
                         android:layout_marginTop="2.5dp"/>
 
+                    <Button
+                        android:id="@+id/image_t"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:text="test"/>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,6 +105,7 @@
                         android:background="@drawable/recipepic_00"
                         android:text="Recipe\n recommendation"
                         android:textSize="17dp"
+                        android:textColor="@color/white"
                         android:fontFamily="@font/fonta"
                         android:textStyle="bold" />
 

@@ -18,6 +18,7 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
+import com.project.rms.Image_recognition.Image_Recognition_Activity
 import com.project.rms.Recipe.ssy_RecipeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
+        val image_recognition= findViewById<Button>(R.id.image_t)//ysj
 
         //리스트 뷰
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -76,6 +78,11 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         // 설정칸으로 dialog(POPUP 창) 테스트함
         customdialogtest.setOnClickListener{
             val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
+
+        image_recognition.setOnClickListener {
+            val intent = Intent(this, Image_Recognition_Activity::class.java)
             startActivity(intent)
         }
     }

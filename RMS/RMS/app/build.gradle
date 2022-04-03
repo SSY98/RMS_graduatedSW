@@ -67,4 +67,8 @@ dependencies {
     //이미지 url 출력에 사용되는 glide 라이브러리 사용을 위해 추가_ssy
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+
+    //이미지 인식 retrofit_ysj
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
