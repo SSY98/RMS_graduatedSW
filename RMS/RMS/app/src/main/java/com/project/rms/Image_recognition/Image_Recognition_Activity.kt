@@ -90,8 +90,12 @@ class Image_Recognition_Activity: AppCompatActivity() {
                     if(response.isSuccessful){
                         // 정상적으로 통신이 성고된 경우
                         var result: ResponseData? = response.body()
+                        var str_data = result?.toString()
+                        var str_arr = str_data?.split("=",")")
+                        var real_result = str_arr?.get(1)
+
                         Log.d("YMC", "onResponse 성공: " + result?.toString());
-                        binding.result.setText(result?.toString())
+                        binding.result.setText(real_result.toString())
                     }else{
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         Log.d("YMC", "onResponse 실패")
