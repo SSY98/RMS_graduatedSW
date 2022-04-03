@@ -44,8 +44,10 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
         val image_recognition= findViewById<Button>(R.id.image_t)//ysj
 
+        getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
+
         //리스트 뷰
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        /*val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val list = mutableListOf("category1", "category2", "category3", "category4", "category5","cat","cat","cat","cat","cat","cat","cat","cat","cat","cat")
 
         val adapter = LinearListViewAdapter(list)
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
             override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
                 touchHelper.startDrag(viewHolder)
             }
-        })
+        })*/
 
         // 바코드 이미지 인식 버튼 누르면 바코드 스캐너 화면을 출력함_ssh
         StartRecognition.setOnClickListener{
@@ -184,6 +186,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
                 productList = db.productDAO().getAll()
                 Log.d("product","$productList")
             }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+                setRecyclerView(productList)
+            }
         }
     }
 
@@ -207,6 +212,13 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
             }.await()
             getAllProduct()
         }
+    }
+
+    // recyclerview로 데이터베이스에 있는 식재료 출력_ssh
+    fun setRecyclerView(productList : List<ssh_ProductEntity>){
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = LinearListViewAdapter(productList)
     }
 
     // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh
