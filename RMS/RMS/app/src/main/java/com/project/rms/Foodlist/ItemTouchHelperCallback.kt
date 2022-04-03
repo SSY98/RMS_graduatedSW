@@ -138,9 +138,9 @@ class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener, 
         background.draw(canvas)
 
     }
-    fun drawTextOnCanvas(canvas: Canvas, label: String, x: Float, y: Float) {
+    /*fun drawTextOnCanvas(canvas: Canvas, label: String, x: Float, y: Float) {
         canvas.drawText(label, x, y, paint)
-    }
+    }*/
 
     fun drawIconOnCanVas(
         canvas: Canvas, icon: Drawable?, left: Int, top: Int, right: Int, bottom: Int
