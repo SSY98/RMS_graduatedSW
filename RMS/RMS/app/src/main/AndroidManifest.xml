@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.project.rms">
 
-    <uses-permission android:name="android.permission.INTERNET"/> //인터넷 설정_ssy
-
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.RMS">
-        //usesCleartextTraffic는 https때문에 넣음_ssy
-        //.App추가_ssy
-
+        android:theme="@style/Theme.RMS"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Barcode.ssh_BarcodeCustom"
+            android:exported="true" />
         <activity
             android:name=".SwipeActivity"
             android:exported="true" />
-
         <activity
             android:name=".SettingActivity"
             android:exported="true" />
-
         <activity
             android:name=".Recipe.ssy_RecipeActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".Recipe.RecipeMake.ssy_RecipeMakeActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>
