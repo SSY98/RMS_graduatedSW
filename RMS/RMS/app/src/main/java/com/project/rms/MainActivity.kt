@@ -14,18 +14,29 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.project.rms.Barcode.ssh_BarcodeCustom
 import com.project.rms.Barcode.ssh_BarcodeDialog
 import com.project.rms.Barcode.ssh_BarcodeDialogInterface
+import com.project.rms.Foodlist.Database.ssh_ProductDatabase
+import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
 import com.project.rms.Recipe.ssy_RecipeActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 
 class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
+    lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
+    var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
@@ -143,14 +154,64 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         }
     }
 
-    // 바코드 스캔 시 식재료 추가에 대한 팝업창 출력
+    // 바코드 스캔 시 식재료 추가에 대한 팝업창 출력_ssh
     fun dialog(){
         val BarcodeDialog = ssh_BarcodeDialog(this,this)
         BarcodeDialog.show()
     }
 
-    // 바코드 인식 팝업창에서 추가 버튼을 누르면 시행되는 작업
+    // 데이터베이스에 식재료를 추가_ssh
+    fun insertProduct(product : ssh_ProductEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db.productDAO().insert(product)
+            }.await()
+            getAllProduct()
+        }
+    }
+
+    // 데이터베이스에 있는 식재료를 불러옴_ssh
+    fun getAllProduct(){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                productList = db.productDAO().getAll()
+                Log.d("product","$productList")
+            }.await()
+        }
+    }
+
+    // 데이터베이스에 있는 식재료를 수정_ssh
+    fun updateProduct(product: ssh_ProductEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db.productDAO().update(product)
+                Log.d("memo", "hi5")
+            }.await()
+            getAllProduct()
+            Log.d("memo", "hi6")
+        }
+    }
+
+    // 데이터베이스에 있는 식재료를 삭제_ssh
+    fun deleteProduct(product: ssh_ProductEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db.productDAO().delete(product)
+            }.await()
+            getAllProduct()
+        }
+    }
+
+    // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh
     override fun onAddButtonClicked() {
+        var productname = App.prefs.FoodName.toString()
+        var productcatergory = App.prefs.FoodCategory.toString()
+        var productdate = App.prefs.FoodDate.toString()
+        var productcount = App.prefs.FoodCount.toString()
+
+        val product = ssh_ProductEntity(null, productname, productcatergory, productdate, productcount)
+        insertProduct(product)
+
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""

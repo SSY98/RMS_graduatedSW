@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android-extensions' //쉐어드 쓰려고 넣음_ssy
     id 'kotlin-android'
+    id 'kotlin-kapt' // room 사용을 위해 추가
 }
 
 android {
@@ -50,6 +51,12 @@ dependencies {
     //swipelayout
     implementation 'ru.rambler.android:swipe-layout:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // room 사용을 위해 추가
+    def roomVersion = "2.4.1"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 
     // 바코드 사용을 위해 추가
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
