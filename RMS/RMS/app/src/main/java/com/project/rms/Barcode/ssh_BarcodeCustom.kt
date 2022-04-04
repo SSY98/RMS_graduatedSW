@@ -1,12 +1,21 @@
 package com.project.rms.Barcode
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,23 +26,80 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
+import com.project.rms.Image_recognition.retrofit
+import com.project.rms.Image_recognition.retrofit_interface
 import com.project.rms.MainActivity
 import com.project.rms.R
 import com.project.rms.SwipeActivity
+import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
+import com.project.rms.databinding.YsjImageRecognitionBinding
 import kotlinx.android.synthetic.main.activity_ssh_barcode_custom.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.text.SimpleDateFormat
 
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     private lateinit var capture: CaptureManager
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
+    //ysj추가
+    // ViewBinding
+    lateinit var binding : ActivitySshBarcodeCustomBinding
+
+    val server = retrofit.create(retrofit_interface::class.java) //api
+
+    // Permisisons
+    val PERMISSIONS = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    val PERMISSIONS_REQUEST = 100
+
+    // Request Code
+    private val BUTTON4 = 400
+
+    private var photoUri: Uri? = null
+    //private lateinit var img : ImageView //
+    //ysj추가 끝
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ssh_barcode_custom)
+        binding = ActivitySshBarcodeCustomBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        setContentView(view)
+
+        checkPermissions(PERMISSIONS, PERMISSIONS_REQUEST)
+
+        //이미지 버튼 누르면 카메라 실행 ysj
+        binding.camera.setOnClickListener {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            val photoFile = File(
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "image").apply {
+                    if (!this.exists()) {
+                        this.mkdirs()
+                    }
+                },
+                newJpgFileName()//이미지 파일 저장
+            )
+            photoUri = FileProvider.getUriForFile(
+                this,
+                "com.blacklog.takepicture.fileprovider",
+                photoFile
+            )
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                startActivityForResult(takePictureIntent, BUTTON4)
+            }
+        }
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
@@ -143,4 +209,30 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
+
+    //이미지 파일 저장 ysj
+    private fun newJpgFileName() : String {
+        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
+        val filename = "test"
+        //val filename = sdf.format(System.currentTimeMillis())
+        return "${filename}.jpg"
+    }
+
+    //권한체크 ysj
+    private fun checkPermissions(permissions: Array<String>, permissionsRequest: Int): Boolean {
+        val permissionList : MutableList<String> = mutableListOf()
+        for(permission in permissions){
+            val result = ContextCompat.checkSelfPermission(this, permission)
+            if(result != PackageManager.PERMISSION_GRANTED){
+                permissionList.add(permission)
+            }
+        }
+        if(permissionList.isNotEmpty()){
+            ActivityCompat.requestPermissions(this, permissionList.toTypedArray(), PERMISSIONS_REQUEST)
+            return false
+        }
+        return true
+    }
+
+
 }
