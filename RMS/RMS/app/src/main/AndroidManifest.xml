@@ -21,10 +21,6 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".Image_recognition.Image_Recognition_Activity"
-            android:exported="true" />
-
-        <activity
             android:name=".Barcode.ssh_BarcodeCustom"
             android:exported="true" />
         <activity

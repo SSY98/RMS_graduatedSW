@@ -1,6 +1,7 @@
 package com.project.rms.Barcode
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -26,6 +27,7 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
+import com.project.rms.Image_recognition.ResponseData
 import com.project.rms.Image_recognition.retrofit
 import com.project.rms.Image_recognition.retrofit_interface
 import com.project.rms.MainActivity
@@ -38,6 +40,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -48,7 +56,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
-    //ysj추가
+    //ysj 추가
     // ViewBinding
     lateinit var binding : ActivitySshBarcodeCustomBinding
 
@@ -68,7 +76,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     private var photoUri: Uri? = null
     //private lateinit var img : ImageView //
-    //ysj추가 끝
+    //ysj 추가 끝
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +108,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                 startActivityForResult(takePictureIntent, BUTTON4)
             }
         }
+
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
@@ -208,6 +217,49 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         integrator.setCameraId(0) // 0이면 후면 카메라, 1이면 전면 카메라
         integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        //RESULT_OK 사진 촬영을 했을 때 ysj
+        if(resultCode == Activity.RESULT_OK){
+            when(requestCode) {
+
+                BUTTON4 -> {
+                    val file = File("/storage/emulated/0/Android/data/com.project.rms/files/Pictures/image/test.jpg")
+                    val requestFile = RequestBody.create(MediaType.parse("application/pdf"), file)
+                    val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+                    Log.d("결과", "5")
+                    server.sendFile(body).enqueue(object : Callback<ResponseData> {
+                        override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+                            if(response.isSuccessful){
+                                // 정상적으로 통신이 성고된 경우
+                                var result: ResponseData? = response.body()
+                                var str_data = result?.toString()
+                                var str_arr = str_data?.split("=",")")
+                                // ex) real_result -> 사과
+                                var real_result = str_arr?.get(1)
+
+                                Log.d("YMC", "onResponse 성공: " + result?.toString());
+                                binding.result.setText(real_result.toString())
+                            }else{
+                                // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                                Log.d("YMC", "onResponse 실패")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                            // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                            Log.d("YMC", "onFailure 에러: " + t.message.toString());
+                        }
+                    })
+                    Log.d("결과", "6")
+                }
+
+            }
+        }
+
     }
 
     //이미지 파일 저장 ysj

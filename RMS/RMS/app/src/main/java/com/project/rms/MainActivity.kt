@@ -18,7 +18,6 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
-import com.project.rms.Image_recognition.Image_Recognition_Activity
 import com.project.rms.Recipe.ssy_RecipeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -81,11 +80,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         // 설정칸으로 dialog(POPUP 창) 테스트함
         customdialogtest.setOnClickListener{
             val intent = Intent(this, SettingActivity::class.java)
-            startActivity(intent)
-        }
-
-        image_recognition.setOnClickListener {
-            val intent = Intent(this, Image_Recognition_Activity::class.java)
             startActivity(intent)
         }
     }
