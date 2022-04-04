@@ -87,5 +87,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"/>
+
+        <Button
+            android:id="@+id/food_plus_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가"/>
     </LinearLayout>
 </LinearLayout>

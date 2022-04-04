@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import com.google.zxing.integration.android.IntentIntegrator
 import com.project.rms.App
+import com.project.rms.MainActivity
 import com.project.rms.R
+import com.project.rms.Recipe.ssy_RecipeActivity
 
 class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface) : Dialog(context) {
     // 인터페이스를 받아옴
@@ -25,6 +28,7 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
         var food_count = findViewById<EditText>(R.id.food_count_edt)
         var food_add = findViewById<Button>(R.id.food_add_btn)
         var food_cancel = findViewById<Button>(R.id.food_cancel_btn)
+        var food_plus = findViewById<Button>(R.id.food_plus_btn)
 
         var FoodName = App.prefs.FoodName
         var FoodCategory = App.prefs.FoodCategory
@@ -53,5 +57,8 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
         food_cancel.setOnClickListener {
             BarcodeDialogInterface.onCancelButtonClicked()
             dismiss()}
+
+        food_plus.setOnClickListener {
+            }
     }
 }
