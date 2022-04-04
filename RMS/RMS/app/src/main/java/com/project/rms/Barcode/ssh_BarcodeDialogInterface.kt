@@ -4,4 +4,6 @@ interface ssh_BarcodeDialogInterface {
     fun onAddButtonClicked()
 
     fun onCancelButtonClicked()
+
+    fun onPlusButtonClicked()
 }

@@ -251,6 +251,27 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     // 바코드 인식 팝업창에서 취소 버튼을 누르면 시행되는 작업
     override fun onCancelButtonClicked() {
-        TODO("Not yet implemented")
+
+    }
+
+    override fun onPlusButtonClicked() {
+        var productname = App.prefs.FoodName.toString()
+        var productcatergory = App.prefs.FoodCategory.toString()
+        var productdate = App.prefs.FoodDate.toString()
+        var productcount = App.prefs.FoodCount.toString()
+
+        val product = ssh_ProductEntity(null, productname, productcatergory, productdate, productcount)
+        insertProduct(product)
+
+        App.prefs.FoodName = ""
+        App.prefs.FoodCategory = ""
+        App.prefs.FoodDate = ""
+        App.prefs.FoodCount = "1"
+
+        var integrator = IntentIntegrator(this)
+        integrator.setPrompt("바코드를 스캔하세요")
+        integrator.setCameraId(0) // 0이면 후면 카메라, 1이면 전면 카메라
+        integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
+        integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
 }

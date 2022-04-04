@@ -59,6 +59,12 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
             dismiss()}
 
         food_plus.setOnClickListener {
+            App.prefs.FoodName = food_name.text.toString()
+            App.prefs.FoodCategory = food_category.text.toString()
+            App.prefs.FoodDate = food_date.text.toString()
+            App.prefs.FoodCount = food_count.text.toString()
+            BarcodeDialogInterface.onPlusButtonClicked()
+            dismiss()
             }
     }
 }
