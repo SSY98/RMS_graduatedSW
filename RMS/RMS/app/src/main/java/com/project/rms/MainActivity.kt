@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.GsonBuilder
 import com.google.zxing.integration.android.IntentIntegrator
 import com.project.rms.Barcode.ssh_BarcodeCustom
 import com.project.rms.Barcode.ssh_BarcodeDialog
@@ -19,14 +20,23 @@ import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
 import com.project.rms.Recipe.ssy_RecipeActivity
+import com.project.rms.Weather.ssy_WHEATHER
+import com.project.rms.Weather.ssy_WeatherInterface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import org.naver.Naver
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
@@ -41,7 +51,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
-        val image_recognition= findViewById<Button>(R.id.image_t)//ysj
+        //val image_recognition= findViewById<Button>(R.id.image_t)//ysj
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
 
@@ -81,6 +91,48 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         customdialogtest.setOnClickListener{
             val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
+
+            //날씨임시테스트_ssy---시작
+            val cal = Calendar.getInstance()
+            var base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time) // 현재 날짜
+            val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time) // 현재 시각
+            val timeM = SimpleDateFormat("mm", Locale.getDefault()).format(cal.time) // 현재 분
+            // API 가져오기 적당하게 변환
+            Log.d("api_times", timeH+timeM)
+            val base_time = getBaseTime(timeH, timeM)
+            // 현재 시각이 00시이고 45분 이하여서 baseTime이 2330이면 어제 정보 받아오기
+            if (timeH == "00" && base_time == "2300") {
+                cal.add(Calendar.DATE, -1).toString()
+                base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
+            }
+            val call = ApiObject.retrofitService.GetWeather("JSON", 10, 1, base_date, base_time, "59", "119")
+            call.enqueue(object : retrofit2.Callback<ssy_WHEATHER>{
+                override fun onResponse(call: Call<ssy_WHEATHER>, response: Response<ssy_WHEATHER>) {
+                    if (response.isSuccessful){
+                        Log.d("api", response.body().toString())
+                        Log.d("api_date", base_date)
+                        Log.d("api_time", base_time)
+                        Log.d("api", response.body()!!.response.body.items.item.toString())
+                        val api_TMP = response.body()!!.response.body.items.item[0].fcstValue
+                        val api_SKY = response.body()!!.response.body.items.item[5].fcstValue
+                        val api_PTY = response.body()!!.response.body.items.item[6].fcstValue
+                        val api_POP = response.body()!!.response.body.items.item[7].fcstValue
+                        Log.d("api_TMP", "기온: "+api_TMP+"도씨")
+                        Log.d("api_SKY", "하늘: "+getSky(api_SKY))
+                        Log.d("api_PTY", "비타입: "+getRainType(api_PTY))
+                        Log.d("api_POP", "강수확률: "+api_POP+"%")
+                    }
+                }
+                override fun onFailure(call: Call<ssy_WHEATHER>, t: Throwable) {
+                    Log.d("api fail : ", t.message.toString())
+                }
+            })
+            //날씨임시테스트_ssy---끝
+
+            //뉴스임시테스트_ssy---시작
+            val nthread=newsThread()
+            nthread.start()
+            //뉴스임시테스트_ssy---끝
         }
     }
 
@@ -268,4 +320,70 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
+
+    //--------------------------------뉴스api_ssy-------------------------------------------------------
+    inner class newsThread() : Thread() {
+        val naver = Naver(clientId = "ESLGojTe7I4Uriq_7nfX", clientSecret = "sm7PyE1Nmq")
+        override fun run() {
+            val search_results = naver.search().news(query = "속보")
+            search_results.items.forEach { news -> news.title }
+            for(i in 0 until 10){
+                var newstitle = search_results.items[i].title.toString()
+                newstitle = newstitle.replace("&quot;","")
+                newstitle = newstitle.replace("<b>","")
+                newstitle = newstitle.replace("</b>","")
+                Log.d("헉", newstitle)
+                Log.d("헉", search_results.items[i].link)
+            }
+            //https://github.com/kimsuelim/naver-sdk-kotlin
+        }
+    }
+    //--------------------------------뉴스api_ssy-------------------------------------------------------
 }
+
+//--------------------------------날씨_ssy-------------------------------------------------------
+fun getRainType(rainType : String): String{
+    return when(rainType) {
+        "0" -> "없음"
+        "1" -> "비"
+        "2" -> "비/눈"
+        "3" -> "눈"
+        "4" -> "소나기"
+        else -> "오류 rainType : " + rainType
+        //없음(0), 비(1), 비/눈(2), 눈(3), 소나기(4)
+    }
+}
+fun getSky(sky : String) : String {
+    return when(sky) {
+        "1" -> "맑음"
+        "3" -> "구름 많음"
+        "4" -> "흐림"
+        else -> "오류 rainType : " + sky
+    }
+}
+fun getBaseTime(h: String, m : String) : String{
+    val time = h+m
+    return when(time.toInt()) {
+        in 210 .. 510 -> "0200"
+        in 510 .. 710 -> "0500"
+        in 810 .. 1110 -> "0800"
+        in 1110 .. 1410 -> "1100"
+        in 1410 .. 1710 -> "1400"
+        in 1710 .. 2010 -> "1700"
+        in 2010 .. 2310 -> "2000"
+        else -> "2300"
+    }
+}
+//gson 객체 생성
+var gson = GsonBuilder().setLenient().create()
+private val retrofit = Retrofit.Builder()
+    .baseUrl("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/") // 마지막 / 반드시 들어가야 함
+    .addConverterFactory(GsonConverterFactory.create(gson)) // converter 지정
+    .build() // retrofit 객체 생성
+//오브젝트 생성
+object ApiObject {
+    val retrofitService: ssy_WeatherInterface by lazy {
+        retrofit.create(ssy_WeatherInterface::class.java)
+    }
+}
+//--------------------------------날씨_ssy-------------------------------------------------------

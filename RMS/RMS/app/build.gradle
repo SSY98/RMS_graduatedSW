@@ -71,4 +71,11 @@ dependencies {
     //이미지 인식 retrofit_ysj
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //날씨api_ssy
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+
+    //뉴스api_ssy
+    implementation 'org.naver.sdk:kotlin-lib:0.2.0'
+
 }
