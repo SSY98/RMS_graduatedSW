@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -23,8 +24,10 @@ import com.project.rms.Foodlist.LinearListViewAdapter
 import com.project.rms.Newfeed.ExampleAdapter
 import com.project.rms.Newfeed.ysj_ExampleModel
 import com.project.rms.Recipe.ssy_RecipeActivity
+import com.project.rms.Recipe.ssy_Recipe_Litem
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
+import com.project.rms.Webview.ssy_Webview
 import com.project.rms.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -40,15 +43,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
-    //뉴스 피드 뷰바인딩_ysj
+    //메인액티비티 뷰바인딩
     private lateinit var binding: ActivityMainBinding
-
     private val lm = LinearLayoutManager(this)
-
-    var a1 = arrayOf("윤 당선인 청와대 도착‥문 대통령과 상춘재에서 만찬 회동 시작", "https://www.naver.com")
-    var a2 = arrayOf("러 외무 푸틴·젤렌스키 회담 현재로선 비생산적", "https://www.daum.net")
-    var a3 = arrayOf("신 중부권 내륙고속도로 '남제천-덕산-수안보' 연구 용역 시작", "https://www.google.co.kr")
-    //ysj
 
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
@@ -59,16 +56,114 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val view = binding.root
         setContentView(view)
 
-        // 뉴스피드
-        //무한루프
-        binding.rvAutoScrollContent.setLoopEnabled(true)
-        //속도,방향
-        binding.rvAutoScrollContent.openAutoScroll(speed = 10, reverse = false)
-        //터치가능
-        binding.rvAutoScrollContent.setCanTouch(true)
+        //------------------------------------뉴스_시작-----------------------------------------------
+        val naver = Naver(clientId = "ESLGojTe7I4Uriq_7nfX", clientSecret = "sm7PyE1Nmq")
+        GlobalScope.launch(Dispatchers.IO) {
+            //출처: 네이버뉴스 sdk - https://github.com/kimsuelim/naver-sdk-kotlin
+            val search_results = naver.search().news(query = "속보")
+            val ntarray = Array<String>(5,{""})
+            val nlarray = Array<String>(5,{""})
+            search_results.items.forEach { news -> news.title }
+            for (i in 0 until 5) {
+                var newstitle = search_results.items[i].title.toString()
+                newstitle = newstitle.replace("&quot;", "")
+                newstitle = newstitle.replace("<b>", "")
+                newstitle = newstitle.replace("</b>", "")
+                ntarray[i]=newstitle
+                nlarray[i]=search_results.items[i].link
+            }
+            GlobalScope.launch(Dispatchers.Main){
+                var a1 = arrayOf(ntarray[0],nlarray[0])
+                var a2 = arrayOf(ntarray[1],nlarray[1])
+                var a3 = arrayOf(ntarray[2],nlarray[2])
+                var a4 = arrayOf(ntarray[3],nlarray[3])
+                var a5 = arrayOf(ntarray[4],nlarray[4])
 
-        initView()
-        // 뉴스피드 끝
+                binding.rvAutoScrollContent.setLoopEnabled(true)
+                binding.rvAutoScrollContent.openAutoScroll(speed = 15, reverse = false)
+                binding.rvAutoScrollContent.setCanTouch(true)
+                lm.orientation = LinearLayoutManager.VERTICAL
+                binding.rvAutoScrollContent.layoutManager = lm
+
+                fun setUpAutoScrollContent(messagesList: List<ysj_ExampleModel>, onItemClicked: (String) -> Unit) {
+
+                    val adapter = ExampleAdapter().apply {
+                        submitList(messagesList)
+                    }
+                    binding.rvAutoScrollContent.adapter = adapter
+                    binding.rvAutoScrollContent.setItemClickListener { viewHolder, position ->
+                        viewHolder?.let {
+                            adapter.onLinkItem(viewHolder, position, onItemClicked)
+                            if(position == 0){
+                                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a1[1]))
+                                startActivity(intent)
+                            }else if(position == 1){
+                                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a2[1]))
+                                startActivity(intent)
+                            }else if(position == 2){
+                                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a3[1]))
+                                startActivity(intent)
+                            } else if(position == 3){
+                                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a4[1]))
+                                startActivity(intent)
+                            } else if(position == 4){
+                                var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a5[1]))
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                }
+                setUpAutoScrollContent(
+                    listOf(
+                        ysj_ExampleModel(a1[0]), ysj_ExampleModel(a2[0]),ysj_ExampleModel(a3[0]),ysj_ExampleModel(a4[0]),ysj_ExampleModel(a5[0])
+                    )
+                ) {
+                    //뉴스피드 예외처리 구간
+                }
+            }
+        }
+        //------------------------------------뉴스_끝------------------------------------------------
+
+        //------------------------------------날씨_시작-----------------------------------------------
+        val cal = Calendar.getInstance()
+        var base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time) // 현재 날짜
+        val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time) // 현재 시각
+        val timeM = SimpleDateFormat("mm", Locale.getDefault()).format(cal.time) // 현재 분
+        // API 가져오기 적당하게 변환
+        Log.d("api_times", timeH+timeM)
+        val base_time = getBaseTime(timeH, timeM)
+        // 현재 시각이 00시이고 45분 이하여서 baseTime이 2330이면 어제 정보 받아오기
+        if (timeH == "00" && base_time == "2300") {
+            cal.add(Calendar.DATE, -1).toString()
+            base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
+        }
+        val call = ApiObject.retrofitService.GetWeather("JSON", 10, 1, base_date, base_time, "59", "119")
+        call.enqueue(object : retrofit2.Callback<ssy_WHEATHER>{
+            override fun onResponse(call: Call<ssy_WHEATHER>, response: Response<ssy_WHEATHER>) {
+                if (response.isSuccessful){
+                    Log.d("api", response.body().toString())
+                    Log.d("api_date", base_date)
+                    Log.d("api_time", base_time)
+                    Log.d("api", response.body()!!.response.body.items.item.toString())
+                    val api_TMP = response.body()!!.response.body.items.item[0].fcstValue
+                    val api_SKY = response.body()!!.response.body.items.item[5].fcstValue
+                    val api_PTY = response.body()!!.response.body.items.item[6].fcstValue
+                    val api_POP = response.body()!!.response.body.items.item[7].fcstValue
+                    binding.weatherimg.setText(getSky(api_SKY))
+                    binding.raintype.setText(getRainType(api_PTY))
+                    binding.rainper.setText(api_POP+"%")
+                    binding.temperatures.setText(api_TMP+" °C")
+                    Log.d("api_TMP", "기온: "+api_TMP+"도씨")
+                    Log.d("api_SKY", "하늘: "+getSky(api_SKY))
+                    Log.d("api_PTY", "비타입: "+getRainType(api_PTY))
+                    Log.d("api_POP", "강수확률: "+api_POP+"%")
+                }
+            }
+            override fun onFailure(call: Call<ssy_WHEATHER>, t: Throwable) {
+                Log.d("api fail : ", t.message.toString())
+            }
+        })
+        //------------------------------------날씨_끝------------------------------------------------
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
@@ -77,7 +172,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
-
 
         //리스트 뷰
         /*val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -110,111 +204,12 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
             startActivity(intent)
         }
 
-        // 설정칸으로 dialog(POPUP 창) 테스트함
+        // 설정칸으로 dialog(POPUP 창) 테스트함_테스트용도
         customdialogtest.setOnClickListener{
             val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
-
-            //날씨임시테스트_ssy---시작
-            val cal = Calendar.getInstance()
-            var base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time) // 현재 날짜
-            val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(cal.time) // 현재 시각
-            val timeM = SimpleDateFormat("mm", Locale.getDefault()).format(cal.time) // 현재 분
-            // API 가져오기 적당하게 변환
-            Log.d("api_times", timeH+timeM)
-            val base_time = getBaseTime(timeH, timeM)
-            // 현재 시각이 00시이고 45분 이하여서 baseTime이 2330이면 어제 정보 받아오기
-            if (timeH == "00" && base_time == "2300") {
-                cal.add(Calendar.DATE, -1).toString()
-                base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
-            }
-            val call = ApiObject.retrofitService.GetWeather("JSON", 10, 1, base_date, base_time, "59", "119")
-            call.enqueue(object : retrofit2.Callback<ssy_WHEATHER>{
-                override fun onResponse(call: Call<ssy_WHEATHER>, response: Response<ssy_WHEATHER>) {
-                    if (response.isSuccessful){
-                        Log.d("api", response.body().toString())
-                        Log.d("api_date", base_date)
-                        Log.d("api_time", base_time)
-                        Log.d("api", response.body()!!.response.body.items.item.toString())
-                        val api_TMP = response.body()!!.response.body.items.item[0].fcstValue
-                        val api_SKY = response.body()!!.response.body.items.item[5].fcstValue
-                        val api_PTY = response.body()!!.response.body.items.item[6].fcstValue
-                        val api_POP = response.body()!!.response.body.items.item[7].fcstValue
-                        Log.d("api_TMP", "기온: "+api_TMP+"도씨")
-                        Log.d("api_SKY", "하늘: "+getSky(api_SKY))
-                        Log.d("api_PTY", "비타입: "+getRainType(api_PTY))
-                        Log.d("api_POP", "강수확률: "+api_POP+"%")
-                    }
-                }
-                override fun onFailure(call: Call<ssy_WHEATHER>, t: Throwable) {
-                    Log.d("api fail : ", t.message.toString())
-                }
-            })
-            //날씨임시테스트_ssy---끝
-
-            //뉴스임시테스트_ssy---시작
-            val naver = Naver(clientId = "ESLGojTe7I4Uriq_7nfX", clientSecret = "sm7PyE1Nmq")
-            GlobalScope.launch(Dispatchers.IO) {
-                val search_results = naver.search().news(query = "속보")
-                search_results.items.forEach { news -> news.title }
-                for (i in 0 until 10) {
-                    var newstitle = search_results.items[i].title.toString()
-                    newstitle = newstitle.replace("&quot;", "")
-                    newstitle = newstitle.replace("<b>", "")
-                    newstitle = newstitle.replace("</b>", "")
-                    Log.d("헉", newstitle)
-                    Log.d("헉", search_results.items[i].link)
-                }
-                //https://github.com/kimsuelim/naver-sdk-kotlin
-            }
-            //뉴스임시테스트_ssy---끝
         }
     }
-
-    //뉴스피드 시작 ysj
-    private fun initView() {
-        lm.orientation = LinearLayoutManager.VERTICAL
-
-        binding.rvAutoScrollContent.layoutManager = lm
-
-        setUpAutoScrollContent(
-            listOf(
-                ysj_ExampleModel(a1[0]),ysj_ExampleModel(a2[0]),ysj_ExampleModel(a3[0])
-            )
-        ) {
-            // 어느 뉴스피드 항목이던지 눌렀을때 이벤트 필요 x
-            //Toast.makeText(this, "Item clicked1", Toast.LENGTH_SHORT).show()
-        }
-    }
-    //버튼 셋업
-    private fun setUpAutoScrollContent(messagesList: List<ysj_ExampleModel>, onItemClicked: (String) -> Unit) {
-
-        val adapter = ExampleAdapter().apply {
-            submitList(messagesList)
-        }
-
-        binding.rvAutoScrollContent.adapter = adapter
-        //버튼(뉴스피드 항목) 눌렀을 때 이벤트
-        binding.rvAutoScrollContent.setItemClickListener { viewHolder, position ->
-            viewHolder?.let {
-                adapter.onLinkItem(viewHolder, position, onItemClicked)
-                //
-                if(position == 0){
-                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a1[1]))
-                    startActivity(intent)
-                }else if(position == 1){
-                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a2[1]))
-                    startActivity(intent)
-                }else if(position == 2){
-                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a3[1]))
-                    startActivity(intent)
-                }
-
-            }
-        }
-    }
-    //뉴스피드 끝 ysj
-
     // 바코드 api_ssy,ssh
     inner class BarcodeThread(var bar:String) : Thread(){
         override fun run() {

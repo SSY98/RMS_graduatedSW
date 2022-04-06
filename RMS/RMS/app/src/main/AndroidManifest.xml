@@ -20,6 +20,10 @@
         android:theme="@style/Theme.RMS"
         android:usesCleartextTraffic="true">
 
+
+        <activity
+            android:name=".Webview.ssy_Webview"
+            android:exported="true"/>
         <activity
             android:name=".Barcode.ssh_BarcodeCustom"
             android:exported="true" />
