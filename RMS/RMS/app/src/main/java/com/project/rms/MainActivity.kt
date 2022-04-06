@@ -1,6 +1,7 @@
 package com.project.rms
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,9 +20,12 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
+import com.project.rms.Newfeed.ExampleAdapter
+import com.project.rms.Newfeed.ysj_ExampleModel
 import com.project.rms.Recipe.ssy_RecipeActivity
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
+import com.project.rms.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import org.naver.Naver
@@ -36,19 +40,41 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
+    //뉴스 피드 뷰바인딩_ysj
+    private lateinit var binding: ActivityMainBinding
+
+    private val lm = LinearLayoutManager(this)
+
+    var a1 = arrayOf("윤 당선인 청와대 도착‥문 대통령과 상춘재에서 만찬 회동 시작", "https://www.naver.com")
+    var a2 = arrayOf("러 외무 푸틴·젤렌스키 회담 현재로선 비생산적", "https://www.daum.net")
+    var a3 = arrayOf("신 중부권 내륙고속도로 '남제천-덕산-수안보' 연구 용역 시작", "https://www.google.co.kr")
+    //ysj
+
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        // 뉴스피드
+        //무한루프
+        binding.rvAutoScrollContent.setLoopEnabled(true)
+        //속도,방향
+        binding.rvAutoScrollContent.openAutoScroll(speed = 10, reverse = false)
+        //터치가능
+        binding.rvAutoScrollContent.setCanTouch(true)
+
+        initView()
+        // 뉴스피드 끝
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
-        //val image_recognition= findViewById<Button>(R.id.image_t)//ysj
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
 
@@ -144,6 +170,50 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
             //뉴스임시테스트_ssy---끝
         }
     }
+
+    //뉴스피드 시작 ysj
+    private fun initView() {
+        lm.orientation = LinearLayoutManager.VERTICAL
+
+        binding.rvAutoScrollContent.layoutManager = lm
+
+        setUpAutoScrollContent(
+            listOf(
+                ysj_ExampleModel(a1[0]),ysj_ExampleModel(a2[0]),ysj_ExampleModel(a3[0])
+            )
+        ) {
+            // 어느 뉴스피드 항목이던지 눌렀을때 이벤트 필요 x
+            //Toast.makeText(this, "Item clicked1", Toast.LENGTH_SHORT).show()
+        }
+    }
+    //버튼 셋업
+    private fun setUpAutoScrollContent(messagesList: List<ysj_ExampleModel>, onItemClicked: (String) -> Unit) {
+
+        val adapter = ExampleAdapter().apply {
+            submitList(messagesList)
+        }
+
+        binding.rvAutoScrollContent.adapter = adapter
+        //버튼(뉴스피드 항목) 눌렀을 때 이벤트
+        binding.rvAutoScrollContent.setItemClickListener { viewHolder, position ->
+            viewHolder?.let {
+                adapter.onLinkItem(viewHolder, position, onItemClicked)
+                //
+                if(position == 0){
+                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a1[1]))
+                    startActivity(intent)
+                }else if(position == 1){
+                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a2[1]))
+                    startActivity(intent)
+                }else if(position == 2){
+                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse(a3[1]))
+                    startActivity(intent)
+                }
+
+            }
+        }
+    }
+    //뉴스피드 끝 ysj
 
     // 바코드 api_ssy,ssh
     inner class BarcodeThread(var bar:String) : Thread(){

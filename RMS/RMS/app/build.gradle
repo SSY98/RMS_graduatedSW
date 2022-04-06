@@ -78,4 +78,7 @@ dependencies {
     //뉴스api_ssy
     implementation 'org.naver.sdk:kotlin-lib:0.2.0'
 
+    //뉴스 AutoScrollContent ysj
+    implementation 'com.github.angelmmg90:AutoScrollContent:0.1.0'
+
 }
