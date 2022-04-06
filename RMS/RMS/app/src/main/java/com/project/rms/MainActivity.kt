@@ -22,10 +22,7 @@ import com.project.rms.Foodlist.LinearListViewAdapter
 import com.project.rms.Recipe.ssy_RecipeActivity
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.json.JSONObject
 import org.naver.Naver
 import retrofit2.Call
@@ -130,8 +127,20 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
             //날씨임시테스트_ssy---끝
 
             //뉴스임시테스트_ssy---시작
-            val nthread=newsThread()
-            nthread.start()
+            val naver = Naver(clientId = "ESLGojTe7I4Uriq_7nfX", clientSecret = "sm7PyE1Nmq")
+            GlobalScope.launch(Dispatchers.IO) {
+                val search_results = naver.search().news(query = "속보")
+                search_results.items.forEach { news -> news.title }
+                for (i in 0 until 10) {
+                    var newstitle = search_results.items[i].title.toString()
+                    newstitle = newstitle.replace("&quot;", "")
+                    newstitle = newstitle.replace("<b>", "")
+                    newstitle = newstitle.replace("</b>", "")
+                    Log.d("헉", newstitle)
+                    Log.d("헉", search_results.items[i].link)
+                }
+                //https://github.com/kimsuelim/naver-sdk-kotlin
+            }
             //뉴스임시테스트_ssy---끝
         }
     }
@@ -320,25 +329,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
-
-    //--------------------------------뉴스api_ssy-------------------------------------------------------
-    inner class newsThread() : Thread() {
-        val naver = Naver(clientId = "ESLGojTe7I4Uriq_7nfX", clientSecret = "sm7PyE1Nmq")
-        override fun run() {
-            val search_results = naver.search().news(query = "속보")
-            search_results.items.forEach { news -> news.title }
-            for(i in 0 until 10){
-                var newstitle = search_results.items[i].title.toString()
-                newstitle = newstitle.replace("&quot;","")
-                newstitle = newstitle.replace("<b>","")
-                newstitle = newstitle.replace("</b>","")
-                Log.d("헉", newstitle)
-                Log.d("헉", search_results.items[i].link)
-            }
-            //https://github.com/kimsuelim/naver-sdk-kotlin
-        }
-    }
-    //--------------------------------뉴스api_ssy-------------------------------------------------------
 }
 
 //--------------------------------날씨_ssy-------------------------------------------------------
