@@ -21,11 +21,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
 
-class LinearListViewAdapter(var list : List<ssh_ProductEntity>) :
+class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>) :
     RecyclerView.Adapter<LinearListViewAdapter.ViewHolder>() ,
     ItemTouchHelperCallback.OnItemMoveListener{
-
-    private lateinit var dragListener: OnStartDragListener
 
     inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.food_item_layout, parent, false)
@@ -46,48 +44,21 @@ class LinearListViewAdapter(var list : List<ssh_ProductEntity>) :
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //position = 순서
-        /*
         if(position<=1)
         {
             holder.itemView.setBackgroundColor(Color.RED)
         }else{holder.itemView.setBackgroundColor(Color.rgb(150,179,226))}
 
-        list[position].let {
-            with(holder) {
-                tvTitle.text = it
-                ivMenu.setOnTouchListener { view, event ->
-                    if (event.action == MotionEvent.ACTION_DOWN) {
-                        dragListener.onStartDrag(this)
-                    }
-                    return@setOnTouchListener false
-                }
-            }
-        }*/
         val product = list[position]
 
         holder.food_name.text = product.name
         holder.food_category.text = product.category
         holder.food_date.text = product.date
         holder.food_count.text = product.count
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView?.context, SwipeActivity::class.java)
-            startActivity(holder.itemView.context,intent,null)
-        }
-
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-
-    interface OnStartDragListener {
-        fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
-    }
-
-    fun startDrag(listener: OnStartDragListener) {
-        this.dragListener = listener
     }
 
     override fun onItemMoved(fromPosition: Int, toPosition: Int) {
@@ -96,7 +67,7 @@ class LinearListViewAdapter(var list : List<ssh_ProductEntity>) :
     }
 
     override fun onItemSwiped(position: Int) {
-
+        list.removeAt(position)
         notifyItemRemoved(position)
     }
 }

@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class SwipeActivity : AppCompatActivity(){
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
-    var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
+    var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
     override fun onCreate(savedInstance: Bundle?){
         super.onCreate(savedInstance)
@@ -57,7 +57,7 @@ class SwipeActivity : AppCompatActivity(){
     }
 
     // recyclerview로 데이터베이스에 있는 식재료 출력_ssh
-    fun setRecyclerView(productList : List<ssh_ProductEntity>){
+    fun setRecyclerView(productList : MutableList<ssh_ProductEntity>){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = LinearListViewAdapter(productList)

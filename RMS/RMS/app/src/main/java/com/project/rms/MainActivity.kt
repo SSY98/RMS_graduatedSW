@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -24,10 +23,8 @@ import com.project.rms.Foodlist.LinearListViewAdapter
 import com.project.rms.Newfeed.ExampleAdapter
 import com.project.rms.Newfeed.ysj_ExampleModel
 import com.project.rms.Recipe.ssy_RecipeActivity
-import com.project.rms.Recipe.ssy_Recipe_Litem
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
-import com.project.rms.Webview.ssy_Webview
 import com.project.rms.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import org.json.JSONObject
@@ -48,7 +45,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
     private val lm = LinearLayoutManager(this)
 
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
-    var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
+    var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -172,22 +169,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
-
-        //리스트 뷰
-        /*val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val list = mutableListOf("category1", "category2", "category3", "category4", "category5","cat","cat","cat","cat","cat","cat","cat","cat","cat","cat")
-
-        val adapter = LinearListViewAdapter(list)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val callback = ItemTouchHelperCallback(adapter,this)
-        val touchHelper = ItemTouchHelper(callback)
-        touchHelper.attachToRecyclerView(recyclerView)
-        recyclerView.adapter = adapter
-        adapter.startDrag(object : LinearListViewAdapter.OnStartDragListener {
-            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
-                touchHelper.startDrag(viewHolder)
-            }
-        })*/
 
         // 바코드 이미지 인식 버튼 누르면 바코드 스캐너 화면을 출력함_ssh
         StartRecognition.setOnClickListener{
@@ -336,21 +317,21 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
     }
 
     // recyclerview로 데이터베이스에 있는 식재료 출력_ssh
-    fun setRecyclerView(productList : List<ssh_ProductEntity>){
+    fun setRecyclerView(productList : MutableList<ssh_ProductEntity>){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = LinearListViewAdapter(productList)//수정
-        recyclerView.layoutManager = LinearLayoutManager(this)//++
         val callback = ItemTouchHelperCallback(adapter,this)//++
         val touchHelper = ItemTouchHelper(callback)//++
         touchHelper.attachToRecyclerView(recyclerView)//++
         recyclerView.adapter = adapter//++
         //밑++
+        /*
         adapter.startDrag(object : LinearListViewAdapter.OnStartDragListener {
             override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
                 touchHelper.startDrag(viewHolder)
             }
-        })
+        })*/
     }
 
     // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh

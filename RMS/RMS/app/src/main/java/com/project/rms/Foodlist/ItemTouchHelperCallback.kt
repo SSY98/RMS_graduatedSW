@@ -15,7 +15,7 @@ import com.project.rms.R
 class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener, internal var mContext: Context) : ItemTouchHelper.Callback() {
 
     var leftBG: Int = Color.rgb(255,0,255)
-    var leftLabel: String = ""
+    //var leftLabel: String = ""
     var leftIcon = ContextCompat.getDrawable(mContext, R.drawable.ic_remove_item)
 
 
@@ -149,6 +149,4 @@ class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener, 
         icon?.draw(canvas)
 
     }
-
-
 }
