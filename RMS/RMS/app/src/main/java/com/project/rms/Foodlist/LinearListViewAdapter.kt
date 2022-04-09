@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListner
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.R
@@ -21,9 +22,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
 
-class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>) :
-    RecyclerView.Adapter<LinearListViewAdapter.ViewHolder>() ,
-    ItemTouchHelperCallback.OnItemMoveListener{
+class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_OnProductDeleteListner: ssh_OnProductDeleteListner) :
+    RecyclerView.Adapter<LinearListViewAdapter.ViewHolder>(),
+    ItemTouchHelperCallback.OnItemMoveListener  {
 
     inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.food_item_layout, parent, false)
@@ -67,7 +68,9 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>) :
     }
 
     override fun onItemSwiped(position: Int) {
+        val product = list[position]
         list.removeAt(position)
         notifyItemRemoved(position)
+        ssh_OnProductDeleteListner.onProductDeleteListner(product)
     }
 }

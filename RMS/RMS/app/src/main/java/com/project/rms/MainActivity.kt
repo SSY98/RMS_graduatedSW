@@ -16,6 +16,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.project.rms.Barcode.ssh_BarcodeCustom
 import com.project.rms.Barcode.ssh_BarcodeDialog
 import com.project.rms.Barcode.ssh_BarcodeDialogInterface
+import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListner
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
@@ -39,7 +40,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
+class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListner {
     //메인액티비티 뷰바인딩
     private lateinit var binding: ActivityMainBinding
     private val lm = LinearLayoutManager(this)
@@ -320,7 +321,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
     fun setRecyclerView(productList : MutableList<ssh_ProductEntity>){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = LinearListViewAdapter(productList)//수정
+        val adapter = LinearListViewAdapter(productList, this)//수정
         val callback = ItemTouchHelperCallback(adapter,this)//++
         val touchHelper = ItemTouchHelper(callback)//++
         touchHelper.attachToRecyclerView(recyclerView)//++
@@ -374,6 +375,10 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface {
         integrator.setCameraId(0) // 0이면 후면 카메라, 1이면 전면 카메라
         integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
+    }
+
+    override fun onProductDeleteListner(product: ssh_ProductEntity) {
+        deleteProduct(product)
     }
 }
 

@@ -25,8 +25,6 @@ class SwipeActivity : AppCompatActivity(){
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
-        getAllProduct()
-
         /*val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val list = mutableListOf("category1", "category2", "category3", "category4", "category5","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog","dog")
 
@@ -41,25 +39,5 @@ class SwipeActivity : AppCompatActivity(){
                 touchHelper.startDrag(viewHolder)
             }
         })*/
-    }
-
-    // 데이터베이스에 있는 식재료를 불러옴_ssh
-    fun getAllProduct(){
-        CoroutineScope(Dispatchers.IO).launch {
-            async{
-                productList = db.productDAO().getAll()
-                Log.d("product","$productList")
-            }.await()
-            CoroutineScope(Dispatchers.Main).launch {
-                setRecyclerView(productList)
-            }
-        }
-    }
-
-    // recyclerview로 데이터베이스에 있는 식재료 출력_ssh
-    fun setRecyclerView(productList : MutableList<ssh_ProductEntity>){
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = LinearListViewAdapter(productList)
     }
 }
