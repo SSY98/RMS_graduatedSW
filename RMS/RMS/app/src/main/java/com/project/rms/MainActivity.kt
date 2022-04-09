@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 var a5 = arrayOf(ntarray[4],nlarray[4])
 
                 binding.rvAutoScrollContent.setLoopEnabled(true)
-                binding.rvAutoScrollContent.openAutoScroll(speed = 15, reverse = false)
+                binding.rvAutoScrollContent.openAutoScroll(speed = 12, reverse = false)
                 binding.rvAutoScrollContent.setCanTouch(true)
                 lm.orientation = LinearLayoutManager.VERTICAL
                 binding.rvAutoScrollContent.layoutManager = lm
@@ -147,10 +147,34 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     val api_SKY = response.body()!!.response.body.items.item[5].fcstValue
                     val api_PTY = response.body()!!.response.body.items.item[6].fcstValue
                     val api_POP = response.body()!!.response.body.items.item[7].fcstValue
-                    binding.weatherimg.setText(getSky(api_SKY))
+                    binding.weathertext.setText(getSky(api_SKY))
                     binding.raintype.setText(getRainType(api_PTY))
-                    binding.rainper.setText(api_POP+"%")
+                    binding.rainper.setText("강수확률은 "+api_POP+"% 입니다")
                     binding.temperatures.setText(api_TMP+" °C")
+
+                    if (getRainType(api_PTY) == "없음"){
+                        if (getSky(api_SKY) == "맑음"){
+                            binding.weatherimg.setImageResource(R.drawable.sunny)
+                        }
+                        else if (getSky(api_SKY) == "구름많음"){
+                            binding.weatherimg.setImageResource(R.drawable.overcast)
+                        }
+                        else if (getSky(api_SKY) == "흐림"){
+                            binding.weatherimg.setImageResource(R.drawable.sunny)
+                        }
+                    }else if (getRainType(api_PTY) == "비"){
+                        binding.weatherimg.setImageResource(R.drawable.rain)
+                    }
+                    else if (getRainType(api_PTY) == "비/눈"){
+                        binding.weatherimg.setImageResource(R.drawable.rainsnow)
+                    }
+                    else if (getRainType(api_PTY) == "눈"){
+                        binding.weatherimg.setImageResource(R.drawable.snow)
+                    }
+                    else if (getRainType(api_PTY) == "소나기"){
+                        binding.weatherimg.setImageResource(R.drawable.shower)
+                    }
+
                     Log.d("api_TMP", "기온: "+api_TMP+"도씨")
                     Log.d("api_SKY", "하늘: "+getSky(api_SKY))
                     Log.d("api_PTY", "비타입: "+getRainType(api_PTY))

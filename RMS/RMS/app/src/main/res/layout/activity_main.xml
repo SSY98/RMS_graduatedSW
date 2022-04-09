@@ -22,97 +22,83 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="200dp"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ex(구름 or 우산) : "
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/weatherimg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="기온(°C) : "
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
-
-                        <TextView
-                            android:id="@+id/temperatures"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="강수확률 : "
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
-
-                        <TextView
-                            android:id="@+id/rainper"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="눈, 비, 소나기 타입 : "
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
-
-                        <TextView
-                            android:id="@+id/raintype"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textSize="25dp"/>
-
-                    </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/weatherimg"
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"/>
 
 
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/weathertext"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="맑음"
+                                        android:textColor="@color/white"
+                                        android:textSize="20dp"/>
+
+                                    <TextView
+                                        android:id="@+id/raintype"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="비타입"
+                                        android:textColor="@color/white"
+                                        android:textSize="20dp"
+                                        android:paddingLeft="20dp"/>
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/temperatures"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="17°C"
+                                    android:textSize="60dp"
+                                    android:textColor="@color/white"/>
+
+                                <TextView
+                                    android:id="@+id/rainper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="강수확률은 20%입니다."
+                                    android:textColor="@color/white"
+                                    android:textSize="25dp"/>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
