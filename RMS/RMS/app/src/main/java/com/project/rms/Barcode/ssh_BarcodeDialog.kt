@@ -35,16 +35,16 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
         var FoodDate = App.prefs.FoodDate
         var FoodCount = App.prefs.FoodCount
 
+        // 배경을 투명하게함
+        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         // 바코드 인식으로 가져온 식재료 정보를 화면에 출력함
         food_name.setText(FoodName)
         food_category.setText(FoodCategory)
         food_date.setText(FoodDate)
         food_count.setText(FoodCount)
 
-        // 배경을 투명하게함
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        // 추가 버튼 클릭 시 onAddButtonClicked 호출 후 종료
+        // 확인 버튼 클릭 시 각각의 edittext에 입력된 식재료 정보를 SharedPreference 변수에 저장하고 onAddButtonClicked 호출 후 종료
         food_add.setOnClickListener {
             App.prefs.FoodName = food_name.text.toString()
             App.prefs.FoodCategory = food_category.text.toString()
@@ -58,6 +58,7 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
             BarcodeDialogInterface.onCancelButtonClicked()
             dismiss()}
 
+        // 추가 버튼 클릭 시 edittext에 입력된 식재료 정보를 SharedPreference 변수에 저장하고 onPlustButtonClicked 호출 후 종료
         food_plus.setOnClickListener {
             App.prefs.FoodName = food_name.text.toString()
             App.prefs.FoodCategory = food_category.text.toString()

@@ -102,13 +102,13 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
         val direct_add= findViewById<Button>(R.id.direct_add) // 직접 입력 버튼
 
-        // 직접 입력 버튼 누르면 팝업창 출력
+        // 직접 입력 버튼 누르면 팝업창 출력_ssh
         direct_add.setOnClickListener{
             val BarcodeDialog = ssh_BarcodeDialog(this,this)
             BarcodeDialog.show()
         }
 
-        // CaptureManager에 DecorateBarcodeView를 연결시켜준뒤 decode함
+        // CaptureManager에 DecorateBarcodeView를 연결시켜준뒤 decode함_ssh
         capture = CaptureManager(this, scanner_custom)
         capture.initializeFromIntent(intent, savedInstanceState)
         capture.decode()
@@ -163,6 +163,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         }
     }
 
+    // 직접 입력 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh
     override fun onAddButtonClicked() {
         var productname = App.prefs.FoodName.toString()
         var productcatergory = App.prefs.FoodCategory.toString()
@@ -179,13 +180,17 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
+    // 바코드 인식 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)_ssh
     override fun onCancelButtonClicked() {
-        TODO("Not yet implemented")
+        App.prefs.FoodName = ""
+        App.prefs.FoodCategory = ""
+        App.prefs.FoodDate = ""
+        App.prefs.FoodCount = "1"
     }
 
+    // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가되고 바코드 인식 화면을 띄움_ssh
     override fun onPlusButtonClicked() {
         var productname = App.prefs.FoodName.toString()
         var productcatergory = App.prefs.FoodCategory.toString()

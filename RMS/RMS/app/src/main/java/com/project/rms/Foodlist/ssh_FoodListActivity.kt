@@ -6,16 +6,20 @@ import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
+import com.project.rms.Foodlist.Database.ssh_OnProductUpdateListener
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
+import com.project.rms.Foodlist.UpdateDialog.ssh_FoodListUpdateDialog
+import com.project.rms.Foodlist.UpdateDialog.ssh_FoodListUpdateDialogInterface
 import com.project.rms.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ssh_FoodListActivity : AppCompatActivity(), ssh_OnProductDeleteListener {
+class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterface, ssh_OnProductDeleteListener, ssh_OnProductUpdateListener {
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
@@ -67,14 +71,50 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_OnProductDeleteListener {
     fun setRecyclerView(productList : MutableList<ssh_ProductEntity>){
         val recyclerView = findViewById<RecyclerView>(R.id.FoodList_recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = ssh_FoodListAdapter(productList, this)//수정
+        val adapter = ssh_FoodListAdapter(productList, this, this)//수정
         val callback = ItemTouchHelperCallback(adapter,this)//++
         val touchHelper = ItemTouchHelper(callback)//++
         touchHelper.attachToRecyclerView(recyclerView)//++
         recyclerView.adapter = adapter//++
     }
 
+    // 스와이프 모션을 사용하면 데이터베이스 내의 식재료가 삭제됨
     override fun onProductDeleteListener(product: ssh_ProductEntity) {
         deleteProduct(product)
+    }
+
+    // 식재료 수정 화면 dialog를 출력
+    override fun onProductUpdateListener(product: ssh_ProductEntity) {
+        val UpdateDialog = ssh_FoodListUpdateDialog(this,this)
+        UpdateDialog.show()
+        Log.d("memo", "hi1")
+    }
+
+    // 식재료 수정 팝업창 수정 버튼 클릭
+    override fun onUpdateButtonClicked() {
+        // 식재료 정보 수정 사항을 각각의 변수에 저장
+        val currentID = App.prefs.FoodID?.toLong()
+        var productname = App.prefs.FoodName.toString()
+        var productcatergory = App.prefs.FoodCategory.toString()
+        var productdate = App.prefs.FoodDate.toString()
+        var productcount = App.prefs.FoodCount.toString()
+
+        // 각각의 변수에 저장된 수정 사항을 데이터베이스에 적용
+        val product = ssh_ProductEntity(currentID, productname, productcatergory, productdate, productcount)
+        updateProduct(product)
+
+        // SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)
+        App.prefs.FoodName = ""
+        App.prefs.FoodCategory = ""
+        App.prefs.FoodDate = ""
+        App.prefs.FoodCount = "1"
+    }
+
+    // 식재료 수정 팝업창에서 취소 버튼 클릭 시 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)
+    override fun onCancelButtonClicked() {
+        App.prefs.FoodName = ""
+        App.prefs.FoodCategory = ""
+        App.prefs.FoodDate = ""
+        App.prefs.FoodCount = "1"
     }
 }

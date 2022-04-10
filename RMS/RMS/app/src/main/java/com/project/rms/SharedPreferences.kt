@@ -8,6 +8,7 @@ class SharedPreferences (context: Context) {
     // private val 프리퍼런스 변수이름 = "다른액티비티에서 사용할 이름"
     private val recipe_name = "Recipe_Name"
     private val recipe_seq = "Recipe_Seq"
+    private val food_id = "FoodID"
     private val food_name = "FoodName"
     private val food_category = "FoodCategory"
     private val food_date = "FoodDate"
@@ -24,6 +25,10 @@ class SharedPreferences (context: Context) {
     var Recipe_Name: String?
         get() = prefs.getString(recipe_name, "")
         set(value) = prefs.edit().putString(recipe_name, value).apply()
+
+    var FoodID: String?
+        get() = prefs.getString(food_id, "")
+        set(value) = prefs.edit().putString(food_id, value).apply()
 
     var FoodName: String?
         get() = prefs.getString(food_name, "")

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
 import com.project.rms.Foodlist.Database.ssh_OnProductUpdateListener
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
@@ -15,7 +16,8 @@ import kotlinx.android.synthetic.main.ssh_item_food.view.*
 import java.util.*
 
 class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
-                          var ssh_OnProductDeleteListener: ssh_OnProductDeleteListener) :
+                          var ssh_OnProductDeleteListener: ssh_OnProductDeleteListener,
+                          var ssh_OnProductUpdateListener: ssh_OnProductUpdateListener) :
     RecyclerView.Adapter<ssh_FoodListAdapter.ViewHolder>(),
     ItemTouchHelperCallback.OnItemMoveListener  {
 
@@ -42,11 +44,31 @@ class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
         }else{holder.itemView.setBackgroundColor(Color.rgb(150,179,226))}
 
         val product = list[position]
+        val productID = product.id.toString()
+        val product_name = product.name
+        val product_category = product.category
+        val product_date = product.date
+        val product_count = product.count
 
-        holder.activity_food_name.text = product.name
-        holder.activity_food_category.text = product.category
-        holder.activity_food_date.text = product.date
-        holder.activity_food_count.text = product.count
+        holder.activity_food_name.text = product_name
+        holder.activity_food_category.text = product_category
+        holder.activity_food_date.text = product_date
+        holder.activity_food_count.text = product_count
+
+        // 식재료 목록을 길게 클릭
+        holder.activity_root.setOnLongClickListener(object: View.OnLongClickListener{
+            override fun onLongClick(v: View?): Boolean {
+                // SharedPreference에 선언한 변수에 클릭한 식재료의 이름, 종류, 유통기한, 갯수를 저장한다.
+                App.prefs.FoodID = productID
+                App.prefs.FoodName = product_name
+                App.prefs.FoodCategory = product_category
+                App.prefs.FoodDate = product_date
+                App.prefs.FoodCount = product_count
+
+                ssh_OnProductUpdateListener.onProductUpdateListener(product) //  OnProductUpdateListener 실행 (Listener는 수정 화면 dialog 창을 띄움)
+                return true
+            }
+        })
     }
 
     override fun getItemCount(): Int {

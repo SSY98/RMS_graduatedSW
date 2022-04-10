@@ -350,16 +350,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         val touchHelper = ItemTouchHelper(callback)//++
         touchHelper.attachToRecyclerView(recyclerView)//++
         recyclerView.adapter = adapter//++
-        //밑++
-        /*
-        adapter.startDrag(object : LinearListViewAdapter.OnStartDragListener {
-            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
-                touchHelper.startDrag(viewHolder)
-            }
-        })*/
     }
 
-    // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh
+    // 바코드 인식 후 팝업창에서 확인 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh
     override fun onAddButtonClicked() {
         var productname = App.prefs.FoodName.toString()
         var productcatergory = App.prefs.FoodCategory.toString()
@@ -375,11 +368,15 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         App.prefs.FoodCount = "1"
     }
 
-    // 바코드 인식 팝업창에서 취소 버튼을 누르면 시행되는 작업
+    // 바코드 인식 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)_ssh
     override fun onCancelButtonClicked() {
-
+        App.prefs.FoodName = ""
+        App.prefs.FoodCategory = ""
+        App.prefs.FoodDate = ""
+        App.prefs.FoodCount = "1"
     }
 
+    // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가되고 바코드 인식 화면을 띄움_ssh
     override fun onPlusButtonClicked() {
         var productname = App.prefs.FoodName.toString()
         var productcatergory = App.prefs.FoodCategory.toString()
@@ -401,6 +398,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
 
+    // 스와이프 모션을 사용하면 데이터베이스 내의 식재료가 삭제됨
     override fun onProductDeleteListener(product: ssh_ProductEntity) {
         deleteProduct(product)
     }
