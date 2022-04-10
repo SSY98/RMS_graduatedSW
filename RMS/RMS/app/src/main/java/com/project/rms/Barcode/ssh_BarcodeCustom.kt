@@ -39,6 +39,9 @@ import retrofit2.Response
 import java.io.File
 import java.text.SimpleDateFormat
 
+
+
+
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     private lateinit var capture: CaptureManager
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
@@ -178,11 +181,13 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         App.prefs.FoodDate = ""
         App.prefs.FoodCount = "1"
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
+        val i = Intent(this, MainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 
-    // 바코드 인식 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)_ssh
+    // 직접 입력 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)_ssh
     override fun onCancelButtonClicked() {
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
@@ -190,7 +195,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         App.prefs.FoodCount = "1"
     }
 
-    // 바코드 인식 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가되고 바코드 인식 화면을 띄움_ssh
+    // 직접 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가되고 바코드 인식 화면을 띄움_ssh
     override fun onPlusButtonClicked() {
         var productname = App.prefs.FoodName.toString()
         var productcatergory = App.prefs.FoodCategory.toString()
@@ -204,12 +209,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
         App.prefs.FoodCount = "1"
-
-        var integrator = IntentIntegrator(this)
-        integrator.setPrompt("바코드를 스캔하세요")
-        integrator.setCameraId(0) // 0이면 후면 카메라, 1이면 전면 카메라
-        integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
-        integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -279,5 +278,11 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         return true
     }
 
-
+    // 뒤로 가기를 누르면 메인화면으로 이동_ssh
+    override fun onBackPressed() {
+        // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
+        val i = Intent(this, MainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
+    }
 }

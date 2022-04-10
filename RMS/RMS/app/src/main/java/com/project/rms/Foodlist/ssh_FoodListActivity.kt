@@ -1,5 +1,6 @@
 package com.project.rms.Foodlist
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.UpdateDialog.ssh_FoodListUpdateDialog
 import com.project.rms.Foodlist.UpdateDialog.ssh_FoodListUpdateDialogInterface
+import com.project.rms.MainActivity
 import com.project.rms.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -116,5 +118,13 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
         App.prefs.FoodCount = "1"
+    }
+
+    // 뒤로 가기를 누르면 메인화면으로 이동_ssh
+    override fun onBackPressed() {
+        // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
+        val i = Intent(this, MainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 }

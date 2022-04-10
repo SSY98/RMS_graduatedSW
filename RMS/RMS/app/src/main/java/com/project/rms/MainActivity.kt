@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -282,8 +283,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 B_API_thread.start()
                 B_API_thread.join() // join()을 사용하면 해당 스레드가 종료되기를 기다렸다가 다음으로 넘어감
                 dialog()
-            } else {
-                Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -319,18 +318,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
-    // 데이터베이스에 있는 식재료를 수정_ssh
-    fun updateProduct(product: ssh_ProductEntity){
-        CoroutineScope(Dispatchers.IO).launch {
-            async{
-                db.productDAO().update(product)
-                Log.d("memo", "hi5")
-            }.await()
-            getAllProduct()
-            Log.d("memo", "hi6")
-        }
-    }
-
     // 데이터베이스에 있는 식재료를 삭제_ssh
     fun deleteProduct(product: ssh_ProductEntity){
         CoroutineScope(Dispatchers.IO).launch {
@@ -349,7 +336,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         val callback = ItemTouchHelperCallback(adapter,this)//++
         val touchHelper = ItemTouchHelper(callback)//++
         touchHelper.attachToRecyclerView(recyclerView)//++
-        recyclerView.adapter = adapter//++
+        recyclerView.adapter = adapter
     }
 
     // 바코드 인식 후 팝업창에서 확인 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ssh
@@ -358,7 +345,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         var productcatergory = App.prefs.FoodCategory.toString()
         var productdate = App.prefs.FoodDate.toString()
         var productcount = App.prefs.FoodCount.toString()
-
+        
         val product = ssh_ProductEntity(null, productname, productcatergory, productdate, productcount)
         insertProduct(product)
 
@@ -366,6 +353,11 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
         App.prefs.FoodCount = "1"
+
+        // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
+        val i = Intent(this, MainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 
     // 바코드 인식 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)_ssh
