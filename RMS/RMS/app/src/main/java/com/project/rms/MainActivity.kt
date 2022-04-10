@@ -16,7 +16,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.project.rms.Barcode.ssh_BarcodeCustom
 import com.project.rms.Barcode.ssh_BarcodeDialog
 import com.project.rms.Barcode.ssh_BarcodeDialogInterface
-import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListner
+import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
@@ -40,7 +40,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListner {
+class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListener {
     //메인액티비티 뷰바인딩
     private lateinit var binding: ActivityMainBinding
     private val lm = LinearLayoutManager(this)
@@ -401,7 +401,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
 
-    override fun onProductDeleteListner(product: ssh_ProductEntity) {
+    override fun onProductDeleteListener(product: ssh_ProductEntity) {
         deleteProduct(product)
     }
 }

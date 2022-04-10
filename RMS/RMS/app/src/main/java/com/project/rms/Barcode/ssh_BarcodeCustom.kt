@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,29 +11,20 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureManager
 import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
-import com.project.rms.Foodlist.ItemTouchHelperCallback
-import com.project.rms.Foodlist.LinearListViewAdapter
 import com.project.rms.Image_recognition.ResponseData
 import com.project.rms.Image_recognition.retrofit
 import com.project.rms.Image_recognition.retrofit_interface
 import com.project.rms.MainActivity
 import com.project.rms.R
-import com.project.rms.SwipeActivity
 import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
-import com.project.rms.databinding.YsjImageRecognitionBinding
 import kotlinx.android.synthetic.main.activity_ssh_barcode_custom.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,8 +37,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
 import java.text.SimpleDateFormat
 
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {

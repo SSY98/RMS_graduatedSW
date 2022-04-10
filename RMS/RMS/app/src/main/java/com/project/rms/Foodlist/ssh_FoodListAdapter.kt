@@ -1,30 +1,32 @@
 package com.project.rms.Foodlist
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
+import com.project.rms.Foodlist.Database.ssh_OnProductUpdateListener
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.R
+import kotlinx.android.synthetic.main.ssh_item_food.view.*
 import java.util.*
 
-class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_OnProductDeleteListner: ssh_OnProductDeleteListener) :
-    RecyclerView.Adapter<LinearListViewAdapter.ViewHolder>(),
+class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
+                          var ssh_OnProductDeleteListener: ssh_OnProductDeleteListener) :
+    RecyclerView.Adapter<ssh_FoodListAdapter.ViewHolder>(),
     ItemTouchHelperCallback.OnItemMoveListener  {
 
     inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.food_item_layout, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.ssh_item_food, parent, false)
     ) {
-        val main_food_name: TextView = itemView.findViewById(R.id.main_food_name)
-        val main_food_category: TextView = itemView.findViewById(R.id.main_food_category)
-        val main_food_date: TextView = itemView.findViewById(R.id.main_food_date)
-        val main_food_count: TextView = itemView.findViewById(R.id.main_food_count)
-        val main_root = itemView.rootView
+        val activity_food_name: TextView = itemView.findViewById(R.id.activity_food_name)
+        val activity_food_category: TextView = itemView.findViewById(R.id.activity_food_category)
+        val activity_food_date: TextView = itemView.findViewById(R.id.activity_food_date)
+        val activity_food_count: TextView = itemView.findViewById(R.id.activity_food_count)
+        val activity_root = itemView.activity_rootView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,17 +41,12 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
             holder.itemView.setBackgroundColor(Color.RED)
         }else{holder.itemView.setBackgroundColor(Color.rgb(150,179,226))}
 
-        holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView?.context, ssh_FoodListActivity::class.java)
-            startActivity(holder.itemView.context,intent,null)
-        }
-
         val product = list[position]
 
-        holder.main_food_name.text = product.name
-        holder.main_food_category.text = product.category
-        holder.main_food_date.text = product.date
-        holder.main_food_count.text = product.count
+        holder.activity_food_name.text = product.name
+        holder.activity_food_category.text = product.category
+        holder.activity_food_date.text = product.date
+        holder.activity_food_count.text = product.count
     }
 
     override fun getItemCount(): Int {
@@ -65,6 +62,6 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
         val product = list[position]
         list.removeAt(position)
         notifyItemRemoved(position)
-        ssh_OnProductDeleteListner.onProductDeleteListener(product)
+        ssh_OnProductDeleteListener.onProductDeleteListener(product)
     }
 }

@@ -4,28 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="120dp"
     android:padding="20dp"
-    android:id="@+id/main_rootView">
+    android:id="@+id/activity_rootView">
 
     <TextView
-        android:id="@+id/main_food_name"
+        android:id="@+id/activity_food_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/main_food_category"
+        android:id="@+id/activity_food_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/main_food_date"
+        android:id="@+id/activity_food_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/main_food_count"
+        android:id="@+id/activity_food_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 </LinearLayout>
