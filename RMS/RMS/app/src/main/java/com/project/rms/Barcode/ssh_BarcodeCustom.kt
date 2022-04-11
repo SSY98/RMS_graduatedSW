@@ -230,7 +230,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                                 var result: ResponseData? = response.body()
                                 var str_data = result?.toString()
                                 var str_arr = str_data?.split("=",")")
-                                // ex) real_result -> 사과
+                                // ex) real_result -> 사과 (이미지 인식 결과)
                                 var real_result = str_arr?.get(1)
 
                                 Log.d("YMC", "onResponse 성공: " + result?.toString());
