@@ -234,10 +234,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                                 var real_result = str_arr?.get(1)
 
                                 Log.d("YMC", "onResponse 성공: " + result?.toString());
-                                dialog()
+
                                 // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
                                 App.prefs.FoodName = real_result
-
                                 if (real_result == "사과") {
                                     App.prefs.FoodCategory = "과일"
                                 }
@@ -245,6 +244,8 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                                     App.prefs.FoodCategory = ""
                                 }
                                 App.prefs.FoodDate = ""
+
+                                dialog() // 팝업창 실행
                                 binding.result.setText(real_result.toString())
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
