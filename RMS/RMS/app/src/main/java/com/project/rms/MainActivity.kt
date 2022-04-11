@@ -1,14 +1,25 @@
 package com.project.rms
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.AudioManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +28,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.project.rms.Barcode.ssh_BarcodeCustom
 import com.project.rms.Barcode.ssh_BarcodeDialog
 import com.project.rms.Barcode.ssh_BarcodeDialogInterface
+import com.project.rms.CountdownTimer.ssy_Countdowntimer
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
@@ -28,6 +40,7 @@ import com.project.rms.Recipe.ssy_RecipeActivity
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
 import com.project.rms.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import org.json.JSONObject
 import org.naver.Naver
@@ -41,13 +54,18 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListener {
+class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListener,TextToSpeech.OnInitListener {
     //메인액티비티 뷰바인딩
     private lateinit var binding: ActivityMainBinding
     private val lm = LinearLayoutManager(this)
 
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
+
+    //음성인식_ssy
+    private lateinit var speechRecognizer: SpeechRecognizer
+    private lateinit var recognitionListener: RecognitionListener
+    private var tts: TextToSpeech? = null //tts
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -188,6 +206,47 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         })
         //------------------------------------날씨_끝------------------------------------------------
 
+        //------------------------------------음성인식-----------------------------------------------
+        requestPermission()
+        var intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
+        setListener()
+        //음성인식 무한반복 스레드
+        tts = TextToSpeech(this, this) //tts
+
+        /*option.setOnClickListener {
+            if(voiceoption==false){
+                voiceoption=true
+                Log.d("옵션", "true")
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else{
+                voiceoption=false
+                Log.d("옵션", "false")
+                //음소거된 볼륨을 되돌려놓음
+                val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                val muteValue = AudioManager.ADJUST_UNMUTE
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
+                //음소거된 볼륨을 되돌려놓음
+            }
+        }*/
+
+        if(App.prefs.Voiceoption == true) {
+            GlobalScope.launch(Dispatchers.Main) {
+                while (App.prefs.Voiceoption == true){
+                    speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
+                    speechRecognizer.setRecognitionListener(recognitionListener)
+                    speechRecognizer.startListening(intent)
+                    delay(7000)
+                    speechRecognizer.destroy()
+                    delay(500)
+                }
+            }
+        }
+        //------------------------------------음성인식_끝---------------------------------------------
+
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
@@ -208,6 +267,11 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         //레시피 추천 버튼 누르면 들어가짐_ssy
         recipeB.setOnClickListener{
             val intent = Intent(this, ssy_RecipeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.timer.setOnClickListener{
+            val intent = Intent(this, ssy_Countdowntimer::class.java)
             startActivity(intent)
         }
 
@@ -432,6 +496,180 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
     override fun onProductDeleteListener(product: ssh_ProductEntity) {
         deleteProduct(product)
     }
+
+    //------------------------------------음성인식----------------------------------------------------
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.RECORD_AUDIO), 0)
+        }
+    }
+
+
+    private fun setListener() {
+        recognitionListener = object: RecognitionListener {
+            //음소거를 위한 오디오 매니저
+            val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+            //주의: 혹시 avd에서 음성인식이 안될경우, (1) avd설정->마이크 설정 확인 (2) 어플 마이크 허용 여부 확인 (3) 구글 마이크로 한번 실험해보기
+            override fun onReadyForSpeech(params: Bundle?) {
+                //음소거
+                val muteValue = AudioManager.ADJUST_MUTE
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
+                //음소거
+            }
+
+            override fun onBeginningOfSpeech() {
+
+            }
+
+            override fun onRmsChanged(rmsdB: Float) {
+
+            }
+
+            override fun onBufferReceived(buffer: ByteArray?) {
+
+            }
+
+            override fun onEndOfSpeech() {
+                //음소거 해제
+                val muteValue = AudioManager.ADJUST_UNMUTE
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
+                //음소거 해제
+            }
+
+            override fun onError(error: Int) {
+                var message: String
+
+                when (error) {
+                    SpeechRecognizer.ERROR_AUDIO ->
+                        message = "오디오 에러"
+                    SpeechRecognizer.ERROR_CLIENT ->
+                        message = "클라이언트 에러"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS ->
+                        message = "퍼미션 없음"
+                    SpeechRecognizer.ERROR_NETWORK ->
+                        message = "네트워크 에러"
+                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT ->
+                        message = "네트워크 타임아웃"
+                    SpeechRecognizer.ERROR_NO_MATCH ->
+                        message = "찾을 수 없음"
+                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY ->
+                        message = "RECOGNIZER가 바쁨"
+                    SpeechRecognizer.ERROR_SERVER ->
+                        message = "서버가 이상함"
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT ->
+                        message = "말하는 시간초과"
+                    else ->
+                        message = "알 수 없는 오류"
+                }
+                //Toast.makeText(applicationContext, "에러 발생 $message", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResults(results: Bundle?) {
+                var matches: ArrayList<String> = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION) as ArrayList<String>
+                val voice = matches[matches.size-1]
+                Log.d("결과", matches[matches.size-1])
+                if (voice.contains("냉장고")) {
+                    App.prefs.Voiceanswer = true // 쉐어드프리퍼런스 사용하면 쉐어드로 옮기기
+                    tts!!.speak("네, 부르셨어요.", TextToSpeech.QUEUE_FLUSH, null,"")
+                    Log.d("결과", "네, 부르셨어요.")
+                }
+                else if(App.prefs.Voiceanswer == true){
+                    val number = voice.replace("[^0-9]".toRegex(), "")
+                    if(voice.contains("타이머") and voice.contains("실행")){
+                        Log.d("결과", "타이머를 실행시킬게요.")
+                        tts!!.speak("타이머를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null,"")
+                        if (number != ""){
+                            if (voice.contains("분")and voice.contains("초")){
+                                val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
+                                val min = number.substring(0, number.length-2)
+                                val sec = number.substring(number.length-2, number.length)
+                                //셰어드프리퍼런스(sp)로 값 정해놓고 옮기기 min*60+sec
+                                startActivity(intent2)
+                                Log.d("분", min)
+                                Log.d("초", sec)
+                            }
+                            else if(voice.contains("분")){
+                                val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
+                                //sp number*60
+                                startActivity(intent2)
+                                Log.d("결과", number)
+                            }
+                            else{
+                                val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
+                                //sp number
+                                startActivity(intent2)
+                                Log.d("결과", number)
+                            }
+                        }
+                        else{
+                            val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
+                            startActivity(intent2)
+                        }
+                        App.prefs.Voiceanswer = false
+                    }
+                    else if(voice.contains("레시피") and voice.contains("실행")){
+                        Log.d("결과", "레시피를 실행시킬게요.")
+                        tts!!.speak("레시피를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null,"")
+                        App.prefs.Voiceanswer = false
+                    }
+                    else if(voice.contains("갤러리") and voice.contains("실행")) {
+                        Log.d("결과", "갤러리를 실행시킬게요.")
+                        tts!!.speak("갤러리를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
+                        App.prefs.Voiceanswer = false
+                        val intent = Intent(applicationContext, ssy_Countdowntimer::class.java)
+                        startActivity(intent)
+                    }
+                    else{
+                        tts!!.speak("죄송해요. 잘모르겠어요.", TextToSpeech.QUEUE_FLUSH, null,"")
+                        App.prefs.Voiceanswer = true
+                    }
+                }
+                /* 텍스트뷰에 나타내기
+                for (i in 0 until matches.size) {
+                        val tvResult: TextView = findViewById(R.id.tvResult)
+                        tvResult.text = matches[i]
+                    }
+                 */
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {
+
+            }
+
+            override fun onEvent(eventType: Int, params: Bundle?) {
+
+            }
+
+        }
+    }
+    //음성인식 무한반복
+
+    //tts
+    override fun onInit(p0: Int) {
+        if (p0 == TextToSpeech.SUCCESS) {
+            // set US English as language for tts
+            val result = tts!!.setLanguage(Locale.KOREA)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS","The Language specified is not supported!")
+            }
+        } else {
+            Log.e("TTS", "Initilization Failed!")
+        }
+    }
+    public override fun onDestroy() {
+        // Shutdown TTS
+        if (tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+        super.onDestroy()
+    }
+    //------------------------------------음성인식_끝-------------------------------------------------
 }
 
 //--------------------------------날씨_ssy-------------------------------------------------------

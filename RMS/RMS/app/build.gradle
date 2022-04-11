@@ -81,4 +81,6 @@ dependencies {
     //뉴스 AutoScrollContent ysj
     implementation 'com.github.angelmmg90:AutoScrollContent:0.1.0'
 
+    //타이머_ssy
+    implementation 'com.github.jaeryo2357:circleTimer:1.1.3'
 }

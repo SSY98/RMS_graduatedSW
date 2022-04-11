@@ -1,8 +1,12 @@
 package com.project.rms
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.media.AudioManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -17,6 +21,25 @@ class SettingActivity :  AppCompatActivity(){
         setContentView(R.layout.setting)
 
         val customdialog= findViewById<Button>(R.id.btn2)
+        val voiceset= findViewById<Button>(R.id.voiceset)
+
+        voiceset.setOnClickListener {
+            if(App.prefs.Voiceoption==false){
+                App.prefs.Voiceoption=true
+                Log.d("옵션", "true")
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else{
+                App.prefs.Voiceoption=false
+                Log.d("옵션", "false")
+                //음소거된 볼륨을 되돌려놓음
+                val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                val muteValue = AudioManager.ADJUST_UNMUTE
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
+                //음소거된 볼륨을 되돌려놓음
+            }
+        }
 
         // 커스텀 다이얼로그
         customdialog.setOnClickListener {

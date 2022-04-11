@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/voiceset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="음성인식"
+        android:textSize="50dp"
+        tools:layout_editor_absoluteX="303dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <Button
         android:id="@+id/btn2"
@@ -11,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="test"
         android:textSize="100dp"
-        tools:layout_editor_absoluteX="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/voiceset"
         tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
