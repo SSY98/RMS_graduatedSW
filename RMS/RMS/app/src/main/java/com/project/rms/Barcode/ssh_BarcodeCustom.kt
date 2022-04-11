@@ -38,8 +38,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.text.SimpleDateFormat
-
-
+import java.util.*
 
 
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
@@ -236,17 +235,21 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                                 Log.d("YMC", "onResponse 성공: " + result?.toString());
 
                                 // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
+                                val cal = Calendar.getInstance()
                                 App.prefs.FoodName = real_result
+
                                 if (real_result == "사과") {
                                     App.prefs.FoodCategory = "과일"
+                                    cal.add(Calendar.DATE, 21).toString()
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
                                 }
                                 else {
+                                    App.prefs.FoodName = ""
                                     App.prefs.FoodCategory = ""
+                                    App.prefs.FoodDate = ""
                                 }
-                                App.prefs.FoodDate = ""
 
                                 dialog() // 팝업창 실행
-                                binding.result.setText(real_result.toString())
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                                 Log.d("YMC", "onResponse 실패")
