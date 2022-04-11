@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     val api_POP = response.body()!!.response.body.items.item[7].fcstValue
                     binding.weathertext.setText(getSky(api_SKY))
                     binding.raintype.setText(getRainType(api_PTY))
-                    binding.rainper.setText("강수확률은 "+api_POP+"% 입니다")
+                    binding.rainper.setText("강수확률 : "+api_POP+"%")
                     binding.temperatures.setText(api_TMP+" °C")
 
                     if (getRainType(api_PTY) == "없음"){
