@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         if (getSky(api_SKY) == "맑음"){
                             binding.weatherimg.setImageResource(R.drawable.sunny)
                         }
-                        else if (getSky(api_SKY) == "구름많음"){
+                        else if (getSky(api_SKY) == "구름 많음"){
                             binding.weatherimg.setImageResource(R.drawable.overcast)
                         }
                         else if (getSky(api_SKY) == "흐림"){
