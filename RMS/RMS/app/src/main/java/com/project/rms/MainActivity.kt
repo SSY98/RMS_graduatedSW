@@ -256,10 +256,48 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 var BAR_CD: String = obj2.getString("BAR_CD")
                 var PRDLST_DCNM: String = obj2.getString("PRDLST_DCNM")
 
+                //유통기한 함수 _ ssy
+                fun getDate(Date : String) : String{
+                    var customDate = false
+                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",") //금지어 추가
+                    val cal = Calendar.getInstance()
+
+                    for(i in BanDate.indices){ //금지어 있으면 커스텀 모드
+                        if(Date.contains(BanDate[i])){
+                            customDate = true
+                        }
+                    }
+                    if (customDate==false){
+                        if(Date.contains("년")){ //년이 들어가있으면
+                            val number = Date.replace("[^\\d]".toRegex(), "")
+                            cal.add(Calendar.YEAR, number.toInt()).toString()
+                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            return now_date
+                        }
+                        else if(Date.contains("월")){ //월이 들어가있으면
+                            val number = Date.replace("[^\\d]".toRegex(), "")
+                            cal.add(Calendar.MONTH, number.toInt()).toString()
+                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            return now_date
+                        }
+                        else{ //일이 들어가있으면
+                            val number = Date.replace("[^\\d]".toRegex(), "")
+                            cal.add(Calendar.DATE, number.toInt()).toString()
+                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            return now_date
+                        }
+                    }
+                    else{ //customDate가 true이면
+                        var now_date = "사용자 직접 입력"
+                        return now_date
+                    }
+                }
+                //유통기한 함수
+
                 // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
                 App.prefs.FoodName = PRDLST_NM
                 App.prefs.FoodCategory = PRDLST_DCNM
-                App.prefs.FoodDate = POG_DAYCNT
+                App.prefs.FoodDate = getDate(POG_DAYCNT)
 
                 // 바코드 인식한 상품 로그 출력
                 Log.d("바코드_번호:","${BAR_CD}")
