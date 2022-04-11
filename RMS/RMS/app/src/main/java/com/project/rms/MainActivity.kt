@@ -629,7 +629,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         startActivity(intent)
                     }
                     //음성인식으로 구글실행
-                    else if(voice.contains("구글") and (voice.contains("실행")or voice.contains("검색"))) {
+                    else if((voice.contains("구글")or voice.contains("웹")) and (voice.contains("실행")or voice.contains("검색"))) {
                         Log.d("결과", "구글을 실행시킬게요.")
                         tts!!.speak("구글을 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
                         App.prefs.Voiceanswer = false
