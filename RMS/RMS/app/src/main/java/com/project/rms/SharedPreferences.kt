@@ -15,12 +15,13 @@ class SharedPreferences (context: Context) {
     private val food_count = "FoodCount"
 
     //음서인식에 사용
-    private val voice_option = "Voiceoption"
-    private val voice_ans = "Voiceanswer"
+    private val voice_option = "Voiceoption" //음성인식 on/off setting
+    private val voice_ans = "Voiceanswer" //음성인식의 대답형태
+    private val voice_pause = "Voicepause" //음성인식 잠깐 멈출때사용(ex) 타이머
+    private val voice_request = "Voicereq" //음성인식으로 실행시킨 액티비티에서 사용
 
-    private val news_site = "NewsSite" //뉴스피드에 사용
+    private val web_site = "WebSite" //뉴스피드, 웹서핑, 유튜브에 사용
     private val timer_s = "TimerSecond" //타이머에 사용
-
 
     private val prefs: SharedPreferences = context.getSharedPreferences(prefsFilename, Context.MODE_PRIVATE)
 
@@ -61,11 +62,20 @@ class SharedPreferences (context: Context) {
         get() = prefs.getBoolean(voice_ans, false)
         set(value) = prefs.edit().putBoolean(voice_ans, value).apply()
 
-    var NewsSite: String?
-        get() = prefs.getString(news_site, "")
-        set(value) = prefs.edit().putString(news_site, value).apply()
+    var Voicepause: Boolean
+        get() = prefs.getBoolean(voice_pause, true)
+        set(value) = prefs.edit().putBoolean(voice_pause, value).apply()
+
+    var Voicereq: Boolean
+        get() = prefs.getBoolean(voice_request, false)
+        set(value) = prefs.edit().putBoolean(voice_request, value).apply()
+
+    var WebSite: String?
+        get() = prefs.getString(web_site, "")
+        set(value) = prefs.edit().putString(web_site, value).apply()
 
     var TimerSecond: Int
         get() = prefs.getInt(timer_s, 60)
         set(value) = prefs.edit().putInt(timer_s, value).apply()
+
 }

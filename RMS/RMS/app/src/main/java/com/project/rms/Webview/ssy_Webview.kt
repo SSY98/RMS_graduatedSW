@@ -23,8 +23,14 @@ class ssy_Webview : AppCompatActivity() {
         // 추가
         var myWebView: WebView = findViewById(R.id.webview)
         myWebView.webViewClient = WebViewClient()
-        myWebView.loadUrl(App.prefs.NewsSite.toString())
 
+        if(App.prefs.Voicereq==true){
+            myWebView.loadUrl(App.prefs.WebSite.toString())
+            App.prefs.Voicereq = false
+        }
+        else{
+            myWebView.loadUrl(App.prefs.WebSite.toString())
+        }
         /*
         var str_encode = URLEncoder.encode("하이", "UTF-8") //검색어 인코딩해서 넣기 셰어드
         myWebView.loadUrl("https://www.youtube.com/results?search_query="+str_encode)

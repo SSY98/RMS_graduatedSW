@@ -166,7 +166,7 @@
                         android:orientation="horizontal">
 
                         <ImageButton
-                            android:id="@+id/youtb_ysj"
+                            android:id="@+id/youtubeB"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="#FF0000"
@@ -176,7 +176,7 @@
                             android:layout_weight="1"/>
 
                         <ImageButton
-                            android:id="@+id/web_ysj"
+                            android:id="@+id/websurfB"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="#0072C6"

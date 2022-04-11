@@ -39,6 +39,7 @@ import com.project.rms.Newfeed.ysj_ExampleModel
 import com.project.rms.Recipe.ssy_RecipeActivity
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
+import com.project.rms.Webview.ssy_Webview
 import com.project.rms.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -215,33 +216,19 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         //음성인식 무한반복 스레드
         tts = TextToSpeech(this, this) //tts
 
-        /*option.setOnClickListener {
-            if(voiceoption==false){
-                voiceoption=true
-                Log.d("옵션", "true")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-            else{
-                voiceoption=false
-                Log.d("옵션", "false")
-                //음소거된 볼륨을 되돌려놓음
-                val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-                val muteValue = AudioManager.ADJUST_UNMUTE
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
-                //음소거된 볼륨을 되돌려놓음
-            }
-        }*/
-
         if(App.prefs.Voiceoption == true) {
             GlobalScope.launch(Dispatchers.Main) {
-                while (App.prefs.Voiceoption == true){
-                    speechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext)
-                    speechRecognizer.setRecognitionListener(recognitionListener)
-                    speechRecognizer.startListening(intent)
+                while (App.prefs.Voiceoption == true){ //옵션으로 온오프 할수있는 변수
+                    while (App.prefs.Voicepause == true) { //소리사용하는 동안 온오프 할수있는 변수
+                        speechRecognizer =
+                            SpeechRecognizer.createSpeechRecognizer(applicationContext)
+                        speechRecognizer.setRecognitionListener(recognitionListener)
+                        speechRecognizer.startListening(intent)
+                        delay(7000)
+                        speechRecognizer.destroy()
+                        delay(500)
+                    }
                     delay(7000)
-                    speechRecognizer.destroy()
-                    delay(500)
                 }
             }
         }
@@ -269,7 +256,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             val intent = Intent(this, ssy_RecipeActivity::class.java)
             startActivity(intent)
         }
-
+        //타이머_ssy
         binding.timer.setOnClickListener{
             val intent = Intent(this, ssy_Countdowntimer::class.java)
             startActivity(intent)
@@ -278,6 +265,18 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         // 설정칸으로 dialog(POPUP 창) 테스트함_테스트용도
         customdialogtest.setOnClickListener{
             val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+        }
+        //유튜브_ssy
+        binding.youtubeB.setOnClickListener{
+            val intent = Intent(this, ssy_Webview::class.java)
+            App.prefs.WebSite = "https://www.youtube.com"
+            startActivity(intent)
+        }
+        //웹서핑_ssy
+        binding.websurfB.setOnClickListener{
+            val intent = Intent(this, ssy_Webview::class.java)
+            App.prefs.WebSite = "https://www.google.co.kr"
             startActivity(intent)
         }
     }
@@ -579,6 +578,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 }
                 else if(App.prefs.Voiceanswer == true){
                     val number = voice.replace("[^0-9]".toRegex(), "")
+                    //음성인식으로 타이머실행
                     if(voice.contains("타이머") and voice.contains("실행")){
                         Log.d("결과", "타이머를 실행시킬게요.")
                         tts!!.speak("타이머를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null,"")
@@ -587,22 +587,21 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                                 val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
                                 val min = number.substring(0, number.length-2)
                                 val sec = number.substring(number.length-2, number.length)
-                                //셰어드프리퍼런스(sp)로 값 정해놓고 옮기기 min*60+sec
+                                App.prefs.TimerSecond = min.toInt() * 60 + sec.toInt()
+                                App.prefs.Voicereq = true
                                 startActivity(intent2)
-                                Log.d("분", min)
-                                Log.d("초", sec)
                             }
                             else if(voice.contains("분")){
                                 val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
-                                //sp number*60
+                                App.prefs.TimerSecond = number.toInt() * 60
+                                App.prefs.Voicereq = true
                                 startActivity(intent2)
-                                Log.d("결과", number)
                             }
                             else{
                                 val intent2 = Intent(applicationContext, ssy_Countdowntimer::class.java)
-                                //sp number
+                                App.prefs.TimerSecond = number.toInt()
+                                App.prefs.Voicereq = true
                                 startActivity(intent2)
-                                Log.d("결과", number)
                             }
                         }
                         else{
@@ -611,18 +610,35 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         }
                         App.prefs.Voiceanswer = false
                     }
+                    //음성인식으로 레시피 실행
                     else if(voice.contains("레시피") and voice.contains("실행")){
                         Log.d("결과", "레시피를 실행시킬게요.")
                         tts!!.speak("레시피를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null,"")
+                        val intent2 = Intent(applicationContext, ssy_RecipeActivity::class.java)
+                        startActivity(intent2)
                         App.prefs.Voiceanswer = false
                     }
-                    else if(voice.contains("갤러리") and voice.contains("실행")) {
-                        Log.d("결과", "갤러리를 실행시킬게요.")
-                        tts!!.speak("갤러리를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
+                    //음성인식으로 유튜브실행
+                    else if(voice.contains("유튜브") and voice.contains("실행")) {
+                        Log.d("결과", "유튜브를 실행시킬게요.")
+                        tts!!.speak("유튜브를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
                         App.prefs.Voiceanswer = false
-                        val intent = Intent(applicationContext, ssy_Countdowntimer::class.java)
+                        App.prefs.Voicereq = true
+                        App.prefs.WebSite = "https://www.youtube.com"
+                        val intent = Intent(applicationContext, ssy_Webview::class.java)
                         startActivity(intent)
                     }
+                    //음성인식으로 구글실행
+                    else if(voice.contains("구글") and (voice.contains("실행")or voice.contains("검색"))) {
+                        Log.d("결과", "구글을 실행시킬게요.")
+                        tts!!.speak("구글을 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
+                        App.prefs.Voiceanswer = false
+                        App.prefs.Voicereq = true
+                        App.prefs.WebSite = "https://www.google.co.kr"
+                        val intent = Intent(applicationContext, ssy_Webview::class.java)
+                        startActivity(intent)
+                    }
+                    //음성인식 명령 예외처리
                     else{
                         tts!!.speak("죄송해요. 잘모르겠어요.", TextToSpeech.QUEUE_FLUSH, null,"")
                         App.prefs.Voiceanswer = true

@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mut_jaeryo.circletimer.CircleTimer
 import com.project.rms.App
 import com.project.rms.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class ssy_Countdowntimer : AppCompatActivity(){
     private var soundPool = SoundPool.Builder().build()
@@ -29,19 +33,31 @@ class ssy_Countdowntimer : AppCompatActivity(){
 
         val timer = findViewById<CircleTimer>(R.id.main_timer)
         timer.setMaximumTime(3600)
-        /*
-        if(음성인식으로 불러와졌다면(boolean)){
-            timer.start()
-        }
-         */
-        timer.setInitPosition(App.prefs.TimerSecond) //쉐어드프리펀스 사용
+        timer.setInitPosition(App.prefs.TimerSecond) //타이머의 시간 설정
 
         val start = findViewById<Button>(R.id.start)
         val stop = findViewById<Button>(R.id.stop)
         val reset = findViewById<Button>(R.id.reset)
-        start.setOnClickListener{ timer.start()}
-        stop.setOnClickListener{ timer.stop() }
-        reset.setOnClickListener{ timer.reset() }
+
+        if(App.prefs.Voicereq == true){ //음성인식으로 타이머 실행시켰을때
+            timer.start()
+            App.prefs.Voicepause = false
+            App.prefs.Voicereq = false
+        }
+
+        start.setOnClickListener{
+            timer.start()
+            App.prefs.Voicepause = false //타이머가 돌아가는동안 음성인식 중단
+        }
+
+        stop.setOnClickListener{
+            timer.stop()
+            App.prefs.Voicepause = true //타이머가 끝나면 음성인식 시작
+        }
+        reset.setOnClickListener{
+            timer.reset()
+            App.prefs.Voicepause = true //타이머가 끝나면 음성인식 시작
+        }
 
         //타이머가 끝나면 비프음 출력
         timer.setBaseTimerEndedListener(object: CircleTimer.baseTimerEndedListener {
@@ -51,6 +67,10 @@ class ssy_Countdowntimer : AppCompatActivity(){
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
                 if (loaded) {
                     soundPool.play(my_sound,  0.6f, 0.6f, 1, 3, 1f);
+                }
+                GlobalScope.launch(Dispatchers.Main) {
+                    delay(20000)
+                    App.prefs.Voicepause = true //타이머가 끝나면 음성인식 시작
                 }
             }
         })
