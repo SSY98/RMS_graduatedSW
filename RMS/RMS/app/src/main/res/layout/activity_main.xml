@@ -157,7 +157,37 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/music"
                         android:layout_marginRight="2.5dp"
-                        android:layout_marginTop="2.5dp"/>
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginBottom="2.5dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/youtb_ysj"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#FF0000"
+                            android:layout_marginTop="2.5dp"
+                            android:layout_marginBottom="2.5dp"
+                            android:layout_marginRight="2.5dp"
+                            android:layout_weight="1"/>
+
+                        <ImageButton
+                            android:id="@+id/web_ysj"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#0072C6"
+                            android:layout_marginTop="2.5dp"
+                            android:layout_marginBottom="2.5dp"
+                            android:layout_marginRight="2.5dp"
+                            android:layout_marginLeft="2.5dp"
+                            android:layout_weight="1"/>
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
