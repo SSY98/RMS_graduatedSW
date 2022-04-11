@@ -195,7 +195,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         App.prefs.FoodCount = "1"
     }
 
-    // 직접 후 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가되고 바코드 인식 화면을 띄움_ssh
+    // 직접 입력 팝업창에서 추가 버튼을 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가되고 바코드 인식 화면을 띄움_ssh
     override fun onPlusButtonClicked() {
         var productname = App.prefs.FoodName.toString()
         var productcatergory = App.prefs.FoodCategory.toString()
@@ -234,6 +234,17 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                                 var real_result = str_arr?.get(1)
 
                                 Log.d("YMC", "onResponse 성공: " + result?.toString());
+                                dialog()
+                                // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
+                                App.prefs.FoodName = real_result
+
+                                if (real_result == "사과") {
+                                    App.prefs.FoodCategory = "과일"
+                                }
+                                else {
+                                    App.prefs.FoodCategory = ""
+                                }
+                                App.prefs.FoodDate = ""
                                 binding.result.setText(real_result.toString())
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
@@ -254,6 +265,11 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     }
 
+    // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
+    fun dialog(){
+        val ImageDialog = ssh_BarcodeDialog(this,this)
+        ImageDialog.show()
+    }
     //이미지 파일 저장 ysj
     private fun newJpgFileName() : String {
         val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
