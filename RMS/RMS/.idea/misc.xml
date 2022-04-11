@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/GithubFile/RMS_graduatedSW/RMS/RMS/app/src/main/res/layout/activity_main.xml" value="0.5" />
+=======
+        <entry key="..\:/GithubFile/RMS_graduatedSW/RMS/RMS/app/src/main/res/layout/activity_main.xml" value="0.67" />
+        <entry key="..\:/GithubFile/RMS_graduatedSW/RMS/RMS/app/src/main/res/layout/activity_ssh_barcode_custom.xml" value="0.54921875" />
+>>>>>>> 0d1cb8ad65e67ec9e1904aecb540c3a8477727eb
         <entry key="..\:/GithubFile/RMS_graduatedSW/RMS/RMS/app/src/main/res/layout/food_item_layout.xml" value="0.67" />
         <entry key="..\:/GithubFile/RMS_graduatedSW/RMS/RMS/app/src/main/res/layout/setting.xml" value="0.23796296296296296" />
         <entry key="..\:/GithubFile/RMS_graduatedSW/RMS/RMS/app/src/main/res/layout/ssy_litem_recipemake.xml" value="0.54921875" />
