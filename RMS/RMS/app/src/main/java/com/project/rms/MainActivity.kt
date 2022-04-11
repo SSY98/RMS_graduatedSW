@@ -215,7 +215,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         setListener()
         //음성인식 무한반복 스레드
         tts = TextToSpeech(this, this) //tts
-
         if(App.prefs.Voiceoption == true) {
             GlobalScope.launch(Dispatchers.Main) {
                 while (App.prefs.Voiceoption == true){ //옵션으로 온오프 할수있는 변수

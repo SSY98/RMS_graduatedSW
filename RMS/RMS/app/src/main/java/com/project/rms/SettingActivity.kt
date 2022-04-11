@@ -26,12 +26,14 @@ class SettingActivity :  AppCompatActivity(){
         voiceset.setOnClickListener {
             if(App.prefs.Voiceoption==false){
                 App.prefs.Voiceoption=true
+                App.prefs.Voicepause=true
                 Log.d("옵션", "true")
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
             else{
                 App.prefs.Voiceoption=false
+                App.prefs.Voicepause=false
                 Log.d("옵션", "false")
                 //음소거된 볼륨을 되돌려놓음
                 val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
