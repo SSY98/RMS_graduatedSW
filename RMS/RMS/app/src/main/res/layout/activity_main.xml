@@ -63,7 +63,7 @@
                                         android:id="@+id/weathertext"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="맑음"
+                                        android:text="날씨?"
                                         android:textColor="@color/white"
                                         android:textSize="20dp"/>
 
@@ -71,7 +71,7 @@
                                         android:id="@+id/raintype"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="비타입"
+                                        android:text="비타입?"
                                         android:textColor="@color/white"
                                         android:textSize="20dp"
                                         android:paddingLeft="20dp"/>
@@ -82,7 +82,7 @@
                                     android:id="@+id/temperatures"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="17°C"
+                                    android:text="null°C"
                                     android:textSize="60dp"
                                     android:textColor="@color/white"/>
 
@@ -90,7 +90,7 @@
                                     android:id="@+id/rainper"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="강수확률은 20%입니다."
+                                    android:text="강수확률은 ??%입니다."
                                     android:textColor="@color/white"
                                     android:textSize="25dp"/>
 
