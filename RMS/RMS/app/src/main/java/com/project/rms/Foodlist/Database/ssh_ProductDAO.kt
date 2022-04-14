@@ -13,6 +13,6 @@ interface ssh_ProductDAO {
     @Delete
     fun delete(product: ssh_ProductEntity)
 
-    @Query("SELECT * FROM products")
+    @Query("SELECT * FROM products ORDER BY date")
     fun getAll(): MutableList<ssh_ProductEntity>
 }

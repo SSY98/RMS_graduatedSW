@@ -24,7 +24,6 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
         val main_food_category: TextView = itemView.findViewById(R.id.main_food_category)
         val main_food_date: TextView = itemView.findViewById(R.id.main_food_date)
         val main_food_count: TextView = itemView.findViewById(R.id.main_food_count)
-        val main_root = itemView.rootView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
