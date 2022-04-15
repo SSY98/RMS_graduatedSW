@@ -19,7 +19,7 @@ var gson : Gson = GsonBuilder()
 
 //creating retrofit object
 var retrofit = Retrofit.Builder()
-    .baseUrl("http://e149-34-77-138-153.ngrok.io")
+    .baseUrl("http://e293-35-237-200-195.ngrok.io")
     .addConverterFactory(GsonConverterFactory.create(gson))
     .build()
 //api

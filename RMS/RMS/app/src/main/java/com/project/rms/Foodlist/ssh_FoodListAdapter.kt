@@ -40,8 +40,17 @@ class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
         //position = 순서
         if(position<=1)
         {
-            holder.itemView.setBackgroundColor(Color.RED)
-        }else{holder.itemView.setBackgroundColor(Color.rgb(150,179,226))}
+            holder.activity_food_name.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_category.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_date.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_count.setTextColor(Color.rgb(255,0,0))
+        }else
+        {
+            holder.activity_food_name.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_category.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_date.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_count.setTextColor(Color.rgb(0,0,0))
+        }
 
         val product = list[position]
         val productID = product.id.toString()

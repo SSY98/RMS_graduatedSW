@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
@@ -21,9 +22,9 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
         LayoutInflater.from(parent.context).inflate(R.layout.food_item_layout, parent, false)
     ) {
         val main_food_name: TextView = itemView.findViewById(R.id.main_food_name)
-        val main_food_category: TextView = itemView.findViewById(R.id.main_food_category)
+        //val main_food_category: TextView = itemView.findViewById(R.id.main_food_category)
         val main_food_date: TextView = itemView.findViewById(R.id.main_food_date)
-        val main_food_count: TextView = itemView.findViewById(R.id.main_food_count)
+        //val main_food_count: TextView = itemView.findViewById(R.id.main_food_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,8 +36,12 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
         //position = 순서
         if(position<=1)
         {
-            holder.itemView.setBackgroundColor(Color.RED)
-        }else{holder.itemView.setBackgroundColor(Color.rgb(150,179,226))}
+            holder.main_food_name.setTextColor(Color.rgb(255,0,0))
+            holder.main_food_date.setTextColor(Color.rgb(255,0,0))
+        }else{
+            holder.main_food_name.setTextColor(Color.rgb(0,0,0))
+            holder.main_food_date.setTextColor(Color.rgb(0,0,0))
+        }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, ssh_FoodListActivity::class.java)
@@ -46,9 +51,9 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
         val product = list[position]
 
         holder.main_food_name.text = product.name
-        holder.main_food_category.text = product.category
+        //holder.main_food_category.text = product.category
         holder.main_food_date.text = product.date
-        holder.main_food_count.text = product.count
+        //holder.main_food_count.text = product.count
     }
 
     override fun getItemCount(): Int {

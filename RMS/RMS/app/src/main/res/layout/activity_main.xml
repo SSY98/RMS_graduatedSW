@@ -52,7 +52,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:layout_gravity="center_vertical"
-                                android:paddingLeft="10dp">
+                                android:paddingLeft="20dp">
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -94,7 +94,6 @@
                                     android:textColor="@color/white"
                                     android:textSize="25dp"/>
 
-
                             </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
@@ -125,6 +124,31 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:paddingTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="#96B3E2"
+                        android:layout_marginRight="2.5dp">
+
+                        <TextView
+                            android:fontFamily="@font/fonta"
+                            android:paddingLeft="25dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="식재료명"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:fontFamily="@font/fonta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="유통기한"
+                            android:layout_weight="2"/>
+
+                    </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
@@ -151,15 +175,6 @@
                         android:fontFamily="@font/fonta"
                         android:textColor="@color/white" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/music"
-                        android:layout_marginRight="2.5dp"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginBottom="2.5dp"/>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
@@ -169,7 +184,8 @@
                             android:id="@+id/youtubeB"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#FF0000"
+                            android:background="#F84437"
+                            android:src="@drawable/btn_youtube"
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"
                             android:layout_marginRight="2.5dp"
@@ -179,7 +195,8 @@
                             android:id="@+id/websurfB"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#0072C6"
+                            android:background="#76ECFF"
+                            android:src="@drawable/btn_websurf"
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"
                             android:layout_marginRight="2.5dp"
@@ -188,6 +205,15 @@
 
 
                     </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/music"
+                        android:layout_marginRight="2.5dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginBottom="2.5dp"/>
 
                 </LinearLayout>
 
@@ -225,7 +251,7 @@
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"
                             android:layout_weight="1"
-                            android:background="#0072C6"/>
+                            android:background="#008CF0"/>
 
                         <ImageButton
                             android:id="@+id/setting"
@@ -233,7 +259,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="#5133AB"
+                            android:background="#AAAAAA"
                             android:layout_marginLeft="2.5dp"
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"/>
