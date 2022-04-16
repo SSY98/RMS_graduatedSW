@@ -2,6 +2,7 @@ package com.project.rms.Webview
 
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,15 @@ class ssy_Webview : AppCompatActivity() {
         // 추가
         var myWebView: WebView = findViewById(R.id.webview)
         myWebView.webViewClient = WebViewClient()
+
+        //세팅
+        val webSettings = myWebView.getSettings()
+        webSettings.setJavaScriptEnabled(true)
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true)
+        webSettings.setAllowFileAccess(true)
+        webSettings.setAllowFileAccessFromFileURLs(true)
+        webSettings.setAllowUniversalAccessFromFileURLs(true)
+        //세팅
 
         if(App.prefs.Voicereq==true){
             myWebView.loadUrl(App.prefs.WebSite.toString())

@@ -34,7 +34,8 @@
             android:exported="true" />
         <activity
             android:name=".Webview.ssy_Webview"
-            android:exported="true" />
+            android:exported="true"
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".Barcode.ssh_BarcodeCustom"
             android:exported="true" />
