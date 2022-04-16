@@ -13,6 +13,7 @@ import com.project.rms.Foodlist.Database.ssh_OnProductUpdateListener
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.R
 import kotlinx.android.synthetic.main.ssh_item_food.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
@@ -38,20 +39,6 @@ class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //position = 순서
-        if(position<=1)
-        {
-            holder.activity_food_name.setTextColor(Color.rgb(255,0,0))
-            holder.activity_food_category.setTextColor(Color.rgb(255,0,0))
-            holder.activity_food_date.setTextColor(Color.rgb(255,0,0))
-            holder.activity_food_count.setTextColor(Color.rgb(255,0,0))
-        }else
-        {
-            holder.activity_food_name.setTextColor(Color.rgb(0,0,0))
-            holder.activity_food_category.setTextColor(Color.rgb(0,0,0))
-            holder.activity_food_date.setTextColor(Color.rgb(0,0,0))
-            holder.activity_food_count.setTextColor(Color.rgb(0,0,0))
-        }
-
         val product = list[position]
         val productID = product.id.toString()
         val product_name = product.name
@@ -78,6 +65,27 @@ class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
                 return true
             }
         })
+
+        var today = Calendar.getInstance() // 오늘 날짜
+        var format = SimpleDateFormat("yyyy-MM-dd")
+        var date = format.parse(product_date) // 유통기한 문자열을 날짜 형태로 변환
+        var d_day = ((date.time - today.time.time) / (60 * 60 * 24 * 1000)) + 1 // 유통기한 날짜에서 오늘 날짜를 빼 남은 유통기한을 구함
+
+
+        // 유통기한이 3일 이하 남은 식재료는 글자를 빨간색으로 나타냄
+        if(d_day<=3)
+        {
+            holder.activity_food_name.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_category.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_date.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_count.setTextColor(Color.rgb(255,0,0))
+        }else
+        {
+            holder.activity_food_name.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_category.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_date.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_count.setTextColor(Color.rgb(0,0,0))
+        }
     }
 
     override fun getItemCount(): Int {

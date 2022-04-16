@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterface, ssh_OnProductDeleteListener, ssh_OnProductUpdateListener {
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
-    var recipeList = mutableListOf<String>() // 레시피 식재료 목록_ssh
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +39,7 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
         CoroutineScope(Dispatchers.IO).launch {
             async{
                 productList = db.productDAO().getAll()
-                recipeList = db.productDAO().date()
                 Log.d("product","$productList")
-                Log.d("product","$recipeList")
             }.await()
             CoroutineScope(Dispatchers.Main).launch {
                 setRecyclerView(productList)
