@@ -44,7 +44,7 @@ import java.util.*
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     private lateinit var capture: CaptureManager
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
-    var productList = listOf<ssh_ProductEntity>() // 식재료 목록_ssh
+    var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
 
     //ysj 추가
     // ViewBinding
