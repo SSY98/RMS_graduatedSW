@@ -16,7 +16,7 @@ interface ssh_ProductDAO {
     @Query("SELECT * FROM products ORDER BY date")
     fun getAll(): MutableList<ssh_ProductEntity>
 
-    // 유통기한 마감이 임박한 상위 3개 식재료 검색
-    @Query("SELECT category FROM products ORDER BY date LIMIT 3")
+    // 유통기한 마감이 임박한 상위 3개 식재료 검색 (이미지 인식한 과일, 채소류는 식재료명을, 그 외 직접 입력, 바코드 인식한 식재료는 분류명이 리스트에 들어가게함)
+    @Query("SELECT CASE WHEN category = '과일' THEN name ELSE category END FROM products ORDER BY date LIMIT 3")
     fun date(): MutableList<String>
 }
