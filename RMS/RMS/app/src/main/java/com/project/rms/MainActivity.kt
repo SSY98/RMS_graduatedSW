@@ -34,6 +34,8 @@ import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Foodlist.ItemTouchHelperCallback
 import com.project.rms.Foodlist.LinearListViewAdapter
+import com.project.rms.Foodlist.ssh_FoodListAdapter
+import com.project.rms.Memo.*
 import com.project.rms.Newfeed.ExampleAdapter
 import com.project.rms.Newfeed.ysj_ExampleModel
 import com.project.rms.Recipe.ssy_RecipeActivity
@@ -55,13 +57,16 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListener,TextToSpeech.OnInitListener {
+class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListener,TextToSpeech.OnInitListener,
+    ssh_OnMemoUpdateListener, ssh_OnMemoDeleteListener {
     //메인액티비티 뷰바인딩
     private lateinit var binding: ActivityMainBinding
     private val lm = LinearLayoutManager(this)
 
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
+    lateinit var db2 : ssh_MemoDatabase // 메모 db_ssh
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
+    var memoList =  mutableListOf<ssh_MemoEntity>() // 메모 목록_ssh
 
     //음성인식_ssy
     private lateinit var speechRecognizer: SpeechRecognizer
@@ -234,12 +239,15 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         //------------------------------------음성인식_끝---------------------------------------------
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
+        db2 = ssh_MemoDatabase.getInstance(this)!! // 메모 db_ssh
 
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
+        val AddMemo = findViewById<Button>(R.id.add_memo) // 메모 추가 버튼_ssh
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
+        getAllMemo() // 데이터베이스에 있는 메모를 불러옴_ssh
 
         // 바코드 이미지 인식 버튼 누르면 바코드 스캐너 화면을 출력함_ssh
         StartRecognition.setOnClickListener{
@@ -277,6 +285,12 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             val intent = Intent(this, ssy_Webview::class.java)
             App.prefs.WebSite = "https://www.google.co.kr"
             startActivity(intent)
+        }
+        // 메모 추가 버튼 클릭 시 메모 추가_ssh
+        AddMemo.setOnClickListener{
+            val memo = ssh_MemoEntity(null, edittext_memo.text.toString())
+            edittext_memo.setText("")
+            insertMemo(memo)
         }
     }
     // 바코드 api_ssy,ssh
@@ -685,6 +699,62 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         super.onDestroy()
     }
     //------------------------------------음성인식_끝-------------------------------------------------
+    //------------------------------------메모_ssh---------------------------------------------------
+    // 메모 추가
+    fun insertMemo(memo : ssh_MemoEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db2.memoDAO().insert(memo)
+                Log.d("memo", "hi1")
+            }.await()
+            getAllMemo()
+            Log.d("memo", "hi2")
+        }
+    }
+
+    fun getAllMemo(){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                memoList = db2.memoDAO().getAll()
+                Log.d("memo","$memoList")
+            }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+                setMemoRecyclerView(memoList)
+            }
+        }
+    }
+
+    fun updateMemo(memo : ssh_MemoEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db2.memoDAO().update(memo)
+            }.await()
+            getAllMemo()
+        }
+    }
+
+    fun deleteMemo(memo: ssh_MemoEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db2.memoDAO().delete(memo)
+            }.await()
+            getAllMemo()
+        }
+    }
+
+    fun setMemoRecyclerView(memoList : MutableList<ssh_MemoEntity>) {
+        val Memo_recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
+        Memo_recyclerView.layoutManager = LinearLayoutManager(this)
+        Memo_recyclerView.adapter = ssh_MemoAdapter(memoList,this)
+    }
+
+    override fun onMemoDeleteListner(memo: ssh_MemoEntity) {
+        deleteMemo(memo)
+    }
+
+    override fun onMemoUpdateListner(memo: ssh_MemoEntity) {
+        TODO("Not yet implemented")
+    }
 }
 
 //--------------------------------날씨_ssy-------------------------------------------------------

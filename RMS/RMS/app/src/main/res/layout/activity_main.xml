@@ -269,15 +269,33 @@
                             android:layout_marginBottom="2.5dp"/>
 
                     </LinearLayout>
-
-                    <ImageView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Memo_recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="450dp"
-                        android:src="@drawable/memo"
-                        android:scaleType="centerCrop"
+                        android:layout_height="400dp"
                         android:layout_marginLeft="2.5dp"
-                        android:layout_marginTop="2.5dp"/>
+                        android:layout_marginTop="2.5dp"
+                        android:background="#ADC4E9"
+                        android:scaleType="centerCrop" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/edittext_memo"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:background="#ADC4E9"
+                            android:hint="메모 추가하기..." />
+
+                        <Button
+                            android:id="@+id/add_memo"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="추가" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
