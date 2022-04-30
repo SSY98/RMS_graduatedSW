@@ -8,13 +8,16 @@ class SharedPreferences (context: Context) {
     // private val 프리퍼런스 변수이름 = "다른액티비티에서 사용할 이름"
     private val recipe_name = "Recipe_Name" //레시피에 사용
     private val recipe_seq = "Recipe_Seq" //레시피에 사용
-    private val food_id = "FoodID"
-    private val food_name = "FoodName"
-    private val food_category = "FoodCategory"
-    private val food_date = "FoodDate"
-    private val food_count = "FoodCount"
+    private val food_id = "FoodID" // 식재료 ID
+    private val food_name = "FoodName" // 식재료 이름
+    private val food_category = "FoodCategory" // 식재료 목록
+    private val food_date = "FoodDate" // 식재료 유통기한
+    private val food_count = "FoodCount" // 식재료 개수
 
-    //음서인식에 사용
+    private val memo_id = "MemoID" // 메모 ID
+    private val memo_contents = "MemoContents" // 메모 내용
+
+    //음성인식에 사용
     private val voice_option = "Voiceoption" //음성인식 on/off setting
     private val voice_ans = "Voiceanswer" //음성인식의 대답형태
     private val voice_pause = "Voicepause" //음성인식 잠깐 멈출때사용(ex) 타이머
@@ -53,6 +56,14 @@ class SharedPreferences (context: Context) {
     var FoodCount: String?
         get() = prefs.getString(food_count, "1")
         set(value) = prefs.edit().putString(food_count, value).apply()
+
+    var MemoID: String?
+        get() = prefs.getString(memo_id, "")
+        set(value) = prefs.edit().putString(memo_id, value).apply()
+
+    var MemoContents: String?
+        get() = prefs.getString(memo_contents, "")
+        set(value) = prefs.edit().putString(memo_contents, value).apply()
 
     var Voiceoption: Boolean
         get() = prefs.getBoolean(voice_option, true)

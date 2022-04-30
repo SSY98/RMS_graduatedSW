@@ -58,7 +58,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProductDeleteListener,TextToSpeech.OnInitListener,
-    ssh_OnMemoUpdateListener, ssh_OnMemoDeleteListener {
+    ssh_OnMemoUpdateListener, ssh_OnMemoDeleteListener, ssh_MemoUpdateDialogInterface {
     //메인액티비티 뷰바인딩
     private lateinit var binding: ActivityMainBinding
     private val lm = LinearLayoutManager(this)
@@ -698,9 +698,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
         super.onDestroy()
     }
-    //------------------------------------음성인식_끝-------------------------------------------------
-    //------------------------------------메모_ssh---------------------------------------------------
-    // 메모 추가
+    //------------------------------------음성인식_끝------------------------------------------------- 
+    // ------------------------------------메모장_ssh-------------------------------------------------
+    // 데이터베이스에 있는 메모 추가
     fun insertMemo(memo : ssh_MemoEntity){
         CoroutineScope(Dispatchers.IO).launch {
             async{
@@ -712,6 +712,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
+    // 데이터베이스에 있는 메모를 불러옴
     fun getAllMemo(){
         CoroutineScope(Dispatchers.IO).launch {
             async{
@@ -724,6 +725,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
+    // 데이터베이스에 있는 메모를 수정
     fun updateMemo(memo : ssh_MemoEntity){
         CoroutineScope(Dispatchers.IO).launch {
             async{
@@ -733,6 +735,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
+    // 데이터베이스에 있는 메모를 삭제
     fun deleteMemo(memo: ssh_MemoEntity){
         CoroutineScope(Dispatchers.IO).launch {
             async{
@@ -742,20 +745,45 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
+    // recyclerview로 데이터베이스에 있는 식재료 출력_ssh
     fun setMemoRecyclerView(memoList : MutableList<ssh_MemoEntity>) {
         val Memo_recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
         Memo_recyclerView.layoutManager = LinearLayoutManager(this)
-        Memo_recyclerView.adapter = ssh_MemoAdapter(memoList,this)
+        Memo_recyclerView.adapter = ssh_MemoAdapter(memoList,this, this)
     }
 
+    // 스와이프 모션을 사용하면 데이터베이스 내의 메모가 삭제됨
     override fun onMemoDeleteListner(memo: ssh_MemoEntity) {
         deleteMemo(memo)
     }
 
+    // 메모 수정 화면 dialog를 출력
     override fun onMemoUpdateListner(memo: ssh_MemoEntity) {
-        TODO("Not yet implemented")
+        val MemoDialog = ssh_MemoUpdateDialog(this,this)
+        MemoDialog.show()
     }
+    
+    // 메모 팝업창에서 수정 버튼 클릭
+    override fun onMemoUpdateButtonClicked() {
+        // 메모 내용 수정 사항을 각각의 변수에 저장
+        val currentMemoID = App.prefs.MemoID?.toLong()
+        var currentMemo = App.prefs.MemoContents.toString()
+
+        // 변수에 저장된 수정 사항을 데이터베이스에 적용
+        val memo = ssh_MemoEntity(currentMemoID, currentMemo)
+        updateMemo(memo)
+
+        // SharedPreference 변수에 저장된 메모 내용 초기화 (= 메모 수정 시 사용하는 edittext 초기화)
+        App.prefs.MemoContents = ""
+    }
+
+    // 메모 팝업창에서 취소 버튼 클릭
+    override fun onMemoCancelButtonClicked() {
+        App.prefs.MemoContents = ""
+    }
+    // ------------------------------------메모장_ssh-------------------------------------------------
 }
+
 
 //--------------------------------날씨_ssy-------------------------------------------------------
 fun getRainType(rainType : String): String{
