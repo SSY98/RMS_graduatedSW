@@ -18,12 +18,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="275dp"
+                android:layout_height="260dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="190dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -100,8 +100,8 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:background="@color/white"
+                    android:layout_height="60dp"
+                    android:background="@color/black"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp">
 
@@ -115,7 +115,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1000dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -156,7 +156,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
+                        android:layout_height="450dp"
                         android:padding="15dp"
                         android:background="#ADC4E9"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -166,18 +166,6 @@
                         android:layout_marginRight="2.5dp"
                         android:layout_marginBottom="2.5dp"/>
 
-                    <Button
-                        android:id="@+id/BarcodeImageRecognition"
-                        android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginRight="2.5dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/bandi_2"
-                        android:text="Bacord &amp; image\n recognition"
-                        android:textSize="19dp"
-                        android:fontFamily="@font/fonta"
-                        android:textColor="@color/white" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -188,7 +176,7 @@
                             android:id="@+id/youtubeB"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#F84437"
+                            android:background="#F85A3C"
                             android:src="@drawable/btn_youtube"
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"
@@ -199,7 +187,7 @@
                             android:id="@+id/websurfB"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#76ECFF"
+                            android:background="#80D29F"
                             android:src="@drawable/btn_websurf"
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"
@@ -210,41 +198,10 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/music"
-                        android:layout_marginRight="2.5dp"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginBottom="2.5dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/recipe"
-                        android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:layout_marginLeft="2.5dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/recipepic_00"
-                        android:text="Recipe\n recommendation"
-                        android:textSize="17dp"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/fonta"
-                        android:textStyle="bold" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="2.5dp">
+                        android:orientation="horizontal">
 
                         <ImageButton
                             android:id="@+id/timer"
@@ -255,7 +212,7 @@
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"
                             android:layout_weight="1"
-                            android:background="#008CF0"/>
+                            android:background="#29ACE4"/>
 
                         <ImageButton
                             android:id="@+id/setting"
@@ -265,35 +222,85 @@
                             android:layout_weight="1"
                             android:background="#AAAAAA"
                             android:layout_marginLeft="2.5dp"
+                            android:layout_marginRight="2.5dp"
                             android:layout_marginTop="2.5dp"
                             android:layout_marginBottom="2.5dp"/>
 
                     </LinearLayout>
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="150dp"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/music"-->
+<!--                        android:layout_marginRight="2.5dp"-->
+<!--                        android:layout_marginTop="2.5dp"-->
+<!--                        android:layout_marginBottom="2.5dp"/>-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/BarcodeImageRecognition"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_marginBottom="2.5dp"
+                        android:background="@drawable/bandi_2"
+                        android:text="Bacord &amp; image\n recognition"
+                        android:textSize="19dp"
+                        android:fontFamily="@font/fonta"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/recipe"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_marginBottom="2.5dp"
+                        android:background="@drawable/recipepic_00"
+                        android:text="Recipe\n recommendation"
+                        android:textSize="17dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/fonta"
+                        android:textStyle="bold" />
+
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/Memo_recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
                         android:layout_marginLeft="2.5dp"
                         android:layout_marginTop="2.5dp"
-                        android:background="#ADC4E9"
+                        android:background="#FFF7D1"
                         android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="52.5dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:background="#FFF7D1"
                         android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/edittext_memo"
-                            android:layout_width="150dp"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:background="#ADC4E9"
+                            android:layout_marginLeft="10dp"
                             android:hint="메모 추가하기..." />
 
                         <Button
                             android:id="@+id/add_memo"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:text="추가" />
                     </LinearLayout>
                 </LinearLayout>

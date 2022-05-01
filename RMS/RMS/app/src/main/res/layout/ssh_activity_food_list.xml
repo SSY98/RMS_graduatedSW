@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:text="식재료 목록"
         android:textSize="30sp"
+        android:fontFamily="@font/fonta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
