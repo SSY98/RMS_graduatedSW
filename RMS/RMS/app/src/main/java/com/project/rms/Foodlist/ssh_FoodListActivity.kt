@@ -89,7 +89,6 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
     override fun onProductUpdateListener(product: ssh_ProductEntity) {
         val UpdateDialog = ssh_FoodListUpdateDialog(this,this)
         UpdateDialog.show()
-        Log.d("memo", "hi1")
     }
 
     // 식재료 수정 팝업창 수정 버튼 클릭

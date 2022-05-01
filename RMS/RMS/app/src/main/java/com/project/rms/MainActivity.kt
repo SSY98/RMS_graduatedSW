@@ -291,6 +291,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             val memo = ssh_MemoEntity(null, edittext_memo.text.toString())
             edittext_memo.setText("")
             insertMemo(memo)
+            Log.d("memo", "hi3")
         }
     }
     // 바코드 api_ssy,ssh
@@ -705,10 +706,10 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         CoroutineScope(Dispatchers.IO).launch {
             async{
                 db2.memoDAO().insert(memo)
+                memoList.add(memo)
                 Log.d("memo", "hi1")
             }.await()
             getAllMemo()
-            Log.d("memo", "hi2")
         }
     }
 
@@ -745,20 +746,33 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
-    // recyclerview로 데이터베이스에 있는 식재료 출력_ssh
+    // recyclerview로 데이터베이스에 있는 메모 출력_ssh
     fun setMemoRecyclerView(memoList : MutableList<ssh_MemoEntity>) {
+        /*
         val Memo_recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
         Memo_recyclerView.layoutManager = LinearLayoutManager(this)
         Memo_recyclerView.adapter = ssh_MemoAdapter(memoList,this, this)
+        val callback = ItemTouchHelperCallback(ssh_MemoAdapter(memoList,this, this),this)//++
+        val touchHelper = ItemTouchHelper(callback)//++
+        touchHelper.attachToRecyclerView(Memo_recyclerView)//++
+         */
+
+        val recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = ssh_MemoAdapter(memoList, this, this)//수정
+        val callback = ItemTouchHelperCallback(adapter,this)//++
+        val touchHelper = ItemTouchHelper(callback)//++
+        touchHelper.attachToRecyclerView(recyclerView)//++
+        recyclerView.adapter = adapter//++
     }
 
     // 스와이프 모션을 사용하면 데이터베이스 내의 메모가 삭제됨
-    override fun onMemoDeleteListner(memo: ssh_MemoEntity) {
+    override fun onMemoDeleteListener(memo: ssh_MemoEntity) {
         deleteMemo(memo)
     }
 
     // 메모 수정 화면 dialog를 출력
-    override fun onMemoUpdateListner(memo: ssh_MemoEntity) {
+    override fun onMemoUpdateListener(memo: ssh_MemoEntity) {
         val MemoDialog = ssh_MemoUpdateDialog(this,this)
         MemoDialog.show()
     }

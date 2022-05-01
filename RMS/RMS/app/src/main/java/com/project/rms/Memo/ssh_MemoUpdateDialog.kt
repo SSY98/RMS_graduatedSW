@@ -31,14 +31,14 @@ class ssh_MemoUpdateDialog(context: Context, Interface: ssh_MemoUpdateDialogInte
         // 메모를 화면에 출력
         update_memo.setText(currentMemo)
 
-        // 수정 버튼 클릭 시 onUpdateButtonClicked 호출 후 종료
+        // 수정 버튼 클릭 시 onMemoUpdateButtonClicked 호출 후 종료
         update_memo_btn.setOnClickListener {
             App.prefs.MemoContents = update_memo.text.toString()
             MemoUpdateDialogInterface.onMemoUpdateButtonClicked()
             dismiss()
         }
 
-        // 취소 버튼 클릭 시 onCancelButtonClicked 호출 후 종료
+        // 취소 버튼 클릭 시 onMemoCancelButtonClicked 호출 후 종료
         cancel_memo_btn.setOnClickListener {
             Log.d("memo", "hi2")
             MemoUpdateDialogInterface.onMemoCancelButtonClicked()
