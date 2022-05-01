@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,7 @@ import java.util.*
 class ssh_MemoAdapter(var list : MutableList<ssh_MemoEntity>,
                       var ssh_onMemoDeleteListener: ssh_OnMemoDeleteListener,
                       var ssh_onMemoUpdateListener: ssh_OnMemoUpdateListener) :
-    RecyclerView.Adapter<ssh_MemoAdapter.ViewHolder>(),
-    ItemTouchHelperCallback.OnItemMoveListener {
+    RecyclerView.Adapter<ssh_MemoAdapter.ViewHolder>() {
 
     inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.ssh_item_memo, parent, false)
@@ -47,29 +47,21 @@ class ssh_MemoAdapter(var list : MutableList<ssh_MemoEntity>,
         // 메모를 길게 클릭
         holder.root.setOnLongClickListener(object: View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
-                // SharedPreference에 선언한 변수에 클릭한 메모를 저장한다.
-                App.prefs.MemoID = memoID
-                App.prefs.MemoContents = memoContents
-                ssh_onMemoUpdateListener.onMemoUpdateListener(memo) //  OnMemoUpdateListener 실행 (Listener는 수정 화면 dialog 창을 띄움)
+                val memo = list[position]
+                ssh_onMemoDeleteListener.onMemoDeleteListener(memo)
                 return true
             }
         })
-    }
+
+        holder.root.setOnClickListener {
+            // SharedPreference에 선언한 변수에 클릭한 메모를 저장한다.
+            App.prefs.MemoID = memoID
+            App.prefs.MemoContents = memoContents
+            ssh_onMemoUpdateListener.onMemoUpdateListener(memo) //  OnMemoUpdateListener 실행 (Listener는 수정 화면 dialog 창을 띄움)
+            }
+        }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-
-    override fun onItemMoved(fromPosition: Int, toPosition: Int) {
-        Collections.swap(list, fromPosition, toPosition)
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-    override fun onItemSwiped(position: Int) {
-        val memo = list[position]
-        list.removeAt(position)
-        notifyItemRemoved(position)
-        ssh_onMemoDeleteListener.onMemoDeleteListener(memo)
     }
 }

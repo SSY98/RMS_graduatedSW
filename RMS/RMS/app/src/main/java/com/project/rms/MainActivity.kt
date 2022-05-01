@@ -748,21 +748,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
 
     // recyclerview로 데이터베이스에 있는 메모 출력_ssh
     fun setMemoRecyclerView(memoList : MutableList<ssh_MemoEntity>) {
-        /*
-        val Memo_recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
-        Memo_recyclerView.layoutManager = LinearLayoutManager(this)
-        Memo_recyclerView.adapter = ssh_MemoAdapter(memoList,this, this)
-        val callback = ItemTouchHelperCallback(ssh_MemoAdapter(memoList,this, this),this)//++
-        val touchHelper = ItemTouchHelper(callback)//++
-        touchHelper.attachToRecyclerView(Memo_recyclerView)//++
-         */
-
         val recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = ssh_MemoAdapter(memoList, this, this)//수정
-        val callback = ItemTouchHelperCallback(adapter,this)//++
-        val touchHelper = ItemTouchHelper(callback)//++
-        touchHelper.attachToRecyclerView(recyclerView)//++
         recyclerView.adapter = adapter//++
     }
 
