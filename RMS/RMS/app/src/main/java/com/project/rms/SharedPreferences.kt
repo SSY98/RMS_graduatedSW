@@ -18,10 +18,12 @@ class SharedPreferences (context: Context) {
     private val memo_contents = "MemoContents" // 메모 내용
 
     //음성인식에 사용
+    private val voice_name = "Voicename" //음성인식 호출이름
     private val voice_option = "Voiceoption" //음성인식 on/off setting
     private val voice_ans = "Voiceanswer" //음성인식의 대답형태
     private val voice_pause = "Voicepause" //음성인식 잠깐 멈출때사용(ex) 타이머
     private val voice_request = "Voicereq" //음성인식으로 실행시킨 액티비티에서 사용
+    private val voice_time = "Voicetime" //음성인식 tts시간
 
     private val web_site = "WebSite" //뉴스피드, 웹서핑, 유튜브에 사용
     private val timer_s = "TimerSecond" //타이머에 사용
@@ -65,6 +67,10 @@ class SharedPreferences (context: Context) {
         get() = prefs.getString(memo_contents, "")
         set(value) = prefs.edit().putString(memo_contents, value).apply()
 
+    var Voicename: String
+        get() = prefs.getString(voice_name, "냉장고").toString()
+        set(value) = prefs.edit().putString(voice_name, value).apply()
+
     var Voiceoption: Boolean
         get() = prefs.getBoolean(voice_option, true)
         set(value) = prefs.edit().putBoolean(voice_option, value).apply()
@@ -80,6 +86,10 @@ class SharedPreferences (context: Context) {
     var Voicereq: Boolean
         get() = prefs.getBoolean(voice_request, false)
         set(value) = prefs.edit().putBoolean(voice_request, value).apply()
+
+    var Voicetime: Long
+        get() = prefs.getLong(voice_time, 0)
+        set(value) = prefs.edit().putLong(voice_time, value).apply()
 
     var WebSite: String?
         get() = prefs.getString(web_site, "")

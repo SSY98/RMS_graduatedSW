@@ -224,13 +224,14 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             GlobalScope.launch(Dispatchers.Main) {
                 while (App.prefs.Voiceoption == true){ //옵션으로 온오프 할수있는 변수
                     while (App.prefs.Voicepause == true) { //소리사용하는 동안 온오프 할수있는 변수
+                        App.prefs.Voicetime = 0
                         speechRecognizer =
                             SpeechRecognizer.createSpeechRecognizer(applicationContext)
                         speechRecognizer.setRecognitionListener(recognitionListener)
                         speechRecognizer.startListening(intent)
                         delay(7000)
                         speechRecognizer.destroy()
-                        delay(500)
+                        delay(App.prefs.Voicetime)
                     }
                     delay(7000)
                 }
@@ -524,14 +525,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
     private fun setListener() {
         recognitionListener = object: RecognitionListener {
             //음소거를 위한 오디오 매니저
-            val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
             //주의: 혹시 avd에서 음성인식이 안될경우, (1) avd설정->마이크 설정 확인 (2) 어플 마이크 허용 여부 확인 (3) 구글 마이크로 한번 실험해보기
             override fun onReadyForSpeech(params: Bundle?) {
-                //음소거
-                val muteValue = AudioManager.ADJUST_MUTE
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
-                //음소거
+               volume_min()
             }
 
             override fun onBeginningOfSpeech() {
@@ -547,10 +543,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             }
 
             override fun onEndOfSpeech() {
-                //음소거 해제
-                val muteValue = AudioManager.ADJUST_UNMUTE
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
-                //음소거 해제
+
             }
 
             override fun onError(error: Int) {
@@ -585,8 +578,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 var matches: ArrayList<String> = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION) as ArrayList<String>
                 val voice = matches[matches.size-1]
                 Log.d("결과", matches[matches.size-1])
-                if (voice.contains("냉장고")) {
+                if (voice.contains(App.prefs.Voicename)) {
                     App.prefs.Voiceanswer = true // 쉐어드프리퍼런스 사용하면 쉐어드로 옮기기
+                    volume_max()
                     tts!!.speak("네, 부르셨어요.", TextToSpeech.QUEUE_FLUSH, null,"")
                     Log.d("결과", "네, 부르셨어요.")
                 }
@@ -595,6 +589,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     //음성인식으로 타이머실행
                     if(voice.contains("타이머") and voice.contains("실행")){
                         Log.d("결과", "타이머를 실행시킬게요.")
+                        volume_max()
                         tts!!.speak("타이머를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null,"")
                         if (number != ""){
                             if (voice.contains("분")and voice.contains("초")){
@@ -627,6 +622,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     //음성인식으로 레시피 실행
                     else if(voice.contains("레시피") and voice.contains("실행")){
                         Log.d("결과", "레시피를 실행시킬게요.")
+                        volume_max()
                         tts!!.speak("레시피를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null,"")
                         val intent2 = Intent(applicationContext, ssy_RecipeActivity::class.java)
                         startActivity(intent2)
@@ -635,6 +631,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     //음성인식으로 유튜브실행
                     else if(voice.contains("유튜브") and voice.contains("실행")) {
                         Log.d("결과", "유튜브를 실행시킬게요.")
+                        volume_max()
                         tts!!.speak("유튜브를 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
                         App.prefs.Voiceanswer = false
                         App.prefs.Voicereq = true
@@ -645,6 +642,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     //음성인식으로 구글실행
                     else if((voice.contains("구글")or voice.contains("웹")) and (voice.contains("실행")or voice.contains("검색"))) {
                         Log.d("결과", "구글을 실행시킬게요.")
+                        volume_max()
                         tts!!.speak("구글을 실행시킬게요.", TextToSpeech.QUEUE_FLUSH, null, "")
                         App.prefs.Voiceanswer = false
                         App.prefs.Voicereq = true
@@ -654,16 +652,11 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     }
                     //음성인식 명령 예외처리
                     else{
+                        volume_max()
                         tts!!.speak("죄송해요. 잘모르겠어요.", TextToSpeech.QUEUE_FLUSH, null,"")
                         App.prefs.Voiceanswer = true
                     }
                 }
-                /* 텍스트뷰에 나타내기
-                for (i in 0 until matches.size) {
-                        val tvResult: TextView = findViewById(R.id.tvResult)
-                        tvResult.text = matches[i]
-                    }
-                 */
             }
 
             override fun onPartialResults(partialResults: Bundle?) {
@@ -675,6 +668,17 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             }
 
         }
+    }
+    fun volume_min(){
+        val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val muteValue = AudioManager.ADJUST_MUTE
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
+    }
+    fun volume_max(){
+        App.prefs.Voicetime = 700
+        val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val muteValue = AudioManager.ADJUST_UNMUTE
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, muteValue, 0)
     }
     //음성인식 무한반복
 
@@ -699,6 +703,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
         super.onDestroy()
     }
+
     //------------------------------------음성인식_끝------------------------------------------------- 
     // ------------------------------------메모장_ssh-------------------------------------------------
     // 데이터베이스에 있는 메모 추가

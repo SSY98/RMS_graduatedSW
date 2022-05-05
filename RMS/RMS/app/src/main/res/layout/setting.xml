@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,20 +8,35 @@
 
     <Button
         android:id="@+id/voiceset"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="음성인식"
         android:textSize="50dp"
-        tools:layout_editor_absoluteX="303dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btn2"
+        tools:layout_editor_absoluteX="-8dp" />
 
     <Button
         android:id="@+id/btn2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="test"
         android:textSize="100dp"
-        app:layout_constraintEnd_toStartOf="@+id/voiceset"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <EditText
+        android:id="@+id/voicename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/voiceset"
+        tools:layout_editor_absoluteX="4dp" />
+
+    <Button
+        android:id="@+id/VN_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="호출이름 변경"
+        app:layout_constraintTop_toBottomOf="@+id/voicename"
+        tools:layout_editor_absoluteX="-7dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

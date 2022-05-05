@@ -22,6 +22,13 @@ class SettingActivity :  AppCompatActivity(){
 
         val customdialog= findViewById<Button>(R.id.btn2)
         val voiceset= findViewById<Button>(R.id.voiceset)
+        val voicename= findViewById<EditText>(R.id.voicename)
+        val vn_btn= findViewById<Button>(R.id.VN_btn)
+
+        voicename.setText(App.prefs.Voicename)
+        vn_btn.setOnClickListener{
+            App.prefs.Voicename = voicename.getText().toString()
+        }
 
         voiceset.setOnClickListener {
             if(App.prefs.Voiceoption==false){
