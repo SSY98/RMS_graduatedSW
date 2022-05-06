@@ -106,6 +106,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
         // 직접 입력 버튼 누르면 팝업창 출력_ssh
         direct_add.setOnClickListener{
+            App.prefs.Dbtn = true
             val BarcodeDialog = ssh_BarcodeDialog(this,this)
             BarcodeDialog.show()
         }
@@ -271,8 +272,10 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
     fun dialog(){
+        App.prefs.Dbtn = true
         val ImageDialog = ssh_BarcodeDialog(this,this)
         ImageDialog.show()
+
     }
     //이미지 파일 저장 ysj
     private fun newJpgFileName() : String {

@@ -399,6 +399,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 B_API_thread.start()
                 B_API_thread.join() // join()을 사용하면 해당 스레드가 종료되기를 기다렸다가 다음으로 넘어감
                 dialog()
+                App.prefs.Dbtn = true
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -649,6 +650,38 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         App.prefs.WebSite = "https://www.google.co.kr"
                         val intent = Intent(applicationContext, ssy_Webview::class.java)
                         startActivity(intent)
+                    }
+                    //음성인식으로 식재료 추가
+                    else if(voice.contains("등록")) {
+                        var input = voice.split(" ")
+                        var name = input[0]
+                        var count = "1"
+                        var count_array = arrayOf("한",'두',"세","네","다섯","여섯","일곱","여덟","아홉","열")
+                        if(voice.replace("[^0-9]".toRegex(), "")==""){
+                            for(i in 0 .. count_array.size-1){
+                                if(voice.contains(count_array[i].toString())){
+                                    count = (i+1).toString()
+                                }
+                            }
+                        }
+                        else{
+                            count = voice.replace("[^0-9]".toRegex(), "")
+                        }
+                        //tts
+                        volume_max()
+                        App.prefs.Voicetime = 1000
+                        tts!!.speak(name+count+" 개 "+"등록하겠습니다.", TextToSpeech.QUEUE_FLUSH, null, "")
+                        App.prefs.Voicereq = true
+                        //식재료 등록
+                        App.prefs.Dbtn = false
+                        App.prefs.FoodName = name
+                        App.prefs.FoodCategory = name
+                        val cal = Calendar.getInstance()
+                        var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                        App.prefs.FoodDate = now_date
+                        App.prefs.FoodCount = count
+                        dialog()
+
                     }
                     //음성인식 명령 예외처리
                     else{

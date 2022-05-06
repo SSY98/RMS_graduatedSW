@@ -17,6 +17,8 @@ class SharedPreferences (context: Context) {
     private val memo_id = "MemoID" // 메모 ID
     private val memo_contents = "MemoContents" // 메모 내용
 
+    private val dialog_button = "Dbtn" // 메모 내용
+
     //음성인식에 사용
     private val voice_name = "Voicename" //음성인식 호출이름
     private val voice_option = "Voiceoption" //음성인식 on/off setting
@@ -66,6 +68,10 @@ class SharedPreferences (context: Context) {
     var MemoContents: String?
         get() = prefs.getString(memo_contents, "")
         set(value) = prefs.edit().putString(memo_contents, value).apply()
+
+    var Dbtn: Boolean
+        get() = prefs.getBoolean(dialog_button, true)
+        set(value) = prefs.edit().putBoolean(dialog_button, value).apply()
 
     var Voicename: String
         get() = prefs.getString(voice_name, "냉장고").toString()

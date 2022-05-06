@@ -27,13 +27,10 @@ var retrofit = Retrofit.Builder()
 
 // api 인터페이스
 interface retrofit_interface {
-
     // 이미지 보내기
     @Multipart
     @POST("/")
     fun sendFile(
         @Part file: MultipartBody.Part	// 우리가 넣을 데이터
     ): Call<ResponseData>
-
-
 }
