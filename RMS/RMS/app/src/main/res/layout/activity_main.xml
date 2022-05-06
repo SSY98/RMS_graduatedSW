@@ -252,8 +252,8 @@
                         android:layout_marginLeft="2.5dp"
                         android:layout_marginBottom="2.5dp"
                         android:background="@drawable/bandi_2"
-                        android:text="Bacord &amp; image\n recognition"
-                        android:textSize="19dp"
+                        android:text="식재료 추가"
+                        android:textSize="20dp"
                         android:fontFamily="@font/fonta"
                         android:textColor="@color/white" />
 
@@ -265,8 +265,8 @@
                         android:layout_marginLeft="2.5dp"
                         android:layout_marginBottom="2.5dp"
                         android:background="@drawable/recipepic_00"
-                        android:text="Recipe\n recommendation"
-                        android:textSize="17dp"
+                        android:text="레시피 추천"
+                        android:textSize="20dp"
                         android:textColor="@color/white"
                         android:fontFamily="@font/fonta"
                         android:textStyle="bold" />
@@ -288,20 +288,25 @@
                         android:background="#FFF7D1"
                         android:orientation="horizontal">
 
+                        <ImageButton
+                            android:id="@+id/add_memo"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#FFF7D1"
+                            android:src="@drawable/btn_plus" />
+
                         <EditText
                             android:id="@+id/edittext_memo"
-                            android:layout_width="200dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#ADC4E9"
+                            android:background="#EAEAEA"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
                             android:hint="메모 추가하기..." />
 
-                        <Button
-                            android:id="@+id/add_memo"
-                            android:layout_width="50dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="추가" />
                     </LinearLayout>
                 </LinearLayout>
 

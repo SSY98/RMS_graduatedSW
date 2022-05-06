@@ -245,7 +245,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
         val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
         val recipeB= findViewById<Button>(R.id.recipe) //ssy
-        val AddMemo = findViewById<Button>(R.id.add_memo) // 메모 추가 버튼_ssh
+        val AddMemo = findViewById<ImageButton>(R.id.add_memo) // 메모 추가 버튼_ssh
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh
         getAllMemo() // 데이터베이스에 있는 메모를 불러옴_ssh

@@ -11,6 +11,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -102,7 +103,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
 
-        val direct_add= findViewById<Button>(R.id.direct_add) // 직접 입력 버튼
+        val direct_add= findViewById<ImageButton>(R.id.direct_add) // 직접 입력 버튼
 
         // 직접 입력 버튼 누르면 팝업창 출력_ssh
         direct_add.setOnClickListener{
