@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="200dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#F6F4F4"
+    android:background="#3C505A"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/edit_pen_icon"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 메모를 수정합니다."
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
+            android:textSize="25dp"/>
+
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/update_memo"
@@ -14,29 +38,40 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:ems="15"
-        android:hint="메모를 작성하세요..."/>
+        android:textColor="@color/white"
+        android:hint="메모를 작성하세요..."
+        android:textColorHint="#F6F6F6"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/update_memo_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:text="수정"
-            android:textSize="20sp"/>
+        android:layout_gravity="center">
 
         <Button
             android:id="@+id/cancel_memo_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#3C505A"
             android:text="취소"
-            android:textSize="20sp"/>
+            android:textColor="#669B9B"
+            android:textSize="20dp"
+            android:fontFamily="@font/fonta"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/update_memo_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3C505A"
+            android:text="수정"
+            android:textSize="20dp"
+            android:textColor="#669B9B"
+            android:fontFamily="@font/fonta"
+            android:layout_weight="1"/>
+
+
     </LinearLayout>
 
 </LinearLayout>
