@@ -24,8 +24,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="168dp"
             android:layout_marginTop="16dp"
-            android:text="TextView"
-            android:textColor="?android:attr/textColorPrimary"
+            android:text="Loading.."
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/fonta"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text="Loading.."
+            android:fontFamily="@font/fonta"
             android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_name"
