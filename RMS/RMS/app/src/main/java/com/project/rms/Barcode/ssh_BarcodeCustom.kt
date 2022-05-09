@@ -10,8 +10,11 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -26,6 +29,7 @@ import com.project.rms.Image_recognition.retrofit_interface
 import com.project.rms.MainActivity
 import com.project.rms.R
 import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
+import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_ssh_barcode_custom.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,6 +68,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     // Request Code
     private val BUTTON4 = 400
+    private val BUTTON = 100
 
     private var photoUri: Uri? = null
     //private lateinit var img : ImageView //
@@ -97,6 +102,32 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
             takePictureIntent.resolveActivity(packageManager)?.also {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                 startActivityForResult(takePictureIntent, BUTTON4)
+            }
+        }
+
+        //영수증 버튼 누르면 카메라 실행_ssh
+        binding.receipt.setOnClickListener {
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            val photoFile = File(
+                File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "image").apply {
+                    if (!this.exists()) {
+                        this.mkdirs()
+                    }
+                },
+                newJpgFileName()//이미지 파일 저장
+            )
+            photoUri = FileProvider.getUriForFile(
+                this,
+                "com.blacklog.takepicture.fileprovider",
+                photoFile
+            )
+            // 이미지의 uri를 받아서 해당하는 이미지를 크롭한다.
+            CropImage.activity(photoUri)
+                .start(this);
+
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                startActivityForResult(takePictureIntent, BUTTON)
             }
         }
 
@@ -214,6 +245,20 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        // 영수증 사진 crop_ssh
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == RESULT_OK) {
+                // (findViewById<View>(R.id.quick_start_cropped_image) as ImageView).setImageURI(result.uri)
+                // var a = result.uri
+                Toast.makeText(
+                    this, "Cropping successful, Sample: " + result.sampleSize, Toast.LENGTH_LONG
+                )
+                    .show()
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.error, Toast.LENGTH_LONG).show()
+            }
+        }
         //RESULT_OK 사진 촬영을 했을 때 ysj
         if(resultCode == Activity.RESULT_OK){
             when(requestCode) {

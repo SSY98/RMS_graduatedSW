@@ -83,4 +83,7 @@ dependencies {
 
     //타이머_ssy
     implementation 'com.github.jaeryo2357:circleTimer:1.1.3'
+
+    // 영수증 인식 crop_ssh
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 }
