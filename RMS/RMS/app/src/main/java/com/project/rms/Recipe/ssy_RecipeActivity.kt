@@ -1,8 +1,12 @@
 package com.project.rms.Recipe
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -10,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
+import com.project.rms.R
 import com.project.rms.Recipe.RecipeMake.ssy_RecipeMakeActivity
 import com.project.rms.databinding.SsyActivityRecipeBinding
 import kotlinx.coroutines.Dispatchers
@@ -132,7 +137,6 @@ class ssy_RecipeActivity : AppCompatActivity() {
         var isr = InputStreamReader(input)
         var br = BufferedReader(isr)
 
-        Log.d("시발",t_site.toString())
         var str: String? = null
         var buf = StringBuffer()
 
@@ -157,15 +161,31 @@ class ssy_RecipeActivity : AppCompatActivity() {
             var RCP_NM: String = obj2.getString("RCP_NM")
             var ATT_FILE_NO_MAIN: String = obj2.getString("ATT_FILE_NO_MAIN")
             var RCP_PARTS_DTLS: String = obj2.getString("RCP_PARTS_DTLS")
+            //레시피 정렬, 보유재료 표시
+            var ready = ""
+            var ready_parts = 0
+            for(i in 0 until materials.size){
+                if(RCP_PARTS_DTLS.contains(materials[i])){
+                    ready = ready + " " + materials[i]
+                    ready_parts += 1
+                }
+            }
+            if(ready == ""){
+                ready = " 없음"
+            }
+            RCP_PARTS_DTLS = "[보유 식재료 :"+ ready + "]" +"\n"+RCP_PARTS_DTLS
             var RCP_SEQ: String = obj2.getString("RCP_SEQ")
             GlobalScope.launch(Dispatchers.Main){
-                    itemList.add(ssy_Recipe_Litem(RCP_SEQ, RCP_NM, RCP_PARTS_DTLS,ATT_FILE_NO_MAIN))
-                    listAdapter.notifyDataSetChanged()
+                itemList.add(ssy_Recipe_Litem(RCP_SEQ, RCP_NM, RCP_PARTS_DTLS,ATT_FILE_NO_MAIN,ready_parts))
+                itemList.sortBy { it.readyparts }
+                itemList.reverse()
+                listAdapter.notifyDataSetChanged()
             }
 
         }
     }
     //냉장고가 안비어 있을때
+    @SuppressLint("ResourceAsColor")
     fun nonempty_ref(){
         var t_site = StringBuilder()
         var Api_key = "1937954c9b7840bbbf76"
@@ -219,7 +239,19 @@ class ssy_RecipeActivity : AppCompatActivity() {
             var RCP_SEQ: String = obj2.getString("RCP_SEQ")
             if(RCP_PARTS_DTLS.contains(choice_materials[0]) and RCP_PARTS_DTLS.contains(choice_materials[1]) and RCP_PARTS_DTLS.contains(choice_materials[2])) {
                 GlobalScope.launch(Dispatchers.Main){
-                    itemList.add(ssy_Recipe_Litem(RCP_SEQ, RCP_NM, RCP_PARTS_DTLS,ATT_FILE_NO_MAIN))
+                    //레시피 정렬, 보유재료 표시
+                    var ready = ""
+                    var ready_parts = 0
+                    for(i in 0 until materials.size){
+                        if(RCP_PARTS_DTLS.contains(materials[i])){
+                            ready = ready + " " + materials[i]
+                            ready_parts += 1
+                        }
+                    }
+                    RCP_PARTS_DTLS = "[보유 식재료 :"+ ready + "]" +"\n"+RCP_PARTS_DTLS
+                    itemList.add(ssy_Recipe_Litem(RCP_SEQ, RCP_NM, RCP_PARTS_DTLS,ATT_FILE_NO_MAIN,ready_parts))
+                    itemList.sortBy { it.readyparts }
+                    itemList.reverse()
                     listAdapter.notifyDataSetChanged()
                     count += 1
                 }
