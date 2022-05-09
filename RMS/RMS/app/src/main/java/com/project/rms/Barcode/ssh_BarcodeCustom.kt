@@ -27,7 +27,6 @@ import com.project.rms.Image_recognition.ResponseData
 import com.project.rms.Image_recognition.retrofit
 import com.project.rms.Image_recognition.retrofit_interface
 import com.project.rms.MainActivity
-import com.project.rms.R
 import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_ssh_barcode_custom.*
@@ -41,9 +40,13 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import android.graphics.Bitmap
+import java.io.*
+
+import android.graphics.BitmapFactory
+import com.project.rms.R
 
 
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
@@ -249,16 +252,22 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
-                // (findViewById<View>(R.id.quick_start_cropped_image) as ImageView).setImageURI(result.uri)
-                // var a = result.uri
+                // crop 된 이미지의 uri를 비트맵으로 변환_ssh
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, result.uri)
+                //(findViewById<View>(R.id.quick_start_cropped_image) as ImageView).setImageBitmap(bitmap)
+
+                // 비트맵 이미지를 jpeg 형식의 파일로 변환_ssh
+                saveBitmapToFileCache(bitmap,
+                    "/storage/emulated/0/Android/data/com.project.rms/files/Pictures/image/receipt.jpeg",
+                    "receipt.jpeg")
+
                 Toast.makeText(
-                    this, "Cropping successful, Sample: " + result.sampleSize, Toast.LENGTH_LONG
-                )
-                    .show()
+                    this, "Cropping successful, Sample: " + result.sampleSize, Toast.LENGTH_LONG).show()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(this, "Cropping failed: " + result.error, Toast.LENGTH_LONG).show()
             }
         }
+
         //RESULT_OK 사진 촬영을 했을 때 ysj
         if(resultCode == Activity.RESULT_OK){
             when(requestCode) {
@@ -329,6 +338,29 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val filename = "test"
         //val filename = sdf.format(System.currentTimeMillis())
         return "${filename}.jpg"
+    }
+
+    // 비트맵 이미지를 jpeg 파일로 변환_ssh
+    fun saveBitmapToFileCache(bitmap: Bitmap, strFilePath: String, fileName:String) {
+        val file = File(strFilePath)
+        if (!file.exists()) file.mkdirs()
+
+        val fileCacheItem = File(strFilePath + fileName)
+        var out: OutputStream? = null
+
+        try {
+            fileCacheItem.createNewFile()
+            out = FileOutputStream(fileCacheItem)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                out?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     //권한체크 ysj
