@@ -154,11 +154,12 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         val timeM = SimpleDateFormat("mm", Locale.getDefault()).format(cal.time) // 현재 분
         // API 가져오기 적당하게 변환
         Log.d("api_times", timeH+timeM)
-        val base_time = getBaseTime(timeH, timeM)
+        var base_time = getBaseTime(timeH, timeM)
         // 현재 시각이 00시이고 45분 이하여서 baseTime이 2330이면 어제 정보 받아오기
-        if (timeH == "00" && base_time == "2300") {
+        if ((timeH == "00" || timeH == "01")&& base_time == "2300") {
             cal.add(Calendar.DATE, -1).toString()
             base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
+            base_time = "2300"
         }
         val call = ApiObject.retrofitService.GetWeather("JSON", 10, 1, base_date, base_time, "59", "119")
         call.enqueue(object : retrofit2.Callback<ssy_WHEATHER>{
