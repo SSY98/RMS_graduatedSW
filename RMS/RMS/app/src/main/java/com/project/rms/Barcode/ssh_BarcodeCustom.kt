@@ -257,9 +257,33 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                 //(findViewById<View>(R.id.quick_start_cropped_image) as ImageView).setImageBitmap(bitmap)
 
                 // 비트맵 이미지를 jpeg 형식의 파일로 변환_ssh
-                saveBitmapToFileCache(bitmap,
-                    "/storage/emulated/0/Android/data/com.project.rms/files/Pictures/image/receipt.jpeg",
-                    "receipt.jpeg")
+                val FilePath = "/storage/emulated/0/Android/data/com.project.rms/files/Pictures/image/receipt.jpeg"
+
+                // 파일 객체를 생성한 후 파일 객체가 가르키는 위치에 디렉토리가 없으면 디렉토리를 생성_ssh
+                val file = File(FilePath)
+                if (!file.exists()) file.mkdirs()
+
+                // 디렉토리 안에 새로운 파일을 만든 후 그 파일에 bitmap을 outputStream으로 작성_ssh
+                val fileCacheItem = File(FilePath)
+                var out: OutputStream? = null
+
+                try {
+                    fileCacheItem.createNewFile()
+                    out = FileOutputStream(fileCacheItem)
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    try {
+                        out?.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+                Log.d("file","${fileCacheItem.name}")
+                Log.d("file","${fileCacheItem.absolutePath}")
+                Log.d("file","${file.isDirectory}")
+                Log.d("file","${fileCacheItem.isFile}")
 
                 Toast.makeText(
                     this, "Cropping successful, Sample: " + result.sampleSize, Toast.LENGTH_LONG).show()
@@ -338,29 +362,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         val filename = "test"
         //val filename = sdf.format(System.currentTimeMillis())
         return "${filename}.jpg"
-    }
-
-    // 비트맵 이미지를 jpeg 파일로 변환_ssh
-    fun saveBitmapToFileCache(bitmap: Bitmap, strFilePath: String, fileName:String) {
-        val file = File(strFilePath)
-        if (!file.exists()) file.mkdirs()
-
-        val fileCacheItem = File(strFilePath + fileName)
-        var out: OutputStream? = null
-
-        try {
-            fileCacheItem.createNewFile()
-            out = FileOutputStream(fileCacheItem)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            try {
-                out?.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
     }
 
     //권한체크 ysj
