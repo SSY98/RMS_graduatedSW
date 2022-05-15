@@ -10,15 +10,11 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.CaptureManager
 import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
@@ -43,10 +39,15 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import java.io.*
 
-import android.graphics.BitmapFactory
+import com.googlecode.tesseract.android.TessBaseAPI
 import com.project.rms.R
+import java.io.File
+
+
+
 
 
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
@@ -57,7 +58,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     //ysj 추가
     // ViewBinding
     lateinit var binding : ActivitySshBarcodeCustomBinding
-
     val server = retrofit.create(retrofit_interface::class.java) //api
 
     // Permisisons
@@ -76,6 +76,11 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     private var photoUri: Uri? = null
     //private lateinit var img : ImageView //
     //ysj 추가 끝
+
+    //영수증인식_ssy
+    private var tess //Tess API reference
+            : TessBaseAPI? = null
+    var datapath: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -246,6 +251,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         App.prefs.FoodCount = "1"
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // 영수증 사진 crop_ssh
@@ -280,6 +286,16 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                         e.printStackTrace()
                     }
                 }
+                //
+                datapath = "$filesDir/tesseract/"
+                checkFile(File(datapath + "tessdata/"))
+                tess = TessBaseAPI()
+                tess!!.init(datapath, "kor")
+                tess!!.setImage(bitmap)
+                val text = tess!!.utF8Text
+                Log.d("살려주세요",text)
+                //tess.recycle() //다쓰고 삭제
+
                 Log.d("file","${fileCacheItem.name}")
                 Log.d("file","${fileCacheItem.absolutePath}")
                 Log.d("file","${file.isDirectory}")
@@ -348,6 +364,43 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
         }
 
     }
+    //tess사용하기위한 함수
+    private val langFileName = "kor.traineddata"
+    private fun copyFiles() {
+        try {
+            val filepath = datapath + "tessdata/" + langFileName
+            val assetManager = assets
+            val instream: InputStream = assetManager.open("tessdata/"+langFileName)
+            val outstream: OutputStream = FileOutputStream(filepath)
+            val buffer = ByteArray(1024)
+            var read: Int
+            while (instream.read(buffer).also { read = it } != -1) {
+                outstream.write(buffer, 0, read)
+            }
+            outstream.flush()
+            outstream.close()
+            instream.close()
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+    private fun checkFile(dir: File) {
+        //디렉토리가 없으면 디렉토리를 만들고 그후에 파일을 카피
+        if (!dir.exists() && dir.mkdirs()) {
+            copyFiles()
+        }
+        //디렉토리가 있지만 파일이 없으면 파일카피 진행
+        if (dir.exists()) {
+            val datafilepath = datapath + "tessdata/" + langFileName
+            val datafile = File(datafilepath)
+            if (!datafile.exists()) {
+                copyFiles()
+            }
+        }
+    }
+    //tess사용하기위한 함수
 
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
     fun dialog(){

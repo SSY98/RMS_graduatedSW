@@ -86,4 +86,7 @@ dependencies {
 
     // 영수증 인식 crop_ssh
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
+    //영수증인식_ssy
+    implementation 'com.rmtheis:tess-two:9.1.0'
 }
