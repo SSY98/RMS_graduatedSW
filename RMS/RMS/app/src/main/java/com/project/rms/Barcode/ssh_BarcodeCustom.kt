@@ -290,11 +290,18 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                 datapath = "$filesDir/tesseract/"
                 checkFile(File(datapath + "tessdata/"))
                 tess = TessBaseAPI()
-                tess!!.init(datapath, "kor")
+                tess!!.init(datapath, "eng")
                 tess!!.setImage(bitmap)
                 val text = tess!!.utF8Text
                 Log.d("살려주세요",text)
                 //tess.recycle() //다쓰고 삭제
+                val t_arr = text.split(" ")
+                /*
+                val barcode_arr
+                for(i in 0 .. t_arr.size-1){
+                    if(t_)
+                }*/
+
 
                 Log.d("file","${fileCacheItem.name}")
                 Log.d("file","${fileCacheItem.absolutePath}")
@@ -365,7 +372,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     }
     //tess사용하기위한 함수
-    private val langFileName = "kor.traineddata"
+    private val langFileName = "eng.traineddata"
     private fun copyFiles() {
         try {
             val filepath = datapath + "tessdata/" + langFileName
