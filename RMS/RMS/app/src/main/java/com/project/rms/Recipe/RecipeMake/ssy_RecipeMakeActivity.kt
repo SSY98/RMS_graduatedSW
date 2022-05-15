@@ -78,17 +78,17 @@ class ssy_RecipeMakeActivity : AppCompatActivity() {
                 Log.d("레시피_메뉴이름:","${RCP_NM}")
                 Log.d("레시피_사진:","${ATT_FILE_NO_MAIN}")
                 Log.d("레시피_필요재료:","${RCP_PARTS_DTLS}")
-                GlobalScope.launch(Dispatchers.Main){
-                    val name= findViewById<TextView>(R.id.food_name) //ssy
-                    val matrial= findViewById<TextView>(R.id.food_material) //ssy
-                    val foodimg= findViewById<ImageView>(R.id.food_img) //ssy
-                    name.setText(RCP_NM)
-                    matrial.setText(RCP_PARTS_DTLS)
-                    Glide.with(applicationContext)
-                        .load(ATT_FILE_NO_MAIN)
-                        .into(foodimg)
-                }
                 if(RCP_SEQ==App.prefs.Recipe_Seq){ //쉐어드프리퍼런스로 seq와 비교
+                    GlobalScope.launch(Dispatchers.Main){
+                        val name= findViewById<TextView>(R.id.food_name) //ssy
+                        val matrial= findViewById<TextView>(R.id.food_material) //ssy
+                        val foodimg= findViewById<ImageView>(R.id.food_img) //ssy
+                        name.setText(RCP_NM)
+                        matrial.setText(RCP_PARTS_DTLS)
+                        Glide.with(applicationContext)
+                            .load(ATT_FILE_NO_MAIN)
+                            .into(foodimg)
+                    }
                     for(j in 1 until 21){
                         val numform = DecimalFormat("00")
                         var MANUAL: String = obj2.getString("MANUAL"+numform.format(j))

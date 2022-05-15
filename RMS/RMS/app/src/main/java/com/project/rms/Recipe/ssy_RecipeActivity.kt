@@ -107,7 +107,7 @@ class ssy_RecipeActivity : AppCompatActivity() {
                 //띄어쓰기 인식안돼서 앞글자만 따옴
                 var input = itemList[position].name
                 println(input)
-                var token = input.split(' ')
+                var token = input.split(' ','&')
                 App.prefs.Recipe_Name = token[0]
                 //앞글자 같은것중에 레시피번호 비교
                 App.prefs.Recipe_Seq = itemList[position].seq
