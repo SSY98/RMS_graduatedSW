@@ -44,6 +44,7 @@ import java.io.*
 
 import com.googlecode.tesseract.android.TessBaseAPI
 import com.project.rms.R
+import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 
 
@@ -115,7 +116,11 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
         //영수증 버튼 누르면 카메라 실행_ssh
         binding.receipt.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            // 이미지 크롭을 위한 가이드를 열어주어 크롭할 이미지를 받아올 수 있게한다.
+            CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
+            /*val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val photoFile = File(
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "image").apply {
                     if (!this.exists()) {
@@ -136,7 +141,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
             takePictureIntent.resolveActivity(packageManager)?.also {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
                 startActivityForResult(takePictureIntent, BUTTON)
-            }
+            }*/
         }
 
 
