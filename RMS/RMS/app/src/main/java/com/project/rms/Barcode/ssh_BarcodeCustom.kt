@@ -291,21 +291,24 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
                         e.printStackTrace()
                     }
                 }
-                //
                 datapath = "$filesDir/tesseract/"
                 checkFile(File(datapath + "tessdata/"))
                 tess = TessBaseAPI()
                 tess!!.init(datapath, "eng")
+                tess!!.setVariable("VAR_CHAR_WHITELIST", "1234567890")
                 tess!!.setImage(bitmap)
                 val text = tess!!.utF8Text
                 Log.d("살려주세요",text)
                 //tess.recycle() //다쓰고 삭제
-                val t_arr = text.split(" ")
-                /*
-                val barcode_arr
+                val t_arr = text.split(" ","\n")
+                var barcode_arr = mutableListOf<String>()
                 for(i in 0 .. t_arr.size-1){
-                    if(t_)
-                }*/
+                    t_arr[i].replace("[^\\d]".toRegex(),"")
+                    if(t_arr[i].length == 13){
+                        barcode_arr.add(t_arr[i])
+                    }
+                }
+                Log.d("바코드만 추출",barcode_arr.toString())
 
 
                 Log.d("file","${fileCacheItem.name}")
