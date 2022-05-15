@@ -33,6 +33,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -131,21 +132,21 @@
             android:background="#3C505A"
             android:fontFamily="@font/fonta"
             android:textColor="#669B9B"
-            android:id="@+id/foodlist_cancel_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="취소"/>
-
-        <Button
-            android:background="#3C505A"
-            android:fontFamily="@font/fonta"
-            android:textColor="#669B9B"
             android:id="@+id/foodlist_update_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="수정"/>
+
+        <Button
+            android:background="#3C505A"
+            android:fontFamily="@font/fonta"
+            android:textColor="#669B9B"
+            android:id="@+id/foodlist_cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="취소"/>
 
     </LinearLayout>
 </LinearLayout>

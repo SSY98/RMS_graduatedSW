@@ -50,17 +50,6 @@
         android:layout_gravity="center">
 
         <Button
-            android:id="@+id/cancel_memo_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#3C505A"
-            android:text="취소"
-            android:textColor="#669B9B"
-            android:textSize="20dp"
-            android:fontFamily="@font/fonta"
-            android:layout_weight="1"/>
-
-        <Button
             android:id="@+id/update_memo_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,6 +57,17 @@
             android:text="수정"
             android:textSize="20dp"
             android:textColor="#669B9B"
+            android:fontFamily="@font/fonta"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/cancel_memo_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#3C505A"
+            android:text="취소"
+            android:textColor="#669B9B"
+            android:textSize="20dp"
             android:fontFamily="@font/fonta"
             android:layout_weight="1"/>
 

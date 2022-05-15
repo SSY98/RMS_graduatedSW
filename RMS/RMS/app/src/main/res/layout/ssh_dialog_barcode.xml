@@ -32,6 +32,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -119,6 +120,24 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:background="#3C505A"
+            android:fontFamily="@font/fonta"
+            android:id="@+id/food_plus_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#669B9B"
+            android:text="계속 추가" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,14 +164,5 @@
             android:text="취소"
             android:layout_weight="1"/>
 
-        <Button
-            android:background="#3C505A"
-            android:fontFamily="@font/fonta"
-            android:id="@+id/food_plus_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#669B9B"
-            android:text="추가"
-            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
