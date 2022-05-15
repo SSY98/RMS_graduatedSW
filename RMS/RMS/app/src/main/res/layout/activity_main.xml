@@ -125,7 +125,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:paddingTop="15dp"
+                        android:paddingTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
@@ -134,7 +134,7 @@
 
                         <TextView
                             android:fontFamily="@font/fonta"
-                            android:paddingLeft="25dp"
+                            android:paddingLeft="30dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="식재료명"

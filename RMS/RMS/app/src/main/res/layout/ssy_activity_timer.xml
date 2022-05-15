@@ -6,10 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_marginTop="50dp"
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="타이머"
+        android:paddingBottom="20dp"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/fonta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.mut_jaeryo.circletimer.CircleTimer
         android:id="@+id/main_timer"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_marginTop="172dp"
         app:init_position="3124"
         app:isOutline="true"
@@ -21,42 +35,51 @@
     </com.mut_jaeryo.circletimer.CircleTimer>
 
     <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start"
+        android:id="@+id/reset"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="초기화"
+        android:background="@drawable/btn_edge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.191"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintVertical_bias="0.824"
+        android:backgroundTint="@color/colorAccent"
+        android:elevation="10dp"/>
 
     <Button
         android:id="@+id/stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="stop"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="정지"
+        android:background="@drawable/btn_edge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.829"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintVertical_bias="0.824"
+        android:backgroundTint="@color/btn_trd"
+        android:elevation="10dp"/>
 
     <Button
-        android:id="@+id/reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="reset"
+        android:id="@+id/start"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="시작"
+        android:background="@drawable/btn_edge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/stop"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/start"
+        app:layout_constraintStart_toEndOf="@+id/reset"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintVertical_bias="0.824"
+        android:backgroundTint="@color/right_bg"
+        android:elevation="10dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
