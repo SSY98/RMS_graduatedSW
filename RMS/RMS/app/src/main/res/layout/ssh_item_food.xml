@@ -34,7 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="xxxx"
-                android:fontFamily="@font/fonta" />
+                android:fontFamily="@font/fonta"
+                android:layout_marginLeft="5dp"/>
 
             <TextView
                 android:id="@+id/activity_food_date"
@@ -42,7 +43,7 @@
                 android:text="20xx-xx-xx"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fonta"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:id="@+id/activity_food_count"
@@ -50,7 +51,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fonta"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:id="@+id/activity_food_counttext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="개"
+                android:fontFamily="@font/fonta"
+                android:layout_marginLeft="2dp"/>
 
         </LinearLayout>
 

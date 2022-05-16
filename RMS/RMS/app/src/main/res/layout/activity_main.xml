@@ -228,15 +228,6 @@
 
                     </LinearLayout>
 
-<!--                    <ImageView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="150dp"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@drawable/music"-->
-<!--                        android:layout_marginRight="2.5dp"-->
-<!--                        android:layout_marginTop="2.5dp"-->
-<!--                        android:layout_marginBottom="2.5dp"/>-->
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -278,14 +269,14 @@
                         android:layout_height="400dp"
                         android:layout_marginLeft="2.5dp"
                         android:layout_marginTop="2.5dp"
-                        android:background="#FFF7D1"
+                        android:background="#FFF596"
                         android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="52.5dp"
+                        android:layout_height="58.5dp"
                         android:layout_marginLeft="2.5dp"
-                        android:background="#FFF7D1"
+                        android:background="#FFF596"
                         android:orientation="horizontal">
 
                         <ImageButton
@@ -294,7 +285,7 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginLeft="10dp"
-                            android:background="#FFF7D1"
+                            android:background="#FFF596"
                             android:src="@drawable/btn_plus" />
 
                         <EditText
@@ -302,10 +293,12 @@
                             android:layout_marginRight="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#EAEAEA"
+                            android:background="@drawable/edge"
+                            android:backgroundTint="#FFF7D1"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="10dp"
-                            android:hint="메모 추가하기..." />
+                            android:hint="메모 추가하기..."
+                            android:elevation="5dp"/>
 
                     </LinearLayout>
                 </LinearLayout>

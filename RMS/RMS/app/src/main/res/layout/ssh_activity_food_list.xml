@@ -4,11 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="20dp">
+    android:layout_height="match_parent">
 
     <TextView
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/FoodList_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +24,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ref_icon"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/FoodList_title"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,11 +35,12 @@
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@color/black"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         app:layout_constraintBottom_toTopOf="@+id/FoodList_recyclerView"
         app:layout_constraintTop_toBottomOf="@+id/FoodList_title"
         app:layout_constraintVertical_bias="1.0" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/FoodList_recyclerView"
@@ -48,12 +49,20 @@
         android:layout_height="0dp"
         android:paddingBottom="10dp"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FoodList_title"
         tools:layout_editor_absoluteX="0dp"
         android:elevation="10dp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="11dp"
+        android:src="@drawable/bottom_veg"
+        android:scaleType="fitEnd"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

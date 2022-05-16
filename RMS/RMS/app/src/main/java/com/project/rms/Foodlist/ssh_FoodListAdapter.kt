@@ -30,6 +30,7 @@ class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
         val activity_food_date: TextView = itemView.findViewById(R.id.activity_food_date)
         val activity_food_count: TextView = itemView.findViewById(R.id.activity_food_count)
         val activity_root = itemView.activity_rootView
+        val activity_food_counttext : TextView = itemView.findViewById(R.id.activity_food_counttext) // ex) xx개  _ysj
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -79,12 +80,14 @@ class ssh_FoodListAdapter(var list : MutableList<ssh_ProductEntity>,
             holder.activity_food_category.setTextColor(Color.rgb(255,0,0))
             holder.activity_food_date.setTextColor(Color.rgb(255,0,0))
             holder.activity_food_count.setTextColor(Color.rgb(255,0,0))
+            holder.activity_food_counttext.setTextColor(Color.rgb(255,0,0)) //ex) xx개  _ysj
         }else
         {
             holder.activity_food_name.setTextColor(Color.rgb(0,0,0))
             holder.activity_food_category.setTextColor(Color.rgb(0,0,0))
             holder.activity_food_date.setTextColor(Color.rgb(0,0,0))
             holder.activity_food_count.setTextColor(Color.rgb(0,0,0))
+            holder.activity_food_counttext.setTextColor(Color.rgb(0,0,0)) //ex) xx개  _ysj
         }
     }
 
