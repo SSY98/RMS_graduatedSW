@@ -179,6 +179,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                     binding.temperatures.setText(api_TMP+" °C")
 
                     if (getRainType(api_PTY) == "없음"){
+                        binding.raintype.setText(" ")
                         if (getSky(api_SKY) == "맑음"){
                             binding.weatherimg.setImageResource(R.drawable.sunny)
                         }
