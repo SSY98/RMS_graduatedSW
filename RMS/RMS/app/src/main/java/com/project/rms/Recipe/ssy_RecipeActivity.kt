@@ -61,7 +61,11 @@ class ssy_RecipeActivity : AppCompatActivity() {
                     } else {
                         choice_materials.add(sel_itemList[position].parts)
                     }
-                    binding.select.setText(choice_materials.toString())
+                    var selecttext = ""
+                    for(i in 0..choice_materials.size-1){
+                        selecttext = selecttext + choice_materials[i] + " "
+                    }
+                    binding.select.setText(selecttext)
                 } else {
                     Toast.makeText(
                         applicationContext,
@@ -77,7 +81,12 @@ class ssy_RecipeActivity : AppCompatActivity() {
             //검색이 되는 재료들만 선정해서 재료 리스트에 넣음
             for(ck in 0 until check_materials.size){
                 if(checkparts(check_materials[ck])!=0){
-                    materials.add(check_materials[ck])
+                    if(materials.contains(check_materials[ck])){
+
+                    }
+                    else{
+                        materials.add(check_materials[ck])
+                    }
                 }
             }
             for(i in 0 until materials.size){
@@ -111,11 +120,6 @@ class ssy_RecipeActivity : AppCompatActivity() {
                 App.prefs.Recipe_Name = token[0]
                 //앞글자 같은것중에 레시피번호 비교
                 App.prefs.Recipe_Seq = itemList[position].seq
-
-                Toast.makeText(applicationContext,
-                    "${itemList[position].name}\n${itemList[position].material}\n"+token[0],
-                    Toast.LENGTH_SHORT).show()
-
                 val intent = Intent(applicationContext, ssy_RecipeMakeActivity::class.java)
                 startActivity(intent)
             }
@@ -248,7 +252,7 @@ class ssy_RecipeActivity : AppCompatActivity() {
                             ready_parts += 1
                         }
                     }
-                    RCP_PARTS_DTLS = "[보유 식재료 :"+ ready + "]" +"\n"+RCP_PARTS_DTLS
+                    RCP_PARTS_DTLS = "[보유 식재료 :"+ ready + "]" +"\n\n"+RCP_PARTS_DTLS
                     itemList.add(ssy_Recipe_Litem(RCP_SEQ, RCP_NM, RCP_PARTS_DTLS,ATT_FILE_NO_MAIN,ready_parts))
                     itemList.sortBy { it.readyparts }
                     itemList.reverse()
