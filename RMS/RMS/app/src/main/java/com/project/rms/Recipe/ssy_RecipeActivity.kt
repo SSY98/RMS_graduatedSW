@@ -173,7 +173,7 @@ class ssy_RecipeActivity : AppCompatActivity() {
             if(ready == ""){
                 ready = " 없음"
             }
-            RCP_PARTS_DTLS = "[보유 식재료 :"+ ready + "]" +"\n"+RCP_PARTS_DTLS
+            RCP_PARTS_DTLS = "[보유 식재료 :"+ ready + "]" +"\n\n"+RCP_PARTS_DTLS
             var RCP_SEQ: String = obj2.getString("RCP_SEQ")
             GlobalScope.launch(Dispatchers.Main){
                 itemList.add(ssy_Recipe_Litem(RCP_SEQ, RCP_NM, RCP_PARTS_DTLS,ATT_FILE_NO_MAIN,ready_parts))
