@@ -44,17 +44,19 @@ import java.io.*
 
 import com.googlecode.tesseract.android.TessBaseAPI
 import com.project.rms.R
+import com.project.rms.Receipt.ssh_ReceiptDatabase
+import com.project.rms.Receipt.ssh_ReceiptDialog
+import com.project.rms.Receipt.ssh_ReceiptDialogInterface
+import com.project.rms.Receipt.ssh_ReceiptEntity
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 
-
-
-
-
-class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
+class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_ReceiptDialogInterface {
     private lateinit var capture: CaptureManager
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
+    lateinit var db3 : ssh_ReceiptDatabase // 영수증 db_ssh
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
+    var ReceiptList = mutableListOf<ssh_ReceiptEntity>() // 영수증 목록_ssh
 
     //ysj 추가
     // ViewBinding
@@ -85,6 +87,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        db3 = ssh_ReceiptDatabase.getInstance(this)!! // 영수증 db_ssh
+
         binding = ActivitySshBarcodeCustomBinding.inflate(layoutInflater)
         val view = binding.root
 
@@ -417,12 +422,42 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface {
     }
     //tess사용하기위한 함수
 
+
+
+    // 데이터베이스에 영수증 식재료를 추가_ssh
+    fun insertReceipt(receipt : ssh_ReceiptEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db3.ReceiptDAO().insert(receipt)
+            }.await()
+            ReceiptList = db3.ReceiptDAO().getAll()
+        }
+    }
+
+    // 영수증 인식 시 식재료 추가에 대한 팝업창 출력_ssh
+    fun ReceiptDialog(){
+        App.prefs.Dbtn = true
+        val ReceiptDialog = ssh_ReceiptDialog(this, this)
+        ReceiptDialog.show()
+    }
+
+    override fun onReceiptAddButtonClicked() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onReceiptCancelButtonClicked() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onReceiptPlusButtonClicked() {
+        TODO("Not yet implemented")
+    }
+
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
     fun dialog(){
         App.prefs.Dbtn = true
         val ImageDialog = ssh_BarcodeDialog(this,this)
         ImageDialog.show()
-
     }
     //이미지 파일 저장 ysj
     private fun newJpgFileName() : String {
