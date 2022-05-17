@@ -323,6 +323,10 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
 
                 Toast.makeText(
                     this, "Cropping successful, Sample: " + result.sampleSize, Toast.LENGTH_LONG).show()
+                val receipt = ssh_ReceiptEntity(null,"1", "1", "2022-05-30", "1")
+                insertReceipt(receipt)
+
+                ReceiptDialog() // 영수증 인식 팝업창 출력_ssh
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(this, "Cropping failed: " + result.error, Toast.LENGTH_LONG).show()
             }
@@ -421,8 +425,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         }
     }
     //tess사용하기위한 함수
-
-
 
     // 데이터베이스에 영수증 식재료를 추가_ssh
     fun insertReceipt(receipt : ssh_ReceiptEntity){
