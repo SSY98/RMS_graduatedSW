@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg3"
     tools:context=".MainActivity">
 
     <ImageView
@@ -21,10 +22,10 @@
         android:id="@+id/food_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="Loading.."
         android:textColor="@color/black"
-        android:fontFamily="@font/fonta"
+        android:textStyle="bold"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/food_img"
@@ -40,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/food_name">
 
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center_vertical|center_horizontal"
             android:id="@+id/food_material"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

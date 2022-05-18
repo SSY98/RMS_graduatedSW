@@ -94,6 +94,9 @@ class ssy_RecipeActivity : AppCompatActivity() {
             }
             GlobalScope.launch(Dispatchers.Main){
                 sel_listAdapter.notifyDataSetChanged()
+                if (materials.size == 0) {
+                    binding.receiptintro.setText("식재료를 추가해주세요ㅠ")
+                }
             }
         }
         //검색 버튼이 눌렸을때

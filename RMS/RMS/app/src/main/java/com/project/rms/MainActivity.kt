@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         Log.d("api_times", timeH+timeM)
         var base_time = getBaseTime(timeH, timeM)
         // 현재 시각이 00시이고 45분 이하여서 baseTime이 2330이면 어제 정보 받아오기
-        if ((timeH == "00" || timeH == "01")&& base_time == "2300") {
+        if ((timeH == "00" || timeH == "01" || timeH == "02")&& base_time == "2300") {
             cal.add(Calendar.DATE, -1).toString()
             base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
             base_time = "2300"

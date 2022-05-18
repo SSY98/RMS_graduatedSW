@@ -15,6 +15,6 @@
         app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/fonta"/>
+        android:fontFamily="@font/fontjua"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

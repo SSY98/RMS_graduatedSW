@@ -20,8 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/fonta" />
+            
+            android:text="사과"
+            android:fontFamily="@font/fontjua" />
 
         <LinearLayout
             android:layout_marginTop="5dp"

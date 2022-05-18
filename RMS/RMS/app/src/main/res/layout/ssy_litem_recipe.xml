@@ -4,8 +4,8 @@
     android:layout_margin="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8dp">
+    app:cardElevation="10dp"
+    app:cardCornerRadius="30dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,32 +16,35 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
             android:text="Loading.."
-            android:textSize="15dp"
             android:textColor="@color/black"
-            android:fontFamily="@font/fonta"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="15dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_img"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_number"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Loading.."
-            android:fontFamily="@font/fonta"
+            android:layout_marginBottom="5dp"
             android:ellipsize="end"
+            android:fontFamily="@font/fonta"
+            android:gravity="center"
+            android:text="Loading.."
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_img"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

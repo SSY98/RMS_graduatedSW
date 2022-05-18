@@ -14,8 +14,8 @@
         android:text="식재료 리스트"
         android:textSize="30dp"
         android:textColor="@color/black"
-        android:fontFamily="@font/fonta"
-        android:textStyle="bold"
+        android:fontFamily="@font/fontjua"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

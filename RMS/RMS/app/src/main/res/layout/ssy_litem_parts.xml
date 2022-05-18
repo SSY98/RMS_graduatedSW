@@ -4,8 +4,8 @@
     android:layout_margin="8dp"
     android:layout_width="wrap_content"
     android:layout_height="50dp"
-    app:cardElevation="8dp"
-    app:cardCornerRadius="8dp">
+    app:cardElevation="10dp"
+    app:cardCornerRadius="25dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,15 +16,16 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="35dp"
             android:layout_marginTop="16dp"
-            android:paddingRight="40dp"
+            android:paddingRight="35dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text=" "
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
