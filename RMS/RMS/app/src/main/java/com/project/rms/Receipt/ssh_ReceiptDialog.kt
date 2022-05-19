@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
+import com.project.rms.Memo.ssh_MemoAdapter
+import com.project.rms.Memo.ssh_MemoEntity
 import com.project.rms.Memo.ssh_MemoUpdateDialogInterface
 import com.project.rms.R
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface) : Dialog(context) {
+class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface) : Dialog(context), ssh_onReceiptDeleteListener {
     // 인터페이스를 받아옴
     private var ReceiptDialogInterface: ssh_ReceiptDialogInterface = Interface
 
@@ -40,18 +42,8 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 영수증 db를 불러옴
-        CoroutineScope(Dispatchers.IO).launch {
-            async{
-                ReceiptList = db3.ReceiptDAO().getAll()
-                Log.d("Receipt","$ReceiptList")
-            }.await()
-            CoroutineScope(Dispatchers.Main).launch {
-                val recyclerView = findViewById<RecyclerView>(R.id.ReceiptRecyclerView)
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                val adapter = ssh_ReceiptAdapter(ReceiptList)//수정
-                recyclerView.adapter = adapter//++
-            }
-        }
+        getAllReceipt()
+
         // 확인 버튼 클릭 시 onReceiptAddButtonClicked 호출 후 종료
         add_receipt.setOnClickListener {
             ReceiptDialogInterface.onReceiptAddButtonClicked()
@@ -69,5 +61,41 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
             ReceiptDialogInterface.onReceiptPlusButtonClicked()
             dismiss()
         }
+    }
+
+    // 데이터베이스에 영수증 식재료를 삭제_ssh
+    fun deleteReceipt(receipt : ssh_ReceiptEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db3.ReceiptDAO().delete(receipt)
+            }.await()
+            getAllReceipt()
+        }
+    }
+
+    // 데이터베이스에 있는 영수증 식재료를 불러옴_ssh
+    fun getAllReceipt(){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                ReceiptList = db3.ReceiptDAO().getAll()
+                Log.d("Receipt","$ReceiptList")
+            }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+                setReceiptRecyclerView(ReceiptList)
+            }
+        }
+    }
+
+    // recyclerview로 데이터베이스에 있는 영수증 식재료 출력_ssh
+    fun setReceiptRecyclerView(receiptList : MutableList<ssh_ReceiptEntity>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.ReceiptRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        val adapter = ssh_ReceiptAdapter(ReceiptList, this)//수정
+        recyclerView.adapter = adapter//++
+    }
+
+    // 영수증 인식 팝업창에서 삭제 버튼 클릭 시 해당 되는 식재료를 DB 및 목록에서 삭제
+    override fun onReceiptDeleteListener(receipt: ssh_ReceiptEntity) {
+        deleteReceipt(receipt)
     }
 }

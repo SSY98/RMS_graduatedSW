@@ -43,11 +43,9 @@ import android.graphics.BitmapFactory
 import java.io.*
 
 import com.googlecode.tesseract.android.TessBaseAPI
+import com.project.rms.Memo.ssh_MemoEntity
 import com.project.rms.R
-import com.project.rms.Receipt.ssh_ReceiptDatabase
-import com.project.rms.Receipt.ssh_ReceiptDialog
-import com.project.rms.Receipt.ssh_ReceiptDialogInterface
-import com.project.rms.Receipt.ssh_ReceiptEntity
+import com.project.rms.Receipt.*
 import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 
@@ -436,12 +434,16 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         }
     }
 
+
+
     // 영수증 인식 시 식재료 추가에 대한 팝업창 출력_ssh
     fun ReceiptDialog(){
         App.prefs.Dbtn = true
         val ReceiptDialog = ssh_ReceiptDialog(this, this)
         ReceiptDialog.show()
     }
+
+
 
     override fun onReceiptAddButtonClicked() {
         TODO("Not yet implemented")
@@ -452,7 +454,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
     }
 
     override fun onReceiptPlusButtonClicked() {
-        TODO("Not yet implemented")
     }
 
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
