@@ -1,15 +1,19 @@
 package com.project.rms.Receipt
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
 import com.project.rms.R
+import kotlinx.android.synthetic.main.ssh_item_memo.view.*
+import kotlinx.android.synthetic.main.ssh_item_receipt.view.*
 
 class ssh_ReceiptAdapter(var list : MutableList<ssh_ReceiptEntity>, var ssh_onReceiptDeleteListener: ssh_onReceiptDeleteListener) : RecyclerView.Adapter<ssh_ReceiptAdapter.ViewHolder>(){
     inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -39,7 +43,6 @@ class ssh_ReceiptAdapter(var list : MutableList<ssh_ReceiptEntity>, var ssh_onRe
         holder.receiptcategory.text = receipt_category
         holder.receiptdate.text = receipt_date
         holder.receiptcount.text = receipt_count
-
 
         // 삭제 버튼을 클릭하면 영수증 DB에서 해당 식재료 삭제
         holder.receiptdelete.setOnClickListener {

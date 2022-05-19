@@ -434,8 +434,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         }
     }
 
-
-
     // 영수증 인식 시 식재료 추가에 대한 팝업창 출력_ssh
     fun ReceiptDialog(){
         App.prefs.Dbtn = true
@@ -444,9 +442,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
     }
 
 
-
     override fun onReceiptAddButtonClicked() {
-        TODO("Not yet implemented")
+        /*val product = ssh_ProductEntity(null, productname, productcatergory, productdate, productcount)
+        insertProduct(product)*/
     }
 
     override fun onReceiptCancelButtonClicked() {
