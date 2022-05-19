@@ -524,7 +524,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         }
     }
 
-
     private fun setListener() {
         recognitionListener = object: RecognitionListener {
             //음소거를 위한 오디오 매니저

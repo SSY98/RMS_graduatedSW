@@ -16,6 +16,7 @@ import com.project.rms.Memo.ssh_MemoAdapter
 import com.project.rms.Memo.ssh_MemoEntity
 import com.project.rms.Memo.ssh_MemoUpdateDialogInterface
 import com.project.rms.R
+import com.project.rms.Recipe.ssy_Parts_Litem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -27,6 +28,7 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
 
     lateinit var db3 : ssh_ReceiptDatabase // 영수증 db_ssh
     var ReceiptList = mutableListOf<ssh_ReceiptEntity>() // 영수증 목록_ssh
+    var ReceiptItem = arrayListOf<ssh_Receipt_item>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
