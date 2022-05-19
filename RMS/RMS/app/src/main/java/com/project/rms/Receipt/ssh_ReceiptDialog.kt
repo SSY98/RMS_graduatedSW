@@ -87,7 +87,7 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
     }
 
     // recyclerview로 데이터베이스에 있는 영수증 식재료 출력_ssh
-    fun setReceiptRecyclerView(receiptList : MutableList<ssh_ReceiptEntity>) {
+    fun setReceiptRecyclerView(ReceiptList : MutableList<ssh_ReceiptEntity>) {
         val recyclerView = findViewById<RecyclerView>(R.id.ReceiptRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = ssh_ReceiptAdapter(ReceiptList, this)//수정
