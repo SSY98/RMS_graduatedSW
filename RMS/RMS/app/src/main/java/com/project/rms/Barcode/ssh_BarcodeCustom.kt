@@ -47,7 +47,9 @@ import com.project.rms.Memo.ssh_MemoEntity
 import com.project.rms.R
 import com.project.rms.Receipt.*
 import com.theartofdev.edmodo.cropper.CropImageView
+import org.json.JSONObject
 import java.io.File
+import java.net.URL
 
 class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_ReceiptDialogInterface {
     private lateinit var capture: CaptureManager
@@ -303,6 +305,8 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                 val text = tess!!.utF8Text
                 Log.d("살려주세요",text)
                 //tess.recycle() //다쓰고 삭제
+
+                //인식한 바코드 barcode_arr에 넣기
                 val t_arr = text.split(" ","\n")
                 var barcode_arr = mutableListOf<String>()
                 for(i in 0 .. t_arr.size-1){
@@ -310,6 +314,12 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                     if(t_arr[i].length == 13){
                         barcode_arr.add(t_arr[i])
                     }
+                }
+
+                //for문으로 배열안 바코드 가져오기
+                for(i in 0 .. barcode_arr.size-1) {
+                    var rept_Thread = rept_BarThread(barcode_arr[i])
+                    rept_Thread.start()
                 }
                 Log.d("바코드만 추출",barcode_arr.toString())
 
@@ -385,6 +395,96 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
             }
         }
 
+    }
+    class rept_BarThread(var bar:String) : Thread(){
+        override fun run() {
+            var Api_key = "1937954c9b7840bbbf76"
+            var site =
+                "https://openapi.foodsafetykorea.go.kr/api/"+Api_key+"/C005/json/1/2/BAR_CD="+bar
+            var url = URL(site)
+            var conn = url.openConnection()
+            var input = conn.getInputStream()
+            var isr = InputStreamReader(input)
+            var br = BufferedReader(isr)
+
+            var str: String? = null
+            var buf = StringBuffer()
+
+            do {
+                str = br.readLine()
+
+                if (str != null) {
+                    buf.append(str)
+                }
+            } while (str != null)
+
+            var root = JSONObject(buf.toString()) //받아온 내용 객체로 가져오기
+            var C005 = root.getJSONObject("C005") // 내용에서 C005객체 가져오기
+            var total_count: String = C005.getString("total_count") //검색결과 갯수 가져오기
+
+            //바코드번호로 정상적이게 검색이 되었으면 파싱시작
+            if(total_count=="1"){
+                var row = C005.getJSONArray("row") //row라는 배열 가져오기
+                var obj2 = row.getJSONObject(0)
+                var result = C005.getJSONObject("RESULT")
+                var code: String = result.getString("CODE") //결과코드 가져오기
+
+                var PRDLST_NM: String = obj2.getString("PRDLST_NM")
+                var POG_DAYCNT: String = obj2.getString("POG_DAYCNT")
+                var BAR_CD: String = obj2.getString("BAR_CD")
+                var PRDLST_DCNM: String = obj2.getString("PRDLST_DCNM")
+
+                //유통기한 함수 _ ssy
+                fun getDate(Date : String) : String{
+                    var customDate = false
+                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",") //금지어 추가
+                    val cal = Calendar.getInstance()
+
+                    for(i in BanDate.indices){ //금지어 있으면 커스텀 모드
+                        if(Date.contains(BanDate[i])){
+                            customDate = true
+                        }
+                    }
+                    if (customDate==false){
+                        if(Date.contains("년")){ //년이 들어가있으면
+                            val number = Date.replace("[^\\d]".toRegex(), "")
+                            cal.add(Calendar.YEAR, number.toInt()).toString()
+                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            return now_date
+                        }
+                        else if(Date.contains("월")){ //월이 들어가있으면
+                            val number = Date.replace("[^\\d]".toRegex(), "")
+                            cal.add(Calendar.MONTH, number.toInt()).toString()
+                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            return now_date
+                        }
+                        else{ //일이 들어가있으면
+                            val number = Date.replace("[^\\d]".toRegex(), "")
+                            cal.add(Calendar.DATE, number.toInt()).toString()
+                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            return now_date
+                        }
+                    }
+                    else{ //customDate가 true이면
+                        var now_date = "사용자 직접 입력"
+                        return now_date
+                    }
+                }
+                //유통기한 함수
+                // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
+                // (제품명) PRDLST_NM, (분류) PRDLST_DCNM, (유통기한) getDate(POG_DAYCNT)
+
+                // 바코드 인식한 상품 로그 출력
+                Log.d("바코드_번호:","${BAR_CD}")
+                Log.d("바코드_제품이름:","${PRDLST_NM}")
+                Log.d("바코드_제품종류:","${PRDLST_DCNM}")
+                Log.d("바코드_유통기한:","${POG_DAYCNT}")
+            }
+            // 바코드번호로 검색이 되지않았으면 실패메시지 발생
+            else{
+                Log.d("바코드_상태:","바코드를 다시입력해주세요")
+            }
+        }
     }
     //tess사용하기위한 함수
     private val langFileName = "eng.traineddata"
