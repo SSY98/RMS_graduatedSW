@@ -525,8 +525,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
 
 
     override fun onReceiptAddButtonClicked() {
-        val receipt = ssh_ReceiptEntity(null,App.prefs.FoodName.toString(),  App.prefs.FoodCategory.toString(), App.prefs.FoodDate.toString(), "1")
-        insertReceipt(receipt)
+        TODO("Not yet implemented")
     }
 
     override fun onReceiptCancelButtonClicked() {
@@ -534,6 +533,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
     }
 
     override fun onReceiptPlusButtonClicked() {
+        TODO("Not yet implemented")
     }
 
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
