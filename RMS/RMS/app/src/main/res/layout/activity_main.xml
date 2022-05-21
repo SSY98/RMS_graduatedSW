@@ -129,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:background="#ADC4E9"
+                        android:background="#D4F4FA"
                         android:layout_marginRight="2.5dp">
 
                         <TextView
@@ -158,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="450dp"
                         android:padding="15dp"
-                        android:background="#ADC4E9"
+                        android:background="#D4F4FA"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -264,6 +264,7 @@
 
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:paddingLeft="10dp"
                         android:id="@+id/Memo_recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"

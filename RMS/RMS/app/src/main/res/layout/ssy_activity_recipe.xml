@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/bg2">
+    android:background="@drawable/bg5_1">
 
     <TextView
         android:layout_marginTop="40dp"
@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:text="식재료를 선택해주세요."
             android:textSize="23dp"
+            android:textColor="@color/black"
             android:layout_gravity="left|center_vertical"
             android:fontFamily="@font/fontjua"/>
 

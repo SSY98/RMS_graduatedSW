@@ -23,8 +23,8 @@
     <com.mut_jaeryo.circletimer.CircleTimer
         android:id="@+id/main_timer"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="172dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="150dp"
         app:init_position="3124"
         app:isOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
