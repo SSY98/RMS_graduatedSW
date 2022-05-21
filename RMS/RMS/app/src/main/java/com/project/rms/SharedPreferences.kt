@@ -78,7 +78,7 @@ class SharedPreferences (context: Context) {
         set(value) = prefs.edit().putString(voice_name, value).apply()
 
     var Voiceoption: Boolean
-        get() = prefs.getBoolean(voice_option, true)
+        get() = prefs.getBoolean(voice_option, false)
         set(value) = prefs.edit().putBoolean(voice_option, value).apply()
 
     var Voiceanswer: Boolean
@@ -104,5 +104,4 @@ class SharedPreferences (context: Context) {
     var TimerSecond: Int
         get() = prefs.getInt(timer_s, 60)
         set(value) = prefs.edit().putInt(timer_s, value).apply()
-
 }
