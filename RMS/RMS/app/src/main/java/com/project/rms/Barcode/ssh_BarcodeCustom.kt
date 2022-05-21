@@ -333,7 +333,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                         }
                     }
                     else{ //customDate가 true이면
-                        var now_date = "사용자 직접 입력"
+                        var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
                         return now_date
                     }
                 }
@@ -461,7 +461,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                     App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
                                 }
                                 dialog() // 팝업창 실행
-                                
+
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                                 Log.d("YMC", "onResponse 실패")

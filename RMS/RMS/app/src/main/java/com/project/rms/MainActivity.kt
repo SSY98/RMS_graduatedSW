@@ -339,7 +339,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 //유통기한 함수 _ ssy
                 fun getDate(Date : String) : String{
                     var customDate = false
-                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",") //금지어 추가
+                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",","없음") //금지어 추가
                     val cal = Calendar.getInstance()
 
                     for(i in BanDate.indices){ //금지어 있으면 커스텀 모드
@@ -368,7 +368,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         }
                     }
                     else{ //customDate가 true이면
-                        var now_date = "사용자 직접 입력"
+                        var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
                         return now_date
                     }
                 }
