@@ -440,13 +440,28 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                     cal.add(Calendar.DATE, 21).toString()
                                     App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
                                 }
-                                else {
-                                    App.prefs.FoodName = ""
-                                    App.prefs.FoodCategory = ""
-                                    App.prefs.FoodDate = ""
+                                else if(real_result == "계란"){
+                                    App.prefs.FoodCategory = "계란"
+                                    cal.add(Calendar.DATE, 25).toString()
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
                                 }
-
+                                else if(real_result == "당근"){
+                                    App.prefs.FoodCategory = "당근"
+                                    cal.add(Calendar.DATE, 14).toString()
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                }
+                                else if(real_result == "양파"){
+                                    App.prefs.FoodCategory = "양파"
+                                    cal.add(Calendar.DATE, 14).toString()
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                }
+                                else {
+                                    App.prefs.FoodName = real_result
+                                    App.prefs.FoodCategory = real_result
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                }
                                 dialog() // 팝업창 실행
+                                
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                                 Log.d("YMC", "onResponse 실패")
