@@ -19,6 +19,11 @@ class SharedPreferences (context: Context) {
 
     private val dialog_button = "Dbtn" // 메모 내용
 
+    private val receipt_name = "ReceiptName" // 영수증 식재료 이름
+    private val receipt_category = "ReceiptCategory" // 영수증 식재료 종류
+    private val receipt_date = "ReceiptDate" // 영수증 식재료 유통기한
+    private val receipt_count = "ReceiptCount" // 영수증 식재료 개수
+
     //음성인식에 사용
     private val voice_name = "Voicename" //음성인식 호출이름
     private val voice_option = "Voiceoption" //음성인식 on/off setting
@@ -72,6 +77,22 @@ class SharedPreferences (context: Context) {
     var Dbtn: Boolean
         get() = prefs.getBoolean(dialog_button, true)
         set(value) = prefs.edit().putBoolean(dialog_button, value).apply()
+
+    var ReceiptName: String?
+        get() = prefs.getString(receipt_name, "")
+        set(value) = prefs.edit().putString(receipt_name, value).apply()
+
+    var ReceiptCategory: String?
+        get() = prefs.getString(receipt_category, "")
+        set(value) = prefs.edit().putString(receipt_category, value).apply()
+
+    var ReceiptDate: String?
+        get() = prefs.getString(receipt_date, "")
+        set(value) = prefs.edit().putString(receipt_date, value).apply()
+
+    var ReceiptCount: String?
+        get() = prefs.getString(receipt_count, "")
+        set(value) = prefs.edit().putString(receipt_count, value).apply()
 
     var Voicename: String
         get() = prefs.getString(voice_name, "냉장고").toString()

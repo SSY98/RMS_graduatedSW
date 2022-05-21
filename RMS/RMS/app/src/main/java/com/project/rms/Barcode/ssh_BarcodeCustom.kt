@@ -58,6 +58,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
     lateinit var db3 : ssh_ReceiptDatabase // 영수증 db_ssh
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
     var ReceiptList = mutableListOf<ssh_ReceiptEntity>() // 영수증 목록_ssh
+    var ReceiptItem = arrayListOf<ssh_Receipt_item>() // 영수증 목록을 식재료 목록 db에 추가하기 위한 배열_ssh
 
     //ysj 추가
     // ViewBinding
@@ -363,7 +364,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
             if (resultCode == RESULT_OK) {
                 // crop 된 이미지의 uri를 비트맵으로 변환_ssh
                 val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, result.uri)
-                //(findViewById<View>(R.id.quick_start_cropped_image) as ImageView).setImageBitmap(bitmap)
 
                 datapath = "$filesDir/tesseract/"
                 checkFile(File(datapath + "tessdata/"))
@@ -384,7 +384,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                         barcode_arr.add(t_arr[i])
                     }
                 }
-                var ReceiptItem = arrayListOf<ssh_Receipt_item>()
 
                 //for문으로 배열안 바코드 가져오기
                 for(i in 0 .. barcode_arr.size-1) {
@@ -399,8 +398,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                     App.prefs.FoodCategory = ""
                     App.prefs.FoodDate = ""
                 }
-                Log.d("aa",ReceiptItem[0].itemcategory)
-                Log.d("aa",ReceiptItem[1].itemcategory)
                 Log.d("바코드만 추출",barcode_arr.toString())
 
                 ReceiptDialog() // 영수증 인식 팝업창 출력_ssh
@@ -513,6 +510,18 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                 db3.ReceiptDAO().insert(receipt)
             }.await()
             ReceiptList = db3.ReceiptDAO().getAll()
+            Log.d("ReceiptList","$ReceiptList")
+        }
+    }
+
+    // 데이터베이스에 영수증 식재료를 삭제_ssh
+    fun deleteReceipt(){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db3.ReceiptDAO().deleteAll()
+            }.await()
+            ReceiptList = db3.ReceiptDAO().getAll()
+            Log.d("ReceiptList","$ReceiptList")
         }
     }
 
@@ -523,17 +532,57 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         ReceiptDialog.show()
     }
 
-
+    // 영수증 인식 팝업창에서 확인 버튼 클릭 시 식재료 목록 데이터베이스에 영수증 인식 한 식재료를 추가_ssh
     override fun onReceiptAddButtonClicked() {
-        TODO("Not yet implemented")
+        // 영수증 db의 식재료를 식재료 db에 추가
+        for(i in 0 .. ReceiptItem.size-1){
+            val product = ssh_ProductEntity(null,ReceiptItem[i].itemname, ReceiptItem[i].itemcategory, ReceiptItem[i].itemdate, ReceiptItem[i].itemcount)
+            insertProduct(product)
+        }
+        deleteReceipt() // 영수증 db 내용 모두 삭제
+        ReceiptItem.clear() // ReceiptItem 배열의 내용 모두 삭제
+
+        // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
+        val i = Intent(this, MainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(i)
     }
 
+    // 영수증 인식 팝업창에서 삭제 버튼 클릭 시 receiptitem 배열에서 해당 식재료 삭제
+    override fun onReceiptDialogDeleteListener() {
+        for(i in 0 .. ReceiptItem.size-1) {
+            if (App.prefs.ReceiptName == ReceiptItem[i].itemname && App.prefs.ReceiptCategory == ReceiptItem[i].itemcategory &&
+                    App.prefs.ReceiptDate == ReceiptItem[i].itemdate && App.prefs.ReceiptCount == ReceiptItem[i].itemcount
+                ) {
+                val index = i
+                ReceiptItem.removeAt(index)
+                break
+            }
+            else {
+                App.prefs.ReceiptName = ""
+                App.prefs.ReceiptCategory = ""
+                App.prefs.ReceiptDate = ""
+                App.prefs.ReceiptCount = ""
+            }
+        }
+        Log.d("ReceiptItem","$ReceiptItem")
+    }
+
+    // 영수증 인식 팝업창에서 취소 버튼 클릭 시 식재료 목록 데이터베이스에 영수증 인식 한 식재료를 추가_ssh
     override fun onReceiptCancelButtonClicked() {
-        TODO("Not yet implemented")
+        deleteReceipt() // 영수증 db 내용 모두 삭제
+        ReceiptItem.clear() // ReceiptItem 배열의 내용 모두 삭제
     }
 
+    // 영수증 인식 팝업창에서 추가 버튼을 클릭 시 식재료 목록 데이터베이스에 영수증 인식 한 식재료를 추가되고 바코드 인식 화면을 띄움_ssh
     override fun onReceiptPlusButtonClicked() {
-        TODO("Not yet implemented")
+        // 영수증 db의 식재료를 식재료 db에 추가
+        for(i in 0 .. ReceiptItem.size-1){
+            val product = ssh_ProductEntity(null,ReceiptItem[i].itemname, ReceiptItem[i].itemcategory, ReceiptItem[i].itemdate, ReceiptItem[i].itemcount)
+            insertProduct(product)
+        }
+        deleteReceipt() // 영수증 db 내용 모두 삭제
+        ReceiptItem.clear() // ReceiptItem 배열의 내용 모두 삭제
     }
 
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh

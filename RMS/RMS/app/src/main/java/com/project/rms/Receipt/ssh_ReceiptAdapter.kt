@@ -46,6 +46,10 @@ class ssh_ReceiptAdapter(var list : MutableList<ssh_ReceiptEntity>, var ssh_onRe
 
         // 삭제 버튼을 클릭하면 영수증 DB에서 해당 식재료 삭제
         holder.receiptdelete.setOnClickListener {
+            App.prefs.ReceiptName = receipt_name
+            App.prefs.ReceiptCategory = receipt_category
+            App.prefs.ReceiptDate = receipt_date
+            App.prefs.ReceiptCount = receipt_count
             ssh_onReceiptDeleteListener.onReceiptDeleteListener(receipt)
         }
     }

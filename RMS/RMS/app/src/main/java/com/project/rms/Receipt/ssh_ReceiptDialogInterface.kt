@@ -6,4 +6,6 @@ interface ssh_ReceiptDialogInterface {
     fun onReceiptCancelButtonClicked()
 
     fun onReceiptPlusButtonClicked()
+
+    fun onReceiptDialogDeleteListener()
 }

@@ -15,4 +15,7 @@ interface ssh_ReceiptDAO {
 
     @Query("SELECT * FROM receipt ORDER BY date")
     fun getAll(): MutableList<ssh_ReceiptEntity>
+
+    @Query("DELETE FROM receipt ")
+    fun deleteAll()
 }

@@ -28,7 +28,6 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
 
     lateinit var db3 : ssh_ReceiptDatabase // 영수증 db_ssh
     var ReceiptList = mutableListOf<ssh_ReceiptEntity>() // 영수증 목록_ssh
-    var ReceiptItem = arrayListOf<ssh_Receipt_item>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,5 +98,6 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
     // 영수증 인식 팝업창에서 삭제 버튼 클릭 시 해당 되는 식재료를 DB 및 목록에서 삭제
     override fun onReceiptDeleteListener(receipt: ssh_ReceiptEntity) {
         deleteReceipt(receipt)
+        ReceiptDialogInterface.onReceiptDialogDeleteListener()
     }
 }
