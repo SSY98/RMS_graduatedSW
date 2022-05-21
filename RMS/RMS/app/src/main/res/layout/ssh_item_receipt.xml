@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#3C505A">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,7 +19,9 @@
             android:id="@+id/receipt_delete_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"/>
+            android:background="#3C505A"
+            android:textColor="#669B9B"
+            android:text="삭제"/>
     </LinearLayout>
 
 
@@ -28,11 +31,16 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="제품명 :"/>
+            android:gravity="right"
+            android:text="제품명 :  "/>
 
         <TextView
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
             android:id="@+id/receipt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -41,14 +49,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="종류 :"/>
+            android:gravity="right"
+            android:text="종류 :  "/>
 
         <TextView
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
             android:id="@+id/receipt_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -57,14 +71,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="유통기한 :" />
+            android:gravity="right"
+            android:text="유통기한 :  " />
 
         <TextView
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
             android:id="@+id/receipt_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -73,14 +93,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="개수 :" />
+            android:gravity="right"
+            android:text="개수 :  " />
 
         <TextView
+            android:textColor="@color/white"
+            android:fontFamily="@font/fonta"
             android:id="@+id/receipt_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

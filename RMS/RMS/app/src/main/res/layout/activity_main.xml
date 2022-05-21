@@ -237,30 +237,29 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/BarcodeImageRecognition"
+                        android:id="@+id/recipe"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:layout_marginLeft="2.5dp"
                         android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/bandi_2"
-                        android:text="식재료 추가"
-                        android:textSize="20dp"
-                        android:fontFamily="@font/fonta"
+                        android:background="@drawable/recipe_bg3"
+                        android:text="레시피 추천 "
+                        android:textSize="25dp"
+                        android:fontFamily="@font/fontjua"
                         android:textColor="@color/white" />
 
                     <Button
-                        android:id="@+id/recipe"
+                        android:id="@+id/BarcodeImageRecognition"
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:layout_marginTop="2.5dp"
                         android:layout_marginLeft="2.5dp"
                         android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/recipepic_00"
-                        android:text="레시피 추천"
-                        android:textSize="20dp"
+                        android:background="@drawable/bandi_2"
+                        android:text="식재료 추가 "
+                        android:textSize="25dp"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/fonta"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/fontjua" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
