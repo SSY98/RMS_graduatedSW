@@ -339,7 +339,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 //유통기한 함수 _ ssy
                 fun getDate(Date : String) : String{
                     var customDate = false
-                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",","없음") //금지어 추가
+                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",","없음","수출") //금지어 추가
                     val cal = Calendar.getInstance()
 
                     for(i in BanDate.indices){ //금지어 있으면 커스텀 모드
@@ -378,6 +378,11 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 App.prefs.FoodName = PRDLST_NM
                 App.prefs.FoodCategory = PRDLST_DCNM
                 App.prefs.FoodDate = getDate(POG_DAYCNT)
+
+                val a = getDate(POG_DAYCNT).split("-")
+                App.prefs.FoodYear = a[0]
+                App.prefs.FoodMonth = a[1]
+                App.prefs.FoodDay = a[2]
 
                 // 바코드 인식한 상품 로그 출력
                 Log.d("바코드_번호:","${BAR_CD}")
@@ -471,6 +476,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
 
         // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
@@ -484,6 +492,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
     }
 
@@ -500,6 +511,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
 
         var integrator = IntentIntegrator(this)

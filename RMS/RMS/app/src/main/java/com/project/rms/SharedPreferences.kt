@@ -12,6 +12,9 @@ class SharedPreferences (context: Context) {
     private val food_name = "FoodName" // 식재료 이름
     private val food_category = "FoodCategory" // 식재료 목록
     private val food_date = "FoodDate" // 식재료 유통기한
+    private val food_year = "FoodYear" // 식재료 유통기한
+    private val food_month = "FoodMonth" // 식재료 유통기한
+    private val food_day = "FoodDay" // 식재료 유통기한
     private val food_count = "FoodCount" // 식재료 개수
 
     private val memo_id = "MemoID" // 메모 ID
@@ -61,6 +64,18 @@ class SharedPreferences (context: Context) {
     var FoodDate: String?
         get() = prefs.getString(food_date, "")
         set(value) = prefs.edit().putString(food_date, value).apply()
+
+    var FoodYear: String?
+        get() = prefs.getString(food_year, "")
+        set(value) = prefs.edit().putString(food_year, value).apply()
+
+    var FoodMonth: String?
+        get() = prefs.getString(food_month, "")
+        set(value) = prefs.edit().putString(food_month, value).apply()
+
+    var FoodDay: String?
+        get() = prefs.getString(food_day, "")
+        set(value) = prefs.edit().putString(food_day, value).apply()
 
     var FoodCount: String?
         get() = prefs.getString(food_count, "1")

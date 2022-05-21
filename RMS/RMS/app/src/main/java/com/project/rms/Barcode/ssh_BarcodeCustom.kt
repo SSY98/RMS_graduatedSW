@@ -304,7 +304,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                 //유통기한 함수 _ ssy
                 fun getDate(Date : String) : String{
                     var customDate = false
-                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",","없음") //금지어 추가
+                    val BanDate = arrayOf<String>("˚C", "˚", "→","-", "도씨","시간","도",":",",","없음","수출") //금지어 추가
                     val cal = Calendar.getInstance()
 
                     for(i in BanDate.indices){ //금지어 있으면 커스텀 모드
