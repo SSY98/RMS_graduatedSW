@@ -90,13 +90,12 @@
             android:layout_height="wrap_content"
             android:text="유통기한 : " />
 
-        <EditText
-            android:textColor="@color/white"
-            android:fontFamily="@font/fonta"
-            android:gravity="center"
-            android:id="@+id/update_food_date"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"/>
+        <DatePicker
+            android:id="@+id/UpdateDatepicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"/>
     </LinearLayout>
 
     <LinearLayout

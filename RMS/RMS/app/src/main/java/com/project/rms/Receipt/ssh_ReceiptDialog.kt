@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
 import com.project.rms.Memo.ssh_MemoAdapter

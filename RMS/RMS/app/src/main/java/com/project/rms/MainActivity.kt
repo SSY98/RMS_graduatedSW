@@ -379,10 +379,10 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 App.prefs.FoodCategory = PRDLST_DCNM
                 App.prefs.FoodDate = getDate(POG_DAYCNT)
 
-                val a = getDate(POG_DAYCNT).split("-")
-                App.prefs.FoodYear = a[0]
-                App.prefs.FoodMonth = a[1]
-                App.prefs.FoodDay = a[2]
+                val DateSplit = getDate(POG_DAYCNT).split("-")
+                App.prefs.FoodYear = DateSplit[0]
+                App.prefs.FoodMonth = DateSplit[1]
+                App.prefs.FoodDay = DateSplit[2]
 
                 // 바코드 인식한 상품 로그 출력
                 Log.d("바코드_번호:","${BAR_CD}")

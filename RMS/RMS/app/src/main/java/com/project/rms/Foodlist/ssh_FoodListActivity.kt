@@ -108,6 +108,9 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
     }
 
@@ -116,6 +119,9 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
     }
 

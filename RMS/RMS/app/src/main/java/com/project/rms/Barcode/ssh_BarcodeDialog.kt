@@ -17,8 +17,10 @@ import com.project.rms.MainActivity
 import com.project.rms.R
 import com.project.rms.Recipe.ssy_RecipeActivity
 import kotlinx.android.synthetic.main.ssh_dialog_barcode.*
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface) : Dialog(context) {
     // 인터페이스를 받아옴
@@ -55,14 +57,16 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
                 App.prefs.FoodDate = date.toString()
             }
 
-        Log.d("바코드_번호:", App.prefs.FoodYear.toString())
-        Log.d("바코드_번호:", App.prefs.FoodMonth!!.toInt().toString())
-        Log.d("바코드_번호:", App.prefs.FoodDay!!.toInt().toString())
-
         // 바코드 인식으로 가져온 식재료 정보를 화면에 출력함
         food_name.setText(FoodName)
         food_category.setText(FoodCategory)
-        Datepicker.init(App.prefs.FoodYear!!.toInt(), (App.prefs.FoodMonth!!.toInt())-1, App.prefs.FoodDay!!.toInt(), listener)
+        if (App.prefs.FoodYear == "") {
+            var cal = Calendar.getInstance() // 오늘 날짜
+            food_date.init(cal.get(Calendar.YEAR), (cal.get(Calendar.MONTH)), cal.get(Calendar.DATE), listener)
+        }
+        else {
+            food_date.init(App.prefs.FoodYear!!.toInt(), (App.prefs.FoodMonth!!.toInt())-1, App.prefs.FoodDay!!.toInt(), listener)
+        }
         food_count.setText(FoodCount)
 
         // 확인 버튼 클릭 시 각각의 edittext에 입력된 식재료 정보를 SharedPreference 변수에 저장하고 onAddButtonClicked 호출 후 종료
@@ -89,9 +93,9 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
 
         // 추가 버튼 클릭 시 edittext에 입력된 식재료 정보를 SharedPreference 변수에 저장하고 onPlustButtonClicked 호출 후 종료
         food_plus.setOnClickListener {
-            var year2 = Datepicker.getYear()
-            var month2 = (Datepicker.getMonth())+1
-            var day2 = Datepicker.getDayOfMonth()
+            var year2 = food_date.getYear()
+            var month2 = (food_date.getMonth())+1
+            var day2 = food_date.getDayOfMonth()
             val strDate2 = year2.toString()+"-"+month2+"-"+day2
             val formatter = DateTimeFormatter.ofPattern("yyyy-M-d")
             val date: LocalDate = LocalDate.parse(strDate2, formatter)

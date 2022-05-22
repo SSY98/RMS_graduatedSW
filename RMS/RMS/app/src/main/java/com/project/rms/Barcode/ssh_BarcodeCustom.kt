@@ -40,6 +40,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.google.zxing.integration.android.IntentIntegrator
 import java.io.*
 
 import com.googlecode.tesseract.android.TessBaseAPI
@@ -123,6 +124,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
 
         //영수증 버튼 누르면 카메라 실행_ssh
         binding.receipt.setOnClickListener {
+            deleteReceipt()
             // 이미지 크롭을 위한 가이드를 열어주어 크롭할 이미지를 받아올 수 있게한다.
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -159,6 +161,13 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         // 직접 입력 버튼 누르면 팝업창 출력_ssh
         direct_add.setOnClickListener{
             App.prefs.Dbtn = true
+            App.prefs.FoodName = ""
+            App.prefs.FoodCategory = ""
+            App.prefs.FoodDate = ""
+            App.prefs.FoodYear = ""
+            App.prefs.FoodMonth = ""
+            App.prefs.FoodDay = ""
+            App.prefs.FoodCount = "1"
             val BarcodeDialog = ssh_BarcodeDialog(this,this)
             BarcodeDialog.show()
         }
@@ -231,6 +240,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
 
         // 메인 액티비티 하나만 실행하고 나머지 액티비티는 다 지움_ssh
@@ -244,6 +256,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
     }
 
@@ -260,6 +275,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         App.prefs.FoodName = ""
         App.prefs.FoodCategory = ""
         App.prefs.FoodDate = ""
+        App.prefs.FoodYear = ""
+        App.prefs.FoodMonth = ""
+        App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
     }
 
@@ -401,11 +419,8 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                 Log.d("바코드만 추출",barcode_arr.toString())
 
                 ReceiptDialog() // 영수증 인식 팝업창 출력_ssh
-
-                Toast.makeText(
-                    this, "Cropping successful, Sample: " + result.sampleSize, Toast.LENGTH_LONG).show()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(this, "Cropping failed: " + result.error, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "영수증 인식 실패." + result.error, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -438,27 +453,47 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                 if (real_result == "사과") {
                                     App.prefs.FoodCategory = "과일"
                                     cal.add(Calendar.DATE, 21).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                    App.prefs.FoodYear = DateSplit[0]
+                                    App.prefs.FoodMonth = DateSplit[1]
+                                    App.prefs.FoodDay = DateSplit[2]
                                 }
                                 else if(real_result == "계란"){
                                     App.prefs.FoodCategory = "계란"
                                     cal.add(Calendar.DATE, 25).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                    App.prefs.FoodYear = DateSplit[0]
+                                    App.prefs.FoodMonth = DateSplit[1]
+                                    App.prefs.FoodDay = DateSplit[2]
                                 }
                                 else if(real_result == "당근"){
                                     App.prefs.FoodCategory = "당근"
                                     cal.add(Calendar.DATE, 14).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                    App.prefs.FoodYear = DateSplit[0]
+                                    App.prefs.FoodMonth = DateSplit[1]
+                                    App.prefs.FoodDay = DateSplit[2]
                                 }
                                 else if(real_result == "양파"){
                                     App.prefs.FoodCategory = "양파"
                                     cal.add(Calendar.DATE, 14).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                    App.prefs.FoodYear = DateSplit[0]
+                                    App.prefs.FoodMonth = DateSplit[1]
+                                    App.prefs.FoodDay = DateSplit[2]
                                 }
                                 else {
                                     App.prefs.FoodName = real_result
                                     App.prefs.FoodCategory = real_result
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                    App.prefs.FoodYear = DateSplit[0]
+                                    App.prefs.FoodMonth = DateSplit[1]
+                                    App.prefs.FoodDay = DateSplit[2]
                                 }
                                 dialog() // 팝업창 실행
 
@@ -598,6 +633,12 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         }
         deleteReceipt() // 영수증 db 내용 모두 삭제
         ReceiptItem.clear() // ReceiptItem 배열의 내용 모두 삭제
+
+        var integrator = IntentIntegrator(this)
+        integrator.setPrompt("바코드를 스캔하세요")
+        integrator.setCameraId(0) // 0이면 후면 카메라, 1이면 전면 카메라
+        integrator.captureActivity = ssh_BarcodeCustom::class.java // 커스텀한 바코드 화면
+        integrator.initiateScan() // initiateScan()을 통해 Zxing 라이브러리 바코드 스캐너가 보여짐
     }
 
     // 이미지 인식 시 식재료 추가에 대한 팝업창 출력_ssh
