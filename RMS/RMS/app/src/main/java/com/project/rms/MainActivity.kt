@@ -690,11 +690,58 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         //식재료 등록
                         App.prefs.Dbtn = false
                         App.prefs.FoodName = name
-                        App.prefs.FoodCategory = name
                         val cal = Calendar.getInstance()
                         var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                        /* 시연끝나고 원래대로 바꾸기
+                        App.prefs.FoodCategory = name
                         App.prefs.FoodDate = now_date
                         App.prefs.FoodCount = count
+                        */
+                        if (App.prefs.FoodName == "사과") {
+                            App.prefs.FoodCategory = "과일"
+                            App.prefs.FoodCount = count
+                            cal.add(Calendar.DATE, 21).toString()
+                            App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                            val DateSplit = App.prefs.FoodDate.toString().split("-")
+                            App.prefs.FoodYear = DateSplit[0]
+                            App.prefs.FoodMonth = DateSplit[1]
+                            App.prefs.FoodDay = DateSplit[2]
+                        }
+                        else if(App.prefs.FoodName == "계란"){
+                            App.prefs.FoodCategory = "계란"
+                            App.prefs.FoodCount = count
+                            cal.add(Calendar.DATE, 25).toString()
+                            App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                            val DateSplit = App.prefs.FoodDate.toString().split("-")
+                            App.prefs.FoodYear = DateSplit[0]
+                            App.prefs.FoodMonth = DateSplit[1]
+                            App.prefs.FoodDay = DateSplit[2]
+                        }
+                        else if(App.prefs.FoodName == "당근"){
+                            App.prefs.FoodCategory = "채소"
+                            App.prefs.FoodCount = count
+                            cal.add(Calendar.DATE, 14).toString()
+                            App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                            val DateSplit = App.prefs.FoodDate.toString().split("-")
+                            App.prefs.FoodYear = DateSplit[0]
+                            App.prefs.FoodMonth = DateSplit[1]
+                            App.prefs.FoodDay = DateSplit[2]
+                        }
+                        else if(App.prefs.FoodName == "양파"){
+                            App.prefs.FoodCategory = "채소"
+                            App.prefs.FoodCount = count
+                            cal.add(Calendar.DATE, 14).toString()
+                            App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                            val DateSplit = App.prefs.FoodDate.toString().split("-")
+                            App.prefs.FoodYear = DateSplit[0]
+                            App.prefs.FoodMonth = DateSplit[1]
+                            App.prefs.FoodDay = DateSplit[2]
+                        }
+                        else {
+                            App.prefs.FoodCategory = name
+                            App.prefs.FoodDate = now_date
+                            App.prefs.FoodCount = count
+                        }
                         dialog()
 
                     }
