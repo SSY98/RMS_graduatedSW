@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rms.App
+import com.project.rms.CountdownTimer.ssy_Countdowntimer
 import com.project.rms.Foodlist.Database.ssh_OnProductDeleteListener
 import com.project.rms.Foodlist.Database.ssh_OnProductUpdateListener
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
@@ -112,6 +113,9 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
         App.prefs.FoodMonth = ""
         App.prefs.FoodDay = ""
         App.prefs.FoodCount = "1"
+
+        val intent = Intent(this, ssh_FoodListActivity::class.java)
+        startActivity(intent)
     }
 
     // 식재료 수정 팝업창에서 취소 버튼 클릭 시 SharedPreference 변수에 저장된 식재료 이름, 종류, 유통기한, 갯수 초기화 (= 식재료 추가, 수정 시 사용하는 edittext 초기화)
