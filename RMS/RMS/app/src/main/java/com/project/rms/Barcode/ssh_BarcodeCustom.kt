@@ -486,15 +486,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                     App.prefs.FoodMonth = DateSplit[1]
                                     App.prefs.FoodDay = DateSplit[2]
                                 }
-                                else {
-                                    App.prefs.FoodName = real_result
-                                    App.prefs.FoodCategory = real_result
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
-                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
-                                    App.prefs.FoodYear = DateSplit[0]
-                                    App.prefs.FoodMonth = DateSplit[1]
-                                    App.prefs.FoodDay = DateSplit[2]
-                                }
                                 dialog() // 팝업창 실행
 
                             }else{
