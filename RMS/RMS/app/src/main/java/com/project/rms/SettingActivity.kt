@@ -36,8 +36,9 @@ class SettingActivity :  AppCompatActivity(){
                 Toast.makeText(applicationContext, "switch on", Toast.LENGTH_SHORT).show()
                 App.prefs.Voiceoption = true
                 App.prefs.Voicepause=true
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                val i = Intent(this, MainActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
             }
             //  스위치가 꺼지면
             else{
