@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
-    android:layout_height="600dp"
+    android:layout_height="700dp"
     android:layout_gravity="center"
     android:background="#3C505A"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ReceiptRecyclerView"
@@ -14,34 +15,49 @@
         android:layout_height="530dp"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:background="#3C505A"
+            android:fontFamily="@font/fonta"
+            android:id="@+id/receipt_plus_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#669B9B"
+            android:text="계속 추가" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
 
         <Button
+            android:background="#3C505A"
+            android:fontFamily="@font/fonta"
             android:id="@+id/receipt_add_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#3C505A"
             android:textColor="#669B9B"
-            android:text="확인"/>
+            android:text="확인"
+            android:layout_weight="1"/>
 
         <Button
+            android:background="#3C505A"
+            android:fontFamily="@font/fonta"
             android:id="@+id/receipt_cancel_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#3C505A"
             android:textColor="#669B9B"
-            android:text="취소"/>
+            android:text="취소"
+            android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/receipt_plus_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#3C505A"
-            android:textColor="#669B9B"
-            android:text="모두 추가"/>
     </LinearLayout>
-
 </LinearLayout>

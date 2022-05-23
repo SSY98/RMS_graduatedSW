@@ -27,7 +27,7 @@
             android:textStyle="bold"
             android:text="Loading.."
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_img"
