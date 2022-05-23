@@ -4,7 +4,7 @@
     android:layout_margin="8dp"
     android:layout_width="wrap_content"
     android:layout_height="50dp"
-    app:cardElevation="10dp"
+    app:cardElevation="15dp"
     app:cardCornerRadius="25dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,16 +17,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
             android:paddingRight="35dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text=" "
-            android:textSize="17dp"
+            android:textSize="18dp"
+            android:fontFamily="@font/fontjua"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textStyle="bold"/>
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

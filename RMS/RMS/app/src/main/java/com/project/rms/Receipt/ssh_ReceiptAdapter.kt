@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.project.rms.App
@@ -23,7 +24,7 @@ class ssh_ReceiptAdapter(var list : MutableList<ssh_ReceiptEntity>, var ssh_onRe
         val receiptcategory: TextView = itemView.findViewById(R.id.receipt_category)
         val receiptdate: TextView = itemView.findViewById(R.id.receipt_date)
         val receiptcount: TextView = itemView.findViewById(R.id.receipt_count)
-        val receiptdelete: Button = itemView.findViewById(R.id.receipt_delete_btn)
+        val receiptdelete: ImageButton = itemView.findViewById(R.id.receipt_delete_btn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

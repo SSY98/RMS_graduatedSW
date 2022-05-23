@@ -11,7 +11,6 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="타이머"
         android:paddingBottom="20dp"
         android:textSize="20dp"
         android:textColor="@color/black"
@@ -23,8 +22,8 @@
     <com.mut_jaeryo.circletimer.CircleTimer
         android:id="@+id/main_timer"
         android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:layout_marginTop="150dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="140dp"
         app:init_position="3124"
         app:isOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +32,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:show_text="true">
     </com.mut_jaeryo.circletimer.CircleTimer>
+
+
 
     <Button
         android:id="@+id/reset"
@@ -45,8 +46,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824"
-        android:backgroundTint="@color/colorAccent"
+        app:layout_constraintVertical_bias="0.85"
+        android:backgroundTint="@color/btn_trd"
         android:elevation="10dp"/>
 
     <Button
@@ -60,8 +61,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824"
-        android:backgroundTint="@color/btn_trd"
+        app:layout_constraintVertical_bias="0.85"
+        android:backgroundTint="#D7D8DC"
         android:elevation="10dp"/>
 
     <Button
@@ -72,13 +73,13 @@
         android:background="@drawable/btn_edge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/stop"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reset"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824"
-        android:backgroundTint="@color/right_bg"
+        app:layout_constraintVertical_bias="0.85"
+        android:backgroundTint="#7BAEEF"
         android:elevation="10dp"/>
 
 

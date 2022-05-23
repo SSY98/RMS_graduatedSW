@@ -4,7 +4,7 @@
     <!--배경색을 의미, 이미지의 중간 중간이 투명한 색상이라면 여기서 지정한 색이 보이게 된다.-->
     <!--동일하게 투명하게는 @null을 입력해 주면 된다.-->
 
-    <stroke android:width="0dp" android:color="#000000"/>
+    <stroke android:width="3dp" android:color="#000000"/>
     <!--stroke 선으로 테두리를 그린다. 여기서 색상은 테두리 색상을 의미-->
 
     <padding android:left="10dp" android:top="10dp" android:right="10dp" android:bottom="10dp" />

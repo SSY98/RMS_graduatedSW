@@ -13,11 +13,11 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="화면 중앙에 바코드를 스캔해주세요!!"
+        android:text="화면 중앙에 바코드를 스캔해주세요"
         android:paddingBottom="20dp"
         android:textSize="20dp"
         android:textColor="@color/white"
-        android:fontFamily="@font/fonta"
+        android:fontFamily="@font/fontjua"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
