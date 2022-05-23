@@ -55,10 +55,11 @@ class ssy_RecipeActivity : AppCompatActivity() {
         //재료가 선택되었을 때
         sel_listAdapter.setItemClickListener(object : ssy_Parts_Ladapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                if (choice_materials.size < 4) {
+                if (choice_materials.size < 3) {
                     if (sel_itemList[position].parts in choice_materials) {
                         choice_materials.remove(sel_itemList[position].parts)
-                    } else {
+                    }
+                    else {
                         choice_materials.add(sel_itemList[position].parts)
                     }
                     var selecttext = ""
@@ -67,11 +68,21 @@ class ssy_RecipeActivity : AppCompatActivity() {
                     }
                     binding.select.setText(selecttext)
                 } else {
-                    Toast.makeText(
-                        applicationContext,
-                        "재료는 3개 까지만 선택가능합니다.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (sel_itemList[position].parts in choice_materials) {
+                        choice_materials.remove(sel_itemList[position].parts)
+                    }
+                    else{
+                        Toast.makeText(
+                            applicationContext,
+                            "재료는 3개 까지만 선택가능합니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    var selecttext = ""
+                    for(i in 0..choice_materials.size-1){
+                        selecttext = selecttext + choice_materials[i] + " "
+                    }
+                    binding.select.setText(selecttext)
                 }
             }
         })
@@ -131,6 +142,10 @@ class ssy_RecipeActivity : AppCompatActivity() {
     //냉장고가 비어있을때
     fun empty_ref(){
         //랜덤 출력
+        GlobalScope.launch(Dispatchers.Main){
+            itemList.clear()
+            listAdapter.notifyDataSetChanged()
+        }
         val end = (200..1358).random()
         val start = end-200
         var t_site = StringBuilder()
@@ -194,6 +209,10 @@ class ssy_RecipeActivity : AppCompatActivity() {
     //냉장고가 안비어 있을때
     @SuppressLint("ResourceAsColor")
     fun nonempty_ref(){
+        GlobalScope.launch(Dispatchers.Main){
+            itemList.clear()
+            listAdapter.notifyDataSetChanged()
+        }
         var t_site = StringBuilder()
         var Api_key = "1937954c9b7840bbbf76"
         var site = "http://openapi.foodsafetykorea.go.kr/api/"+Api_key+"/COOKRCP01/json/1/1000/"
