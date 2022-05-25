@@ -355,6 +355,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                         return now_date
                     }
                 }
+
                 when (PRDLST_DCNM) {
                     "가공치즈" -> PRDLST_DCNM = "치즈"
                     "기타 수산물가공품" -> PRDLST_DCNM = "참치"
@@ -571,6 +572,30 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         ReceiptDialog.show()
     }
 
+    // 영수증 인식 팝업창에서 삭제 버튼 클릭 시 receiptitem 배열에서 해당 식재료 삭제
+    override fun onReceiptDialogDeleteListener() {
+        for(i in 0 .. ReceiptItem.size-1) {
+            if (App.prefs.ReceiptName == ReceiptItem[i].itemname && App.prefs.ReceiptCategory == ReceiptItem[i].itemcategory &&
+                App.prefs.ReceiptDate == ReceiptItem[i].itemdate && App.prefs.ReceiptCount == ReceiptItem[i].itemcount
+            ) {
+                val index = i
+                ReceiptItem.removeAt(index)
+                App.prefs.ReceiptName = ""
+                App.prefs.ReceiptCategory = ""
+                App.prefs.ReceiptDate = ""
+                App.prefs.ReceiptCount = ""
+                break
+            }
+            else {
+                App.prefs.ReceiptName = ""
+                App.prefs.ReceiptCategory = ""
+                App.prefs.ReceiptDate = ""
+                App.prefs.ReceiptCount = ""
+            }
+        }
+        Log.d("ReceiptItem","$ReceiptItem")
+    }
+
     // 영수증 인식 팝업창에서 확인 버튼 클릭 시 식재료 목록 데이터베이스에 영수증 인식 한 식재료를 추가_ssh
     override fun onReceiptAddButtonClicked() {
         // 영수증 db의 식재료를 식재료 db에 추가
@@ -585,26 +610,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         val i = Intent(this, MainActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(i)
-    }
-
-    // 영수증 인식 팝업창에서 삭제 버튼 클릭 시 receiptitem 배열에서 해당 식재료 삭제
-    override fun onReceiptDialogDeleteListener() {
-        for(i in 0 .. ReceiptItem.size-1) {
-            if (App.prefs.ReceiptName == ReceiptItem[i].itemname && App.prefs.ReceiptCategory == ReceiptItem[i].itemcategory &&
-                    App.prefs.ReceiptDate == ReceiptItem[i].itemdate && App.prefs.ReceiptCount == ReceiptItem[i].itemcount
-                ) {
-                val index = i
-                ReceiptItem.removeAt(index)
-                break
-            }
-            else {
-                App.prefs.ReceiptName = ""
-                App.prefs.ReceiptCategory = ""
-                App.prefs.ReceiptDate = ""
-                App.prefs.ReceiptCount = ""
-            }
-        }
-        Log.d("ReceiptItem","$ReceiptItem")
     }
 
     // 영수증 인식 팝업창에서 취소 버튼 클릭 시 식재료 목록 데이터베이스에 영수증 인식 한 식재료를 추가_ssh

@@ -46,6 +46,11 @@ class ssh_BarcodeDialog(context: Context, Interface: ssh_BarcodeDialogInterface)
 
         food_plus.setEnabled(App.prefs.Dbtn)
 
+        App.prefs.FoodName = ""
+        App.prefs.FoodCategory = ""
+        App.prefs.FoodDate = ""
+        App.prefs.FoodCount = ""
+
         // 배경을 투명하게함
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
