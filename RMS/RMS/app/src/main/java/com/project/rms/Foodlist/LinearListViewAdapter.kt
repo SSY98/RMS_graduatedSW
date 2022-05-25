@@ -47,7 +47,7 @@ class LinearListViewAdapter(var list : MutableList<ssh_ProductEntity>, var ssh_O
         holder.main_food_date.text = product_date
 
         var today = Calendar.getInstance() // 오늘 날짜
-        var format = SimpleDateFormat("yyyy-MM-dd")
+        var format = SimpleDateFormat("yyyy-M-d")
         var date = format.parse(product_date) // 유통기한 문자열을 날짜 형태로 변환
         var d_day = ((date.time - today.time.time) / (60 * 60 * 24 * 1000)) + 1 // 유통기한 날짜에서 오늘 날짜를 빼 남은 유통기한을 구함
 
