@@ -351,24 +351,24 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         if(Date.contains("년")){ //년이 들어가있으면
                             val number = Date.replace("[^\\d]".toRegex(), "")
                             cal.add(Calendar.YEAR, number.toInt()).toString()
-                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                             return now_date
                         }
                         else if(Date.contains("월")){ //월이 들어가있으면
                             val number = Date.replace("[^\\d]".toRegex(), "")
                             cal.add(Calendar.MONTH, number.toInt()).toString()
-                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                             return now_date
                         }
                         else{ //일이 들어가있으면
                             val number = Date.replace("[^\\d]".toRegex(), "")
                             cal.add(Calendar.DATE, number.toInt()).toString()
-                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                             return now_date
                         }
                     }
                     else{ //customDate가 true이면
-                        var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                        var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                         return now_date
                     }
                 }
@@ -691,7 +691,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                         App.prefs.Dbtn = false
                         App.prefs.FoodName = name
                         val cal = Calendar.getInstance()
-                        var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                        var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                         /* 시연끝나고 원래대로 바꾸기
                         App.prefs.FoodCategory = name
                         App.prefs.FoodDate = now_date

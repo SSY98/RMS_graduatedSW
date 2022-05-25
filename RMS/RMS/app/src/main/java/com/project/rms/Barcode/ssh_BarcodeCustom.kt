@@ -334,26 +334,33 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                         if(Date.contains("년")){ //년이 들어가있으면
                             val number = Date.replace("[^\\d]".toRegex(), "")
                             cal.add(Calendar.YEAR, number.toInt()).toString()
-                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                             return now_date
                         }
                         else if(Date.contains("월")){ //월이 들어가있으면
                             val number = Date.replace("[^\\d]".toRegex(), "")
                             cal.add(Calendar.MONTH, number.toInt()).toString()
-                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                             return now_date
                         }
                         else{ //일이 들어가있으면
                             val number = Date.replace("[^\\d]".toRegex(), "")
                             cal.add(Calendar.DATE, number.toInt()).toString()
-                            var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                            var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                             return now_date
                         }
                     }
                     else{ //customDate가 true이면
-                        var now_date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(cal.time)
+                        var now_date = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                         return now_date
                     }
+                }
+                when (PRDLST_DCNM) {
+                    "가공치즈" -> PRDLST_DCNM = "치즈"
+                    "기타 수산물가공품" -> PRDLST_DCNM = "참치"
+                    "숙면" -> PRDLST_DCNM = "쫄면"
+                    "혼합장" -> PRDLST_DCNM = "쌈장"
+                    else -> PRDLST_DCNM = PRDLST_DCNM
                 }
                 //유통기한 함수
                 // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
@@ -450,7 +457,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                 val cal = Calendar.getInstance()
                                 App.prefs.FoodName = real_result
 
-                                if (real_result == "사과") {
+                                if (real_result == "바나나") {
                                     App.prefs.FoodCategory = "과일"
                                     cal.add(Calendar.DATE, 21).toString()
                                     App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
@@ -459,18 +466,9 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                     App.prefs.FoodMonth = DateSplit[1]
                                     App.prefs.FoodDay = DateSplit[2]
                                 }
-                                else if(real_result == "계란"){
-                                    App.prefs.FoodCategory = "계란"
-                                    cal.add(Calendar.DATE, 25).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
-                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
-                                    App.prefs.FoodYear = DateSplit[0]
-                                    App.prefs.FoodMonth = DateSplit[1]
-                                    App.prefs.FoodDay = DateSplit[2]
-                                }
-                                else if(real_result == "당근"){
-                                    App.prefs.FoodCategory = "당근"
-                                    cal.add(Calendar.DATE, 14).toString()
+                                else if(real_result == "청양고추"){
+                                    App.prefs.FoodCategory = "채소"
+                                    cal.add(Calendar.DATE, 7).toString()
                                     App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
                                     val DateSplit = App.prefs.FoodDate.toString().split("-")
                                     App.prefs.FoodYear = DateSplit[0]
