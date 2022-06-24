@@ -86,10 +86,12 @@ class ssy_RecipeActivity : AppCompatActivity() {
                 }
             }
         })
+        val dialog = ssy_LoadingDialog(ssy_RecipeActivity@this) //로딩 다이알로그
         //선택가능한 재료만 재료리스트에 넣기
         GlobalScope.launch(Dispatchers.IO) {
             check_materials = db.productDAO().date() //db의 값 가져오기
             //검색이 되는 재료들만 선정해서 재료 리스트에 넣음
+            GlobalScope.launch(Dispatchers.Main){dialog.show()} //로딩 다이알로그 시작
             for(ck in 0 until check_materials.size){
                 if(checkparts(check_materials[ck])!=0){
                     if(materials.contains(check_materials[ck])){
@@ -100,13 +102,14 @@ class ssy_RecipeActivity : AppCompatActivity() {
                     }
                 }
             }
+            GlobalScope.launch(Dispatchers.Main){dialog.dismiss()} //로딩 다이알로그 해제
             for(i in 0 until materials.size){
                 sel_itemList.add(ssy_Parts_Litem(materials[i]))
             }
             GlobalScope.launch(Dispatchers.Main){
                 sel_listAdapter.notifyDataSetChanged()
                 if (materials.size == 0) {
-                    binding.receiptintro.setText("식재료를 추가해주세요ㅠ")
+                    binding.receiptintro.setText("식재료를 추가해주세요")
                 }
             }
         }
