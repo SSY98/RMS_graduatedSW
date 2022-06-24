@@ -355,14 +355,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                         return now_date
                     }
                 }
-
-                when (PRDLST_DCNM) {
-                    "가공치즈" -> PRDLST_DCNM = "치즈"
-                    "기타 수산물가공품" -> PRDLST_DCNM = "참치"
-                    "숙면" -> PRDLST_DCNM = "쫄면"
-                    "혼합장" -> PRDLST_DCNM = "쌈장"
-                    else -> PRDLST_DCNM = PRDLST_DCNM
-                }
                 //유통기한 함수
                 // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
                 App.prefs.FoodName = PRDLST_NM
@@ -490,6 +482,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                                 Log.d("YMC", "onResponse 실패")
+                                Toast.makeText(applicationContext, "서버가 닫혀있습니다.\n나중에 시도해주세요.", Toast.LENGTH_SHORT).show()
                             }
                         }
 
