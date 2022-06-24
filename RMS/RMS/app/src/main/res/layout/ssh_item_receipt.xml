@@ -129,6 +129,7 @@
                 android:textColor="#669B9B"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
+                android:scaleType="fitCenter"
                 android:text="삭제"/>
 
 
