@@ -16,4 +16,10 @@ interface ssh_ImageDAO {
 
     @Query("SELECT * FROM image")
     fun getAll(): MutableList<ssh_ImageEntity>
+
+    @Query("SELECT COUNT(*) FROM image")
+    fun getCount(): Int
+
+    @Query("DELETE FROM image")
+    suspend fun deleteAll()
 }

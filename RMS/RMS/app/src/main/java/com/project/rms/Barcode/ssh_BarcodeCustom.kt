@@ -56,8 +56,10 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
     private lateinit var capture: CaptureManager
     lateinit var db : ssh_ProductDatabase // 식재료 db_ssh
     lateinit var db3 : ssh_ReceiptDatabase // 영수증 db_ssh
+    lateinit var db_Img : ssh_ImageDatabase // 이미지인식 db
     var productList = mutableListOf<ssh_ProductEntity>() // 식재료 목록_ssh
     var ReceiptList = mutableListOf<ssh_ReceiptEntity>() // 영수증 목록_ssh
+    var ImageList = mutableListOf<ssh_ImageEntity>() // 식재료 목록_ssh
     var ReceiptItem = arrayListOf<ssh_Receipt_item>() // 영수증 목록을 식재료 목록 db에 추가하기 위한 배열_ssh
 
     //ysj 추가
@@ -155,6 +157,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
 
 
         db = ssh_ProductDatabase.getInstance(this)!! // 식재료 db_ssh
+        db_Img = ssh_ImageDatabase.getInstance(this)!! // 이미지 인식 db
 
         val direct_add= findViewById<ImageButton>(R.id.direct_add) // 직접 입력 버튼
 
@@ -448,33 +451,20 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                 // 이름, 종류, 유통기한에 대한 정보를 SharedPreferences를 활용해 임시 저장_ssh
                                 val cal = Calendar.getInstance()
                                 App.prefs.FoodName = real_result
-
-                                if (real_result == "바나나") {
-                                    App.prefs.FoodCategory = "과일"
-                                    cal.add(Calendar.DATE, 21).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
-                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
-                                    App.prefs.FoodYear = DateSplit[0]
-                                    App.prefs.FoodMonth = DateSplit[1]
-                                    App.prefs.FoodDay = DateSplit[2]
-                                }
-                                else if(real_result == "청양고추"){
-                                    App.prefs.FoodCategory = "채소"
-                                    cal.add(Calendar.DATE, 7).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
-                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
-                                    App.prefs.FoodYear = DateSplit[0]
-                                    App.prefs.FoodMonth = DateSplit[1]
-                                    App.prefs.FoodDay = DateSplit[2]
-                                }
-                                else if(real_result == "양파"){
-                                    App.prefs.FoodCategory = "양파"
-                                    cal.add(Calendar.DATE, 14).toString()
-                                    App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
-                                    val DateSplit = App.prefs.FoodDate.toString().split("-")
-                                    App.prefs.FoodYear = DateSplit[0]
-                                    App.prefs.FoodMonth = DateSplit[1]
-                                    App.prefs.FoodDay = DateSplit[2]
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    ImageInfoAdd()
+                                    ImageList = db_Img.ImageDAO().getAll()
+                                } //db값가져오기
+                                for(i in 0 until ImageList.size){
+                                    if(ImageList[i].name == real_result){
+                                        App.prefs.FoodCategory = ImageList[i].category
+                                        cal.add(Calendar.DATE, ImageList[i].date).toString()
+                                        App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                        val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                        App.prefs.FoodYear = DateSplit[0]
+                                        App.prefs.FoodMonth = DateSplit[1]
+                                        App.prefs.FoodDay = DateSplit[2]
+                                    }
                                 }
                                 dialog() // 팝업창 실행
 
@@ -496,7 +486,31 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
             }
         }
     }
-
+    //이미지인식 정보값 추가하기
+    fun ImageInfoAdd(){
+        class SetItem(val name:String, val category: String, val date: Int)
+        var SetList = mutableListOf<SetItem>()
+        SetList.add(SetItem("사과","과일",14))
+        SetList.add(SetItem("바나나","과일",10))
+        SetList.add(SetItem("고추","채소",7))
+        SetList.add(SetItem("양파","채소",14))
+        SetList.add(SetItem("감자","채소",7))
+        var count = 0
+        CoroutineScope(Dispatchers.IO).launch {
+            count = db_Img.ImageDAO().getCount()
+            if(count==SetList.size){}
+            else{
+                db_Img.ImageDAO().deleteAll()
+                for(i in 0 until SetList.size){
+                    val image = ssh_ImageEntity(null, SetList[i].name, SetList[i].category, SetList[i].date)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        async{
+                            db_Img.ImageDAO().insert(image)
+                        }.await()}
+                }
+            }
+        }
+    }
     //tess사용하기위한 함수
     private val langFileName = "eng.traineddata"
     private fun copyFiles() {
