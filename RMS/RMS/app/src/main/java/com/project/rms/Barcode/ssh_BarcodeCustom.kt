@@ -19,9 +19,6 @@ import com.journeyapps.barcodescanner.CaptureManager
 import com.project.rms.App
 import com.project.rms.Foodlist.Database.ssh_ProductDatabase
 import com.project.rms.Foodlist.Database.ssh_ProductEntity
-import com.project.rms.Image_recognition.ResponseData
-import com.project.rms.Image_recognition.retrofit
-import com.project.rms.Image_recognition.retrofit_interface
 import com.project.rms.MainActivity
 import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
 import com.theartofdev.edmodo.cropper.CropImage
@@ -44,10 +41,12 @@ import com.google.zxing.integration.android.IntentIntegrator
 import java.io.*
 
 import com.googlecode.tesseract.android.TessBaseAPI
+import com.project.rms.Image_recognition.*
 import com.project.rms.Memo.ssh_MemoEntity
 import com.project.rms.R
 import com.project.rms.Receipt.*
 import com.project.rms.Recipe.ssy_Recipe_Litem
+import com.theartofdev.edmodo.cropper.CropImageActivity
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.json.JSONObject
 import java.io.File
@@ -128,6 +127,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
             // 이미지 크롭을 위한 가이드를 열어주어 크롭할 이미지를 받아올 수 있게한다.
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
+                .setActivityTitle("바코드 번호가 잘 보이게 사진을 편집")
                 .start(this);
             /*val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val photoFile = File(
@@ -427,7 +427,6 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         //RESULT_OK 사진 촬영을 했을 때 ysj
         if(resultCode == Activity.RESULT_OK){
             when(requestCode) {
-
                 BUTTON4 -> {
                     val file = File("/storage/emulated/0/Android/data/com.project.rms/files/Pictures/image/test.jpg")
                     val requestFile = RequestBody.create(MediaType.parse("application/pdf"), file)

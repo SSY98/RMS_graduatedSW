@@ -294,7 +294,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             val memo = ssh_MemoEntity(null, edittext_memo.text.toString())
             edittext_memo.setText("")
             insertMemo(memo)
-            Log.d("memo", "hi3")
         }
     }
     // 바코드 api_ssy,ssh
@@ -807,7 +806,6 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             async{
                 db2.memoDAO().insert(memo)
                 memoList.add(memo)
-                Log.d("memo", "hi1")
             }.await()
             getAllMemo()
         }
