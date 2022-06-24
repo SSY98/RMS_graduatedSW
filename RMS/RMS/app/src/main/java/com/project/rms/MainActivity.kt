@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
                 var a5 = arrayOf(ntarray[4],nlarray[4])
 
                 binding.rvAutoScrollContent.setLoopEnabled(true)
-                binding.rvAutoScrollContent.openAutoScroll(speed = 12, reverse = false)
+                binding.rvAutoScrollContent.openAutoScroll(speed = 20, reverse = false)
                 binding.rvAutoScrollContent.setCanTouch(true)
                 lm.orientation = LinearLayoutManager.VERTICAL
                 binding.rvAutoScrollContent.layoutManager = lm
@@ -245,8 +245,8 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         db2 = ssh_MemoDatabase.getInstance(this)!! // 메모 db_ssh
 
         val customdialogtest= findViewById<ImageButton>(R.id.setting)
-        val StartRecognition = findViewById<Button>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
-        val recipeB= findViewById<Button>(R.id.recipe) //ssy
+        val StartRecognition = findViewById<ImageButton>(R.id.BarcodeImageRecognition) // 바코드 이미지 인식 버튼_ssh
+        val recipeB= findViewById<ImageButton>(R.id.recipe) //ssy
         val AddMemo = findViewById<ImageButton>(R.id.add_memo) // 메모 추가 버튼_ssh
 
         getAllProduct() // 데이터베이스에 있는 식재료를 불러옴_ssh

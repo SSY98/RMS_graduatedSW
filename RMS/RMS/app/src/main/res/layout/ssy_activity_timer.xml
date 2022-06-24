@@ -22,7 +22,7 @@
     <com.mut_jaeryo.circletimer.CircleTimer
         android:id="@+id/main_timer"
         android:layout_width="wrap_content"
-        android:layout_height="500dp"
+        android:layout_height="300dp"
         android:layout_marginTop="140dp"
         app:init_position="3124"
         app:isOutline="true"
@@ -54,8 +54,8 @@
 
             <Button
                 android:id="@+id/reset"
-                android:layout_width="170dp"
-                android:layout_height="80dp"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:text="초기화"
                 android:background="@drawable/btn_edge"
@@ -78,8 +78,8 @@
 
             <Button
                 android:id="@+id/stop"
-                android:layout_width="170dp"
-                android:layout_height="80dp"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
                 android:text="정지"
                 android:background="@drawable/btn_edge"
                 android:layout_gravity="center"
@@ -102,8 +102,8 @@
 
             <Button
                 android:id="@+id/start"
-                android:layout_width="170dp"
-                android:layout_height="80dp"
+                android:layout_width="130dp"
+                android:layout_height="70dp"
                 android:text="시작"
                 android:background="@drawable/btn_edge"
                 android:layout_gravity="center"

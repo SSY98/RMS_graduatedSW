@@ -6,21 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/spoon_icon"
-        app:layout_constraintBottom_toTopOf="@+id/FoodList_recyclerView"
-        app:layout_constraintStart_toStartOf="@+id/FoodList_recyclerView" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:src="@drawable/spoon_icon"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/FoodList_recyclerView"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/FoodList_recyclerView" />-->
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/refrigerator_icon"
-        app:layout_constraintBottom_toTopOf="@+id/FoodList_recyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/FoodList_recyclerView" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:src="@drawable/refrigerator_icon"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/FoodList_recyclerView"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/FoodList_recyclerView" />-->
 
     <TextView
         android:layout_marginTop="50dp"

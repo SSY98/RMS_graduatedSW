@@ -45,6 +45,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="#8C8C8C"
+                android:scaleType="fitCenter"
                 android:src="@drawable/btn_ba" />
 
             <TextView
@@ -71,6 +72,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="#8C8C8C"
+                android:scaleType="fitCenter"
                 android:src="@drawable/btn_ima" />
 
             <TextView
@@ -97,6 +99,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="#8C8C8C"
+                android:scaleType="fitCenter"
                 android:src="@drawable/btn_rec" />
 
             <TextView
@@ -123,6 +126,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="#8C8C8C"
+                android:scaleType="fitCenter"
                 android:src="@drawable/btn_custom" />
 
             <TextView

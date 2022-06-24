@@ -18,90 +18,78 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
+                android:layout_height="255dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="190dp">
+                    android:layout_height="200dp"
+                    android:orientation="horizontal">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                        <ImageView
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/weatherimg"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical"
+                        android:gravity="center_vertical">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
                             android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:id="@+id/weatherimg"
-                                    android:layout_width="150dp"
-                                    android:layout_height="150dp"/>
-
-
-                            </LinearLayout>
-                            <LinearLayout
+                            <TextView
+                                android:id="@+id/weathertext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_gravity="center_vertical"
-                                android:paddingLeft="40dp">
+                                android:text="Loading"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"/>
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/raintype"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Loading"
+                                android:textColor="@color/white"
+                                android:textSize="19dp"
+                                android:paddingLeft="15dp"/>
 
-                                    <TextView
-                                        android:id="@+id/weathertext"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Loading.."
-                                        android:textColor="@color/white"
-                                        android:textSize="20dp"/>
-
-                                    <TextView
-                                        android:id="@+id/raintype"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Loading.."
-                                        android:textColor="@color/white"
-                                        android:textSize="20dp"
-                                        android:paddingLeft="20dp"/>
-
-                                </LinearLayout>
-
-                                <TextView
-                                    android:id="@+id/temperatures"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Loading.."
-                                    android:textSize="60dp"
-                                    android:textColor="@color/white"/>
-
-                                <TextView
-                                    android:id="@+id/rainper"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Loading.."
-                                    android:textColor="@color/white"
-                                    android:textSize="25dp"/>
-
-                            </LinearLayout>
                         </LinearLayout>
-                    </RelativeLayout>
+                        <TextView
+                            android:id="@+id/temperatures"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loading"
+                            android:textSize="40dp"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:id="@+id/rainper"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loading"
+                            android:textColor="@color/white"
+                            android:textSize="25dp"/>
+
+                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/black"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp">
 
@@ -110,171 +98,169 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:listitem="@layout/ysj_item_autoscroll_content" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:paddingTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:paddingTop="15dp"
                         android:background="#D4F4FA"
+                        android:orientation="horizontal"
                         android:layout_marginRight="2.5dp">
 
                         <TextView
-                            android:fontFamily="@font/fonta"
-                            android:paddingLeft="30dp"
+                            android:fontFamily="@font/fontjua"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="식재료명"
+                            android:gravity="center_horizontal"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:layout_weight="1"/>
 
                         <TextView
-                            android:fontFamily="@font/fonta"
+                            android:fontFamily="@font/fontjua"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="유통기한"
+                            android:gravity="center_horizontal"
                             android:textColor="@color/black"
                             android:textStyle="bold"
-                            android:layout_weight="2"/>
+                            android:layout_weight="1"/>
 
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="450dp"
-                        android:padding="15dp"
+                        android:layout_height="400dp"
+                        android:padding="10dp"
                         android:background="#D4F4FA"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginRight="2.5dp"
-                        android:layout_marginBottom="2.5dp"/>
+                        android:layout_marginRight="2.5dp" />
 
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="2">
 
-                    <LinearLayout
+                    <ImageButton
+                        android:id="@+id/recipe"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:background="#FFBF75"
+                        android:src="@drawable/btn_recipe"
+                        android:layout_marginBottom="2.5dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_weight="1"/>
 
-                        <ImageButton
-                            android:id="@+id/youtubeB"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#F85A3C"
-                            android:src="@drawable/btn_youtube"
-                            android:layout_marginTop="2.5dp"
-                            android:layout_marginBottom="2.5dp"
-                            android:layout_marginRight="2.5dp"
-                            android:layout_weight="1"/>
-
-                        <ImageButton
-                            android:id="@+id/websurfB"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#80D29F"
-                            android:src="@drawable/btn_websurf"
-                            android:layout_marginTop="2.5dp"
-                            android:layout_marginBottom="2.5dp"
-                            android:layout_marginRight="2.5dp"
-                            android:layout_marginLeft="2.5dp"
-                            android:layout_weight="1"/>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <ImageButton
+                        android:id="@+id/BarcodeImageRecognition"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:orientation="horizontal">
+                        android:layout_height="match_parent"
+                        android:background="#5CD1E5"
+                        android:src="@drawable/btn_reco"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginBottom="2.5dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_weight="1"/>
 
-                        <ImageButton
-                            android:id="@+id/timer"
-                            android:src="@drawable/btn_timer"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="2.5dp"
-                            android:layout_marginTop="2.5dp"
-                            android:layout_marginBottom="2.5dp"
-                            android:layout_weight="1"
-                            android:background="#29ACE4"/>
+                    <ImageButton
+                        android:id="@+id/youtubeB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F85A3C"
+                        android:src="@drawable/btn_youtube"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginBottom="2.5dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_weight="1"/>
 
-                        <ImageButton
-                            android:id="@+id/setting"
-                            android:src="@drawable/btn_setting"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="#AAAAAA"
-                            android:layout_marginLeft="2.5dp"
-                            android:layout_marginRight="2.5dp"
-                            android:layout_marginTop="2.5dp"
-                            android:layout_marginBottom="2.5dp"/>
+                    <ImageButton
+                        android:id="@+id/websurfB"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#80D29F"
+                        android:src="@drawable/btn_websurf"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginLeft="2.5dp"
+                        android:layout_weight="1"/>
 
-                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_weight="2">
+
+                    <ImageButton
+                        android:id="@+id/timer"
+                        android:src="@drawable/btn_timer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="2.5dp"
+                        android:background="#29ACE4"
+                        android:layout_weight="1"/>
+
+                    <ImageButton
+                        android:id="@+id/setting"
+                        android:src="@drawable/btn_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#AAAAAA"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_weight="1"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/recipe"
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        android:layout_marginLeft="2.5dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/recipe_bg3"
-                        android:text="레시피 추천 "
-                        android:textSize="25dp"
-                        android:fontFamily="@font/fontjua"
-                        android:textColor="@color/white" />
-
-                    <Button
-                        android:id="@+id/BarcodeImageRecognition"
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        android:layout_marginTop="2.5dp"
-                        android:layout_marginLeft="2.5dp"
-                        android:layout_marginBottom="2.5dp"
-                        android:background="@drawable/bandi_2"
-                        android:text="식재료 추가 "
-                        android:textSize="25dp"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/fontjua" />
-
+                    android:orientation="vertical"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:paddingLeft="15dp"
                         android:id="@+id/Memo_recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
+                        android:layout_height="230dp"
                         android:layout_marginLeft="2.5dp"
-                        android:layout_marginTop="2.5dp"
                         android:background="#FFF596"
+                        android:paddingLeft="15dp"
                         android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="58.5dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="2.5dp"
                         android:background="#FFF596"
                         android:orientation="horizontal">
@@ -290,7 +276,7 @@
 
                         <EditText
                             android:id="@+id/edittext_memo"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edge"
@@ -302,11 +288,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
