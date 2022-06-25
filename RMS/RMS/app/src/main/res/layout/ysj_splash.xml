@@ -6,9 +6,9 @@
     android:background="@color/white">
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@mipmap/ic_launcher2_round"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/first3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
