@@ -454,20 +454,22 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
                                 CoroutineScope(Dispatchers.IO).launch {
                                     ImageInfoAdd()
                                     ImageList = db_Img.ImageDAO().getAll()
-                                } //db값가져오기
-                                for(i in 0 until ImageList.size){
-                                    if(ImageList[i].name == real_result){
-                                        App.prefs.FoodCategory = ImageList[i].category
-                                        cal.add(Calendar.DATE, ImageList[i].date).toString()
-                                        App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
-                                        val DateSplit = App.prefs.FoodDate.toString().split("-")
-                                        App.prefs.FoodYear = DateSplit[0]
-                                        App.prefs.FoodMonth = DateSplit[1]
-                                        App.prefs.FoodDay = DateSplit[2]
+                                    Log.d("image_haha","$ImageList")
+                                    for(i in 0 until ImageList.size){
+                                        if(ImageList[i].name == real_result){
+                                            App.prefs.FoodCategory = ImageList[i].category
+                                            cal.add(Calendar.DATE, ImageList[i].date).toString()
+                                            App.prefs.FoodDate = SimpleDateFormat("yyyy-M-d", Locale.getDefault()).format(cal.time)
+                                            val DateSplit = App.prefs.FoodDate.toString().split("-")
+                                            App.prefs.FoodYear = DateSplit[0]
+                                            App.prefs.FoodMonth = DateSplit[1]
+                                            App.prefs.FoodDay = DateSplit[2]
+                                        }
                                     }
-                                }
-                                dialog() // 팝업창 실행
-
+                                    CoroutineScope(Dispatchers.Main).launch {
+                                        dialog() // 팝업창 실행
+                                    }
+                                } //db값가져오기
                             }else{
                                 // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                                 Log.d("YMC", "onResponse 실패")
@@ -495,6 +497,7 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
         SetList.add(SetItem("고추","채소",7))
         SetList.add(SetItem("양파","채소",14))
         SetList.add(SetItem("감자","채소",7))
+        SetList.add(SetItem("포도","과일",5))
         var count = 0
         CoroutineScope(Dispatchers.IO).launch {
             count = db_Img.ImageDAO().getCount()
