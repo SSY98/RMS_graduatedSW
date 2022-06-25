@@ -129,8 +129,8 @@ class ssh_BarcodeCustom : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_R
             // 이미지 크롭을 위한 가이드를 열어주어 크롭할 이미지를 받아올 수 있게한다.
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setActivityTitle("바코드 번호가 잘 보이게 사진을 편집")
                 .start(this);
+            Toast.makeText(applicationContext, "영수증 사진을 촬영하거나 앨범에서 영수증 사진을 불러오고 영수증 내 바코드 번호가 잘 보이도록 사진을 잘라주세요.", Toast.LENGTH_LONG).show()
             /*val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val photoFile = File(
                 File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "image").apply {
