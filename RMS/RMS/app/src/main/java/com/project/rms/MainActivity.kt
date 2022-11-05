@@ -39,6 +39,7 @@ import com.project.rms.Memo.*
 import com.project.rms.Newfeed.ExampleAdapter
 import com.project.rms.Newfeed.ysj_ExampleModel
 import com.project.rms.Recipe.ssy_RecipeActivity
+import com.project.rms.Shop.ssh_ShopActivity
 import com.project.rms.Weather.ssy_WHEATHER
 import com.project.rms.Weather.ssy_WeatherInterface
 import com.project.rms.Webview.ssy_Webview
@@ -266,6 +267,13 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
             val intent = Intent(this, ssy_RecipeActivity::class.java)
             startActivity(intent)
         }
+
+        //식재료 쇼핑_ssh
+        binding.shop.setOnClickListener{
+            val intent = Intent(this, ssh_ShopActivity::class.java)
+            startActivity(intent)
+        }
+
         //타이머_ssy
         binding.timer.setOnClickListener{
             val intent = Intent(this, ssy_Countdowntimer::class.java)

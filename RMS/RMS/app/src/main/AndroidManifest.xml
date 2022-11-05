@@ -7,8 +7,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!--음성인식권한-->
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 음성인식권한 -->
     <queries>
         <intent>
             <action android:name="android.speech.RecognitionService" />
@@ -25,8 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RMS"
         android:usesCleartextTraffic="true">
-
-
+        <activity
+            android:name=".Shop.ssh_ShopActivity"
+            android:exported="true" />
         <activity
             android:name=".CountdownTimer.ssy_Countdowntimer"
             android:exported="true" />
@@ -59,12 +59,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
-
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

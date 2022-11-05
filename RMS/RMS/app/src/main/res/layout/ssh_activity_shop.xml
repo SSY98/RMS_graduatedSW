@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Shop.ssh_ShopActivity">
+
+    <TextView
+        android:id="@+id/shopintro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/fontjua"
+        android:text="식재료 쇼핑"
+        android:textColor="@color/black"
+        android:textSize="27dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/shopsearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edge"
+        android:hint="식재료를 입력해주세요."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopintro"
+        app:layout_constraintVertical_bias="0"/>
+
+    <ImageButton
+        android:id="@+id/shopbutton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:background="#00000000"
+        android:src="@drawable/btn_search"
+        app:layout_constraintBottom_toBottomOf="@+id/shopsearch"
+        app:layout_constraintEnd_toEndOf="@+id/shopsearch"
+        app:layout_constraintTop_toTopOf="@+id/shopsearch"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="40dp"
+        android:id="@+id/shoplist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopsearch"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
