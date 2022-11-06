@@ -225,11 +225,11 @@
 
                     <ImageButton
                         android:id="@+id/shop"
-                        android:src="@drawable/btn_timer"
+                        android:src="@drawable/btn_shop"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="2.5dp"
-                        android:background="#29ACE4"
+                        android:background="#A8D0FF"
                         android:layout_weight="1"/>
 
                     <ImageButton
