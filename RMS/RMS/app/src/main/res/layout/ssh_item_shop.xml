@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,24 +17,58 @@
             android:layout_width="200dp"
             android:layout_height="180dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:textColor="@color/black"
             android:id="@+id/shop_text"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="10dp"
-            android:textSize="20dp"
-            android:text="Loading.."
             android:fontFamily="@font/fonta"
+            android:gravity="center"
+            android:text="Loading.."
+            android:textColor="@color/black"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
             app:layout_constraintStart_toEndOf="@+id/shop_img"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.127" />
+
+        <TextView
+            android:id="@+id/shop_store"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fonta"
+            android:gravity="center"
+            android:text="Loading.."
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/shop_img"
+            app:layout_constraintTop_toBottomOf="@+id/shop_text"
+            app:layout_constraintVertical_bias="0.271" />
+
+        <TextView
+            android:id="@+id/shop_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/fonta"
+            android:gravity="center"
+            android:text="Loading.."
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/shop_img"
+            app:layout_constraintTop_toBottomOf="@+id/shop_store" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -296,13 +296,13 @@ class ssy_RecipeActivity : AppCompatActivity() {
         }
     }
     //받은 재료가 검색되나 안되나 확인
-    fun checkparts(prats:String): Int {
+    fun checkparts(parts:String): Int {
         var t_site = StringBuilder()
         var Api_key = "1937954c9b7840bbbf76"
         var site = "http://openapi.foodsafetykorea.go.kr/api/"+Api_key+"/COOKRCP01/json/1/1000/"
         t_site.append(site)
 
-        t_site.append("RCP_PARTS_DTLS="+prats)
+        t_site.append("RCP_PARTS_DTLS="+parts)
 
         var url = URL(t_site.toString())
         var conn = url.openConnection()
