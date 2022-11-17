@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:backgroundTint="@color/white"
+    android:background="@drawable/btn_edge"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_gravity="center|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 타이머 추가"
+            android:textColor="@color/black"
+            android:fontFamily="@font/fontjua"
+            android:textSize="20dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/black"
+            android:fontFamily="@font/fonta"
+            android:layout_width="70dp"
+            android:gravity="right"
+            android:layout_height="50dp"
+            android:text=" 타이머   \n이름 : " />
+
+        <EditText
+            android:textColor="@color/black"
+            android:fontFamily="@font/fonta"
+            android:id="@+id/food_name_edt"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:gravity="right"
+            android:textColor="@color/black"
+            android:fontFamily="@font/fonta"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="시간 설정 : " />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="00"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text=":"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="30dp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="30dp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"
+            android:textSize="30dp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:background="@color/white"
+            android:fontFamily="@font/fonta"
+            android:id="@+id/timer_add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#669B9B"
+            android:text="확인"
+            android:layout_weight="1"/>
+
+        <Button
+            android:background="@color/white"
+            android:fontFamily="@font/fonta"
+            android:id="@+id/timer_cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#669B9B"
+            android:text="취소"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+</LinearLayout>

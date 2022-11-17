@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="2dp"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/timer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="라면"
+        android:textSize="50dp"
+        tools:text="timername"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"/>
+    <TextView
+        android:id="@+id/timer_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="03:00"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        tools:text="timertime"/>
+
+
+
+</LinearLayout>

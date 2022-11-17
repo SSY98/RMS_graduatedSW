@@ -22,8 +22,8 @@
     <com.mut_jaeryo.circletimer.CircleTimer
         android:id="@+id/main_timer"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="140dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="50dp"
         app:init_position="3124"
         app:isOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,53 +32,80 @@
         app:layout_constraintTop_toTopOf="parent"
         app:show_text="true">
 
-
     </com.mut_jaeryo.circletimer.CircleTimer>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerHorizon"
+        android:padding="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/addtimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_timer"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#C7C4FF"
+        android:id="@+id/addtimer"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:background="@drawable/btn_edge"
+        android:src="@drawable/btn_tplus"
+        app:layout_constraintBottom_toTopOf="@+id/can1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="10dp"/>
 
     <LinearLayout
         android:id="@+id/can1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="110dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/reset"
-                android:layout_width="130dp"
+            <ImageButton
+                android:src="@drawable/btn_tplay"
+                android:id="@+id/start"
+                android:background="@drawable/btn_edge"
+                android:backgroundTint="#7BAEEF"
+                android:layout_width="100dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
-                android:text="초기화"
-                android:background="@drawable/btn_edge"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.191"
+                app:layout_constraintEnd_toStartOf="@+id/stop"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/reset"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.85"
-                android:backgroundTint="#D7D8DC"
                 android:elevation="10dp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
+            <ImageButton
+                android:src="@drawable/btn_tpause"
                 android:id="@+id/stop"
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:layout_height="70dp"
                 android:text="정지"
                 android:background="@drawable/btn_edge"
@@ -96,26 +123,25 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/start"
-                android:layout_width="130dp"
+            <ImageButton
+                android:src="@drawable/btn_tsquare"
+                android:id="@+id/reset"
+                android:layout_width="100dp"
                 android:layout_height="70dp"
-                android:text="시작"
-                android:background="@drawable/btn_edge"
                 android:layout_gravity="center"
+                android:text="초기화"
+                android:background="@drawable/btn_edge"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stop"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.191"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/reset"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.85"
-                android:backgroundTint="#7BAEEF"
+                android:backgroundTint="#D7D8DC"
                 android:elevation="10dp"/>
 
         </LinearLayout>

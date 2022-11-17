@@ -4,11 +4,17 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Bundle
-import android.widget.Button
+import android.view.LayoutInflater
+import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mut_jaeryo.circletimer.CircleTimer
 import com.project.rms.App
 import com.project.rms.R
+import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
+import com.project.rms.databinding.SsyActivityTimerBinding
+import kotlinx.android.synthetic.main.ssy_activity_timer.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -18,6 +24,10 @@ class ssy_Countdowntimer : AppCompatActivity(){
     private var soundPool = SoundPool.Builder().build()
     private var my_sound = 0
     var loaded = false
+    var timerList = arrayListOf<ysj_TimerModel>()
+
+    // ViewBinding
+    lateinit var binding : SsyActivityTimerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +45,10 @@ class ssy_Countdowntimer : AppCompatActivity(){
         timer.setMaximumTime(3600)
         timer.setInitPosition(App.prefs.TimerSecond) //타이머의 시간 설정
 
-        val start = findViewById<Button>(R.id.start)
-        val stop = findViewById<Button>(R.id.stop)
-        val reset = findViewById<Button>(R.id.reset)
+        val start = findViewById<ImageButton>(R.id.start)
+        val stop = findViewById<ImageButton>(R.id.stop)
+        val reset = findViewById<ImageButton>(R.id.reset)
+        val addtimer = findViewById<ImageButton>(R.id.addtimer)
 
         if(App.prefs.Voicereq == true){ //음성인식으로 타이머 실행시켰을때
             timer.start()
@@ -59,6 +70,15 @@ class ssy_Countdowntimer : AppCompatActivity(){
             App.prefs.Voicepause = true //타이머가 끝나면 음성인식 시작
         }
 
+        //추가 버튼 누르면 팝업창 출력_ysj
+        addtimer.setOnClickListener{
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.ysj_dialog_addtimer, null)
+            val mBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+
+            mBuilder.show()
+        }
+
         //타이머가 끝나면 비프음 출력
         timer.setBaseTimerEndedListener(object: CircleTimer.baseTimerEndedListener {
             override fun OnEnded() {
@@ -74,5 +94,16 @@ class ssy_Countdowntimer : AppCompatActivity(){
                 }
             }
         })
+
+
+        //리사이클러뷰
+        var manager02 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        var adapter02 = ysj_ListAdapterHorizontal(timerList)
+
+        var RecyclerView02 = recyclerHorizon.apply {
+            adapter = adapter02
+            layoutManager = manager02
+        }
+
     }
 }
