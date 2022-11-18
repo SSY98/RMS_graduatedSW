@@ -4,21 +4,23 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mut_jaeryo.circletimer.CircleTimer
 import com.project.rms.App
+import com.project.rms.CountdownTimer.Database.ssh_TimerDatabase
+import com.project.rms.CountdownTimer.Database.ssh_TimerEntity
+import com.project.rms.Memo.ssh_MemoAdapter
 import com.project.rms.R
-import com.project.rms.databinding.ActivitySshBarcodeCustomBinding
 import com.project.rms.databinding.SsyActivityTimerBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.ssy_activity_timer.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ssy_Countdowntimer : AppCompatActivity(){
     private var soundPool = SoundPool.Builder().build()
@@ -26,12 +28,18 @@ class ssy_Countdowntimer : AppCompatActivity(){
     var loaded = false
     var timerList = arrayListOf<ysj_TimerModel>()
 
+    lateinit var db : ssh_TimerDatabase // 타이머 db_ssh
+    var TimerList = mutableListOf<ssh_TimerEntity>() // 타이머 목록_ssh
+
+
     // ViewBinding
     lateinit var binding : SsyActivityTimerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ssy_activity_timer)
+
+        db = ssh_TimerDatabase.getInstance(this)!! // 타이머 db_ssh
 
         soundPool = SoundPool(10, AudioManager.STREAM_MUSIC, 0)
         my_sound = soundPool.load(this, R.raw.timer_beep, 1)
@@ -105,5 +113,42 @@ class ssy_Countdowntimer : AppCompatActivity(){
             layoutManager = manager02
         }
 
+        /* 타이머 추가 코드_ssh
+        val timerdata = ssh_TimerEntity(null, "타이머 이름 데이터", "타이머 시간 데이터")
+        // edittext_memo.setText("")
+        insertTimer(timerdata)*/
+
+    }
+
+    // 데이터베이스에 타이머 추가
+    fun insertTimer(timer : ssh_TimerEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db.timerDAO().insert(timer)
+            }.await()
+            getAllTimer()
+        }
+    }
+
+    // 데이터베이스에 있는 타이머를 불러옴_ssh
+    fun getAllTimer(){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                TimerList = db.timerDAO().getAll()
+                Log.d("timer","$TimerList")
+            }.await()
+            CoroutineScope(Dispatchers.Main).launch {
+            }
+        }
+    }
+
+    // 데이터베이스에 있는 타이머를 삭제_ssh
+    fun deleteTimer(timer: ssh_TimerEntity){
+        CoroutineScope(Dispatchers.IO).launch {
+            async{
+                db.timerDAO().delete(timer)
+            }.await()
+            getAllTimer()
+        }
     }
 }

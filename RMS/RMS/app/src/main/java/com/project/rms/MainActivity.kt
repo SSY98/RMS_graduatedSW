@@ -808,7 +808,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
 
     //------------------------------------음성인식_끝------------------------------------------------- 
     // ------------------------------------메모장_ssh-------------------------------------------------
-    // 데이터베이스에 있는 메모 추가
+    // 데이터베이스에 메모 추가
     fun insertMemo(memo : ssh_MemoEntity){
         CoroutineScope(Dispatchers.IO).launch {
             async{
