@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.ssy_activity_timer.*
 import kotlinx.coroutines.*
 
-class ssy_Countdowntimer : AppCompatActivity(){
+class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
     private var soundPool = SoundPool.Builder().build()
     private var my_sound = 0
     var loaded = false
@@ -56,7 +56,7 @@ class ssy_Countdowntimer : AppCompatActivity(){
         val start = findViewById<ImageButton>(R.id.start)
         val stop = findViewById<ImageButton>(R.id.stop)
         val reset = findViewById<ImageButton>(R.id.reset)
-        val addtimer = findViewById<ImageButton>(R.id.addtimer)
+        val addtimer = findViewById<ImageButton>(R.id.addtimer)// + 버튼
 
         if(App.prefs.Voicereq == true){ //음성인식으로 타이머 실행시켰을때
             timer.start()
@@ -78,13 +78,15 @@ class ssy_Countdowntimer : AppCompatActivity(){
             App.prefs.Voicepause = true //타이머가 끝나면 음성인식 시작
         }
 
-        //추가 버튼 누르면 팝업창 출력_ysj
+        //추가 '+' 버튼 누르면 팝업창 출력_ysj
         addtimer.setOnClickListener{
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.ysj_dialog_addtimer, null)
-            val mBuilder = AlertDialog.Builder(this)
-                .setView(mDialogView)
+            App.prefs.Timername = ""
+            App.prefs.Timermin = 0
+            App.prefs.Timersec = 0
+            App.prefs.Timersumtime = 0
 
-            mBuilder.show()
+            val TimerDialog = ysj_TimerDialog(this,this)
+            TimerDialog.show()
         }
 
         //타이머가 끝나면 비프음 출력
@@ -118,7 +120,36 @@ class ssy_Countdowntimer : AppCompatActivity(){
         // edittext_memo.setText("")
         insertTimer(timerdata)*/
 
+
+
+
     }
+
+    // '+' 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ysj
+    override fun onAddButtonClicked() {
+        var timername = App.prefs.Timername.toString()
+        var timermin = App.prefs.Timermin
+        var timersec = App.prefs.Timersec
+        val timertime = timermin*60 + timersec
+
+
+        val timer = ssh_TimerEntity(null, timername, timertime)
+        insertTimer(timer)
+
+        App.prefs.Timername = ""
+        App.prefs.Timermin = 0
+        App.prefs.Timersec = 0
+        App.prefs.Timersumtime = 0
+    }
+
+    // '+' 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 내용 초기화 (edittext 초기화)_ysj
+    override fun onCancelButtonClicked() {
+        App.prefs.Timername = ""
+        App.prefs.Timermin = 0
+        App.prefs.Timersec = 0
+        App.prefs.Timersumtime = 0
+    }
+
 
     // 데이터베이스에 타이머 추가
     fun insertTimer(timer : ssh_TimerEntity){

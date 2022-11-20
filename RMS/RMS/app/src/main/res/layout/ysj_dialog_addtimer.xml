@@ -44,7 +44,7 @@
         <EditText
             android:textColor="@color/black"
             android:fontFamily="@font/fonta"
-            android:id="@+id/food_name_edt"
+            android:id="@+id/timer_name_edt"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:gravity="center"/>
@@ -68,18 +68,7 @@
             android:text="시간 설정 : " />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text="00"
-            android:textColor="@color/black"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text=":"
-            android:textColor="@color/black"/>
-        <EditText
+            android:id="@+id/timer_min_edt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00"
@@ -92,6 +81,7 @@
             android:textSize="30dp"
             android:textColor="@color/black"/>
         <EditText
+            android:id="@+id/timer_sec_edt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00"

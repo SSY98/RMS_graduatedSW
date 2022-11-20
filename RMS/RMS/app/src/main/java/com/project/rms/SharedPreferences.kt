@@ -27,6 +27,12 @@ class SharedPreferences (context: Context) {
     private val receipt_date = "ReceiptDate" // 영수증 식재료 유통기한
     private val receipt_count = "ReceiptCount" // 영수증 식재료 개수
 
+    //타이머에 사용
+    private val timer_name = "Timername"//타이머 이름
+    private val timer_min = "Timermin"//타이머 분
+    private val timer_sec = "Timersec"//타이머 초
+    private val timer_sumtime = "Timersumtime"//타이머 총합
+
     //음성인식에 사용
     private val voice_name = "Voicename" //음성인식 호출이름
     private val voice_option = "Voiceoption" //음성인식 on/off setting
@@ -140,4 +146,21 @@ class SharedPreferences (context: Context) {
     var TimerSecond: Int
         get() = prefs.getInt(timer_s, 60)
         set(value) = prefs.edit().putInt(timer_s, value).apply()
+
+    var Timername: String?
+        get() = prefs.getString(timer_name, "")
+        set(value) = prefs.edit().putString(timer_name, value).apply()
+
+    var Timermin: Int
+        get() = prefs.getInt(timer_min, 0)
+        set(value) = prefs.edit().putInt(timer_min, value).apply()
+
+    var Timersec: Int
+        get() = prefs.getInt(timer_sec, 0)
+        set(value) = prefs.edit().putInt(timer_sec, value).apply()
+
+    var Timersumtime: Int
+        get() = prefs.getInt(timer_sumtime, 0)
+        set(value) = prefs.edit().putInt(timer_sumtime, value).apply()
+
 }

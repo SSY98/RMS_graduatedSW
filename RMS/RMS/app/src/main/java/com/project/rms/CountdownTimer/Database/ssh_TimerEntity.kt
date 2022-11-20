@@ -8,5 +8,5 @@ data class ssh_TimerEntity(
     @PrimaryKey(autoGenerate = true)
     val id : Long?,
     var name: String,
-    var time: String
+    var time: Int
 )
