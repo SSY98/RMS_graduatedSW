@@ -81,9 +81,7 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
         //추가 '+' 버튼 누르면 팝업창 출력_ysj
         addtimer.setOnClickListener{
             App.prefs.Timername = ""
-            App.prefs.Timermin = 0
-            App.prefs.Timersec = 0
-            App.prefs.Timersumtime = 0
+            App.prefs.Timertime = ""
 
             val TimerDialog = ysj_TimerDialog(this,this)
             TimerDialog.show()
@@ -120,34 +118,24 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
         // edittext_memo.setText("")
         insertTimer(timerdata)*/
 
-
-
-
     }
 
     // '+' 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ysj
     override fun onAddButtonClicked() {
         var timername = App.prefs.Timername.toString()
-        var timermin = App.prefs.Timermin
-        var timersec = App.prefs.Timersec
-        val timertime = timermin*60 + timersec
-
+        val timertime = App.prefs.Timertime.toString()
 
         val timer = ssh_TimerEntity(null, timername, timertime)
         insertTimer(timer)
 
         App.prefs.Timername = ""
-        App.prefs.Timermin = 0
-        App.prefs.Timersec = 0
-        App.prefs.Timersumtime = 0
+        App.prefs.Timertime = ""
     }
 
     // '+' 팝업창에서 취소 버튼을 누르면 SharedPreference 변수에 저장된 내용 초기화 (edittext 초기화)_ysj
     override fun onCancelButtonClicked() {
         App.prefs.Timername = ""
-        App.prefs.Timermin = 0
-        App.prefs.Timersec = 0
-        App.prefs.Timersumtime = 0
+        App.prefs.Timertime = ""
     }
 
 

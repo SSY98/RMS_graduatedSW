@@ -29,9 +29,7 @@ class SharedPreferences (context: Context) {
 
     //타이머에 사용
     private val timer_name = "Timername"//타이머 이름
-    private val timer_min = "Timermin"//타이머 분
-    private val timer_sec = "Timersec"//타이머 초
-    private val timer_sumtime = "Timersumtime"//타이머 총합
+    private val timer_time = "Timertime"//타이머 총합
 
     //음성인식에 사용
     private val voice_name = "Voicename" //음성인식 호출이름
@@ -151,16 +149,8 @@ class SharedPreferences (context: Context) {
         get() = prefs.getString(timer_name, "")
         set(value) = prefs.edit().putString(timer_name, value).apply()
 
-    var Timermin: Int
-        get() = prefs.getInt(timer_min, 0)
-        set(value) = prefs.edit().putInt(timer_min, value).apply()
-
-    var Timersec: Int
-        get() = prefs.getInt(timer_sec, 0)
-        set(value) = prefs.edit().putInt(timer_sec, value).apply()
-
-    var Timersumtime: Int
-        get() = prefs.getInt(timer_sumtime, 0)
-        set(value) = prefs.edit().putInt(timer_sumtime, value).apply()
+    var Timertime: String?
+        get() = prefs.getString(timer_time, "")
+        set(value) = prefs.edit().putString(timer_time, value).apply()
 
 }
