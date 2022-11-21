@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.ssy_activity_timer.*
 import kotlinx.coroutines.*
 
-class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
+class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface,ysj_OnTimerDeleteListener{
     private var soundPool = SoundPool.Builder().build()
     private var my_sound = 0
     var loaded = false
@@ -103,15 +103,7 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
             }
         })
 
-
-        //리사이클러뷰
-        var manager02 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        var adapter02 = ysj_ListAdapterHorizontal(timerList)
-
-        var RecyclerView02 = recyclerHorizon.apply {
-            adapter = adapter02
-            layoutManager = manager02
-        }
+        getAllTimer()
 
         /* 타이머 추가 코드_ssh
         val timerdata = ssh_TimerEntity(null, "타이머 이름 데이터", "타이머 시간 데이터")
@@ -120,7 +112,20 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
 
     }
 
-    // '+' 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ysj
+    // recyclerview로 데이터베이스에 있는 타이머 출력_ysj
+    fun setRecyclerView(TimerList : MutableList<ssh_TimerEntity>){
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerHorizon)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter02 = ysj_ListAdapterHorizontal(TimerList,this)
+        var manager02 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        var RecyclerView02 = recyclerHorizon.apply {
+            adapter = adapter02
+            layoutManager = manager02
+        }
+    }
+
+        // '+' 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ysj
     override fun onAddButtonClicked() {
         var timername = App.prefs.Timername.toString()
         val timertime = App.prefs.Timertime.toString()
@@ -157,6 +162,7 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
                 Log.d("timer","$TimerList")
             }.await()
             CoroutineScope(Dispatchers.Main).launch {
+                setRecyclerView(TimerList)
             }
         }
     }
@@ -170,4 +176,10 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface{
             getAllTimer()
         }
     }
+
+    override fun onTimerDeleteListener(timer : ssh_TimerEntity) {
+        deleteTimer(timer)
+    }
+
+
 }
