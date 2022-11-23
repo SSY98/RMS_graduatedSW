@@ -1,6 +1,7 @@
 package com.project.rms.CountdownTimer
 
 import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.mut_jaeryo.circletimer.CircleTimer
 import com.project.rms.App
 import com.project.rms.CountdownTimer.Database.ssh_TimerDatabase
 import com.project.rms.CountdownTimer.Database.ssh_TimerEntity
+import com.project.rms.MainActivity
 import com.project.rms.Memo.ssh_MemoAdapter
 import com.project.rms.R
 import com.project.rms.databinding.SsyActivityTimerBinding
@@ -22,11 +24,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.ssy_activity_timer.*
 import kotlinx.coroutines.*
 
-class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface,ysj_OnTimerDeleteListener{
+class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface, ysj_OnTimerDeleteListener, ysj_OnTimerUpdateListener{
     private var soundPool = SoundPool.Builder().build()
     private var my_sound = 0
     var loaded = false
-    var timerList = arrayListOf<ysj_TimerModel>()
 
     lateinit var db : ssh_TimerDatabase // 타이머 db_ssh
     var TimerList = mutableListOf<ssh_TimerEntity>() // 타이머 목록_ssh
@@ -116,7 +117,7 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface,ysj_OnT
     fun setRecyclerView(TimerList : MutableList<ssh_TimerEntity>){
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerHorizon)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter02 = ysj_ListAdapterHorizontal(TimerList,this)
+        val adapter02 = ysj_ListAdapterHorizontal(TimerList,this,this)
         var manager02 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         var RecyclerView02 = recyclerHorizon.apply {
@@ -181,5 +182,13 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface,ysj_OnT
         deleteTimer(timer)
     }
 
+    override fun onTimerUpdateListener(timer: ssh_TimerEntity){
+
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
 
 }
