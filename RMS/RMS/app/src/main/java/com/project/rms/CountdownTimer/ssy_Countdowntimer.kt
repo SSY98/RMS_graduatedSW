@@ -88,7 +88,7 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface, ysj_On
             TimerDialog.show()
         }
 
-        //타이머가 끝나면 비프음 출력
+        //타이머가 끝나면 비프음 출력_ssy
         timer.setBaseTimerEndedListener(object: CircleTimer.baseTimerEndedListener {
             override fun OnEnded() {
                 val audioManager: AudioManager = applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -105,28 +105,9 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface, ysj_On
         })
 
         getAllTimer()
-
-        /* 타이머 추가 코드_ssh
-        val timerdata = ssh_TimerEntity(null, "타이머 이름 데이터", "타이머 시간 데이터")
-        // edittext_memo.setText("")
-        insertTimer(timerdata)*/
-
     }
 
-    // recyclerview로 데이터베이스에 있는 타이머 출력_ysj
-    fun setRecyclerView(TimerList : MutableList<ssh_TimerEntity>){
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerHorizon)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter02 = ysj_ListAdapterHorizontal(TimerList,this,this)
-        var manager02 = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        var RecyclerView02 = recyclerHorizon.apply {
-            adapter = adapter02
-            layoutManager = manager02
-        }
-    }
-
-        // '+' 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ysj
+    // '+' 팝업창에서 확인 버튼 누르면 팝업창에서 입력한 내용이 데이터베이스에 추가된다._ysj
     override fun onAddButtonClicked() {
         var timername = App.prefs.Timername.toString()
         val timertime = App.prefs.Timertime.toString()
@@ -145,7 +126,7 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface, ysj_On
     }
 
 
-    // 데이터베이스에 타이머 추가
+    // 데이터베이스에 타이머 추가_ssh
     fun insertTimer(timer : ssh_TimerEntity){
         CoroutineScope(Dispatchers.IO).launch {
             async{
@@ -178,12 +159,22 @@ class ssy_Countdowntimer : AppCompatActivity(), ysj_TimerDialogInterface, ysj_On
         }
     }
 
+    // recyclerview로 데이터베이스에 있는 타이머 출력_ysj
+    fun setRecyclerView(TimerList : MutableList<ssh_TimerEntity>){
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerHorizon)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val adapter = ysj_ListAdapterHorizontal(TimerList,this,this)
+        recyclerView.adapter = adapter//++
+    }
+
     override fun onTimerDeleteListener(timer : ssh_TimerEntity) {
         deleteTimer(timer)
     }
 
     override fun onTimerUpdateListener(timer: ssh_TimerEntity){
-
+        val timer = findViewById<CircleTimer>(R.id.main_timer)
+        timer.setMaximumTime(3600)
+        timer.setInitPosition(App.prefs.TimerSecond)
     }
 
     override fun onBackPressed() {

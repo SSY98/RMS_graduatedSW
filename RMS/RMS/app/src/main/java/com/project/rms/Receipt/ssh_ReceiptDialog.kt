@@ -93,7 +93,7 @@ class ssh_ReceiptDialog(context: Context, Interface: ssh_ReceiptDialogInterface)
         val recyclerView = findViewById<RecyclerView>(R.id.ReceiptRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = ssh_ReceiptAdapter(ReceiptList, this)//수정
-        recyclerView.adapter = adapter//++
+        recyclerView.adapter = adapter
     }
 
     // 영수증 인식 팝업창에서 삭제 버튼 클릭 시 해당 되는 식재료를 DB 및 목록에서 삭제

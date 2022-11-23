@@ -464,9 +464,9 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = LinearListViewAdapter(productList, this)//수정
-        val callback = ItemTouchHelperCallback(adapter,this)//++
-        val touchHelper = ItemTouchHelper(callback)//++
-        touchHelper.attachToRecyclerView(recyclerView)//++
+        val callback = ItemTouchHelperCallback(adapter,this)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(recyclerView)
         recyclerView.adapter = adapter
     }
 
@@ -857,7 +857,7 @@ class MainActivity : AppCompatActivity(), ssh_BarcodeDialogInterface, ssh_OnProd
         val recyclerView = findViewById<RecyclerView>(R.id.Memo_recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = ssh_MemoAdapter(memoList, this, this)//수정
-        recyclerView.adapter = adapter//++
+        recyclerView.adapter = adapter
     }
 
     // 스와이프 모션을 사용하면 데이터베이스 내의 메모가 삭제됨

@@ -75,10 +75,10 @@ class ssh_FoodListActivity : AppCompatActivity(), ssh_FoodListUpdateDialogInterf
         val recyclerView = findViewById<RecyclerView>(R.id.FoodList_recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = ssh_FoodListAdapter(productList, this, this)//수정
-        val callback = ItemTouchHelperCallback(adapter,this)//++
-        val touchHelper = ItemTouchHelper(callback)//++
-        touchHelper.attachToRecyclerView(recyclerView)//++
-        recyclerView.adapter = adapter//++
+        val callback = ItemTouchHelperCallback(adapter,this)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(recyclerView)
+        recyclerView.adapter = adapter
     }
 
     // 스와이프 모션을 사용하면 데이터베이스 내의 식재료가 삭제됨

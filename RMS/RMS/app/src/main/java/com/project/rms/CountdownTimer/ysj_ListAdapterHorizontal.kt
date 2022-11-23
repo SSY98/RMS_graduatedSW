@@ -65,14 +65,8 @@ class ysj_ListAdapterHorizontal(var list: MutableList<ssh_TimerEntity>,
             val alltimertime = alltimer.time
             val timeint = alltimertime.toInt()
             App.prefs.TimerSecond = timeint
-
-            val intent = Intent(holder.itemView?.context,ssy_Countdowntimer::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
-            startActivity(holder.itemView.context,intent,null)
-
             ysj_onTimerUpdateListener.onTimerUpdateListener(alltimer)
         }
-
     }
 
     override fun getItemCount(): Int {
