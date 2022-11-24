@@ -6,6 +6,8 @@
     android:layout_marginHorizontal="2dp"
     android:orientation="vertical"
     android:layout_margin="10dp"
+    android:padding="20dp"
+    android:background="@drawable/btn_edge2"
     android:id="@+id/TimerRoot">
 
     <TextView
@@ -13,19 +15,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="라면"
-        android:textSize="35dp"
+        android:textSize="25dp"
         android:layout_gravity="center"
-        tools:text="timername"/>
+        tools:text="timername"
+        android:paddingBottom="2.5dp"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="0dp"
         android:background="@color/black"/>
     <TextView
+        android:paddingTop="2.5dp"
         android:id="@+id/timer_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="03:00"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:layout_gravity="center"
         tools:text="timertime"/>
 
