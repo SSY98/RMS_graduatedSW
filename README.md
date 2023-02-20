@@ -66,4 +66,5 @@
 ## 업데이트
 
 - 2022/11/24 : 네이버 API를 이용한 쇼핑 기능 업데이트
-![쇼핑](https://user-images.githubusercontent.com/90738302/220035787-f96125eb-7351-4779-a401-7d8c961209d1.png)
+
+<img  src="https://user-images.githubusercontent.com/90738302/220035787-f96125eb-7351-4779-a401-7d8c961209d1.png"  width="300"  height="500">
