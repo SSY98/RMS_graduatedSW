@@ -3,7 +3,6 @@
 ## 대학교 졸업작품
 
 **<a href="https://www.youtube.com/watch?v=i4XwfHjk1AE"> 시연 영상(Youtube영상) </a>**</br>
-**<a href="https://play.google.com/store/apps/details?id=com.project.rms"> 플레이스토어 다운로드 링크 </a>**</br>
 
 ## 팀 소개
 
